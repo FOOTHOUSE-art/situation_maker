@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>偶然シチュエーションメーカー V19</title>
+<title>偶然シチュエーションメーカー V22</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -106,7 +106,7 @@ details.sec .sec-body{padding:4px 14px 10px}
 
   <!-- ============ 初期設定 ============ -->
   <section id="setup">
-    <h1>偶然シチュエーションメーカー V19<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
+    <h1>偶然シチュエーションメーカー V22<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
     <div class="form">
       <label>性別
         <select id="s-gender">
@@ -160,7 +160,7 @@ details.sec .sec-body{padding:4px 14px 10px}
       ※ プロフィール画面では、組み合わせに無理がないか自動でチェックされ、ワンタップで整えられます（強制はされません）。<br>
       ※ 画面下の固定バーの「味付け」から、クスッと笑える／偶然写真／足元シチュの一括抽選が使えます。<br>
       ※ 服・履物は選んだ季節に合うものが抽選されます（手動では全候補から選択可）。矛盾があれば整合性チェックに表示され、「⚡一括で整える」でまとめて修正できます。<br>
-      ※ 仕上がりスタイルと画像比率はここで決めた値がプロフィールで固定（●固定）されます。変更したい場合はプロフィール側で固定を解除してください。
+      ※ 初期設定で選択した項目（季節・時間帯・仕上がりスタイル・画像比率）はプロフィールで固定（●固定）され、再抽選でも変わりません。変更したい場合はプロフィール側で🔒を解除してください（季節・時間帯で「ランダム」を選んだ場合は固定されません）。
     </p>
   </section>
 
@@ -879,6 +879,62 @@ const D={
       P("立ち食いカウンター","the stand-up counter"),P("七味の缶","a tin of shichimi pepper"),
       P("食券の券売機","the meal-ticket machine"),P("湯気の立つかけそば","a steaming bowl of soba"),
       P("急いで食べる隣客","a neighbor eating in a hurry"),P("茹で場の湯気","steam from the boiling station")]},
+    {jp:"スーパーマーケット",en:"in a supermarket",io:"in",props:[
+      P("買い物カゴ","a shopping basket"),P("特売のPOP","bargain-sale signs"),
+      P("野菜の陳列棚","the produce shelves"),P("カート","a shopping cart"),
+      P("試食コーナー","a free-sample corner"),P("レジの列","the checkout line")]},
+    {jp:"リビング（テレビの前）",en:"in a living room in front of the TV",io:"in",props:[
+      P("テレビの光","the glow of the TV screen"),P("ソファとクッション","a sofa with cushions"),
+      P("リモコン","the remote control"),P("ローテーブルのお菓子","snacks on the low table"),
+      P("床のラグ","a rug on the floor"),P("夜の薄明かり","the dim evening room light")]},
+    {jp:"パチンコ店",en:"inside a pachinko parlor",io:"in",props:[
+      P("並ぶ台のまばゆい光","rows of dazzling machines"),P("ドル箱","stacked boxes of pachinko balls"),
+      P("ハンドルを握る手元","a hand on the machine's handle"),P("島の通路","the aisle between machine rows"),
+      P("景品カウンター","the prize exchange counter"),P("天井の派手な照明","the flashy ceiling lights")]},
+    {jp:"駅の階段",en:"on a station staircase",io:"in",props:[
+      P("続く段差","the run of steps"),P("手すり","the handrail"),
+      P("行き交う人々の脚","the legs of passing commuters"),P("番線の案内表示","the platform guide signs"),
+      P("上から差し込む光","light spilling down from above"),P("駆け上がる人","someone hurrying up the stairs")]},
+    {jp:"マンションの駐輪場",en:"at an apartment building's bicycle parking",io:"out",props:[
+      P("並んだ自転車","rows of parked bicycles"),P("自転車の鍵","a bicycle key"),
+      P("バッグの中を探る手","a hand digging through a bag"),P("屋根付きラック","the covered bike rack"),
+      P("夕方の長い影","long evening shadows"),P("前かごの荷物","cargo in the front basket")]},
+    {jp:"マンションのエントランス",en:"in an apartment building entrance lobby",io:"in",props:[
+      P("オートロックのパネル","the auto-lock entry panel"),P("集合ポスト","the bank of mailboxes"),
+      P("来客用スリッパ","guest slippers by the step"),P("磨かれた床の反射","reflections on the polished floor"),
+      P("観葉植物","a potted plant"),P("ガラス扉","the glass entrance doors")]},
+    {jp:"マンションの共用廊下（深夜）",en:"in an apartment building's shared corridor late at night",io:"in",props:[
+      P("部屋の鍵","the room key in hand"),P("等間隔の照明","evenly spaced corridor lights"),
+      P("ドアの前の荷物","a bag set down by the door"),P("深夜の静けさ","the late-night stillness"),
+      P("手すりの外の夜景","the night view past the railing"),P("緩めたネクタイ","a loosened necktie")]},
+    {jp:"内見中の空き物件",en:"inside an empty apartment being shown to a client",io:"in",props:[
+      P("何もない室内","the bare empty rooms"),P("開けかけのカーテン","curtains half-opened"),
+      P("間取り図の資料","floor-plan documents"),P("スリッパ","viewing slippers"),
+      P("窓からの光","daylight through the windows"),P("巻尺","a tape measure")]},
+    {jp:"営業車の傍ら",en:"beside a company sales car",io:"out",props:[
+      P("開いた運転席のドア","the open driver's door"),P("社名の入らない白い車体","a plain white company car"),
+      P("書類鞄","a briefcase"),P("濡れた路面","the wet road surface"),
+      P("置き忘れた傘","an umbrella left on the seat"),P("コインパーキングの精算機","the parking lot pay station")]},
+    {jp:"サウナの外気浴スペース",en:"in the open-air rest area of a sauna",io:"out",bath:true,props:[
+      P("ととのい椅子","reclining rest chairs"),P("腰に巻いたタオル","a towel wrapped at the waist"),
+      P("夜風に揺れる植栽","plants swaying in the night breeze"),P("水風呂への動線","the path to the cold bath"),
+      P("火照った肌の湯気","faint steam rising from warmed skin"),P("給水器","a water dispenser")]},
+    {jp:"サウナ・銭湯の洗い場",en:"at the washing stations of a sauna / bathhouse",io:"in",bath:true,props:[
+      P("シャワーとカラン","the shower heads and faucets"),P("泡立てた髪","hair lathered with shampoo"),
+      P("桶と風呂椅子","a wash bucket and low stool"),P("濡れた床の反射","reflections on the wet floor"),
+      P("鏡の曇り","fogged mirrors"),P("シャンプーのボトル","shampoo bottles")]},
+    {jp:"居酒屋のカウンター",en:"at the counter of a cozy izakaya pub",io:"in",props:[
+      P("生ビールのジョッキ","a frosty mug of draft beer"),P("お通しの小鉢","a small appetizer dish"),
+      P("焼き台の煙","smoke from the grill"),P("短冊のメニュー","hand-written menu strips on the wall"),
+      P("カウンター下の足元","the footrest space under the counter"),P("おしぼり","a rolled hand towel")]},
+    {jp:"配信部屋（デスクとリングライト）",en:"in a streaming room with a desk and ring light",io:"in",props:[
+      P("リングライトの光","the glow of a ring light"),P("マイクアーム","a boom-mounted microphone"),
+      P("ゲーミングチェア","a gaming chair"),P("散らかったデスク","a cluttered desk"),
+      P("モニターの光が顔に当たる","monitor light on their face"),P("配線コード","tangled cables on the floor")]},
+    {jp:"花火大会の帰り道",en:"on the way home from a fireworks festival",io:"out",props:[
+      P("遠くの打ち上げの残光","the afterglow of distant fireworks"),P("浴衣姿の人混み","crowds in yukata heading home"),
+      P("片付け始めた出店","festival stalls starting to close"),P("ビニールのヨーヨー","a water balloon yo-yo"),
+      P("提灯の列","strings of lanterns"),P("うちわ","a paper fan in hand")]},
     {jp:"歓楽街（風俗店の看板が並ぶ通り）",en:"on a nightlife-district street lined with adult-entertainment signboards (exterior street only)",io:"out",props:[
       P("派手なネオンの袖看板","gaudy neon projecting signs"),P("店頭の立て看板","standing signboards"),
       P("ビルのテナント案内板","a building tenant directory"),P("濡れた路面の反射","reflections on the wet road"),
@@ -997,7 +1053,21 @@ const D={
     Object.assign(P("桶で湯をすくう","scooping hot water with a wooden bucket"),{locRe:/風呂|浴場/}),
     Object.assign(P("手すりにもたれる","leaning on the railing"),{cats:["立つ"],locRe:/ベランダ|屋上|ホーム/}),
     Object.assign(P("草の穂を指で触る","brushing the grass seed heads with their fingers"),{locRe:/草むら|河川敷|公園/}),
-    Object.assign(P("バックドアに寄りかかる","leaning against the open tailgate"),{locRe:/荷室/})
+    Object.assign(P("バックドアに寄りかかる","leaning against the open tailgate"),{locRe:/荷室/}),
+    Object.assign(P("テレビを見ている","eyes on the TV"),{locRe:/リビング|自室|寝室|ホテル|旅館/}),
+    Object.assign(P("買い物カゴを提げる","carrying a shopping basket"),{locRe:/スーパー|コンビニ|商店街/}),
+    Object.assign(P("商品の値札を見比べる","comparing price tags"),{locRe:/スーパー|商店街|古着屋/}),
+    Object.assign(P("ハンドルを握って玉の行方を目で追う","hand on the pachinko handle, eyes tracking the balls"),{cats:["座る"],locRe:/パチンコ/}),
+    Object.assign(P("階段の手すりに手を添える","one hand on the stair handrail"),{locRe:/階段/}),
+    Object.assign(P("バッグの中の鍵を探る","digging through their bag for keys"),{locRe:/駐輪場|廊下|エントランス|マンション/}),
+    Object.assign(P("スリッパに履き替えようとする","mid-change into slippers"),{cats:["立つ"],locRe:/エントランス|内見|旅館|ホテル/}),
+    Object.assign(P("カーテンを開けようと手を伸ばす","reaching up to open the curtains"),{cats:["立つ"],locRe:/内見|自室|寝室|ホテル|旅館/}),
+    Object.assign(P("髪を泡立てている","lathering their hair"),{cats:["座る","立つ"],locRe:/洗い場/}),
+    Object.assign(P("足の指をそっと動かす","idly wiggling their toes"),{locRe:/外気浴|風呂|カウンター|リビング|自室|配信部屋/}),
+    Object.assign(P("カウンター下で靴を脱いで足を休める","shoes slipped off under the counter, resting their feet"),{cats:["座る"],locRe:/居酒屋|カウンター|そば/}),
+    Object.assign(P("コメントを読んで笑う","laughing at the comments on screen"),{locRe:/配信部屋/}),
+    Object.assign(P("片足を椅子に上げてくつろぐ","one foot pulled up onto the chair, relaxed"),{cats:["座る"],locRe:/配信部屋|自室|リビング/}),
+    Object.assign(P("濡れた靴下を指で確かめる","pressing a finger to their soaked sock"),{cats:["座る","立つ"],locRe:/ホーム|駅|営業車/})
   ],
   /* 被写体側のハプニング（out:屋外向き / locRe:特定の場所向き。未指定は汎用） */
   happening:[
@@ -1070,7 +1140,26 @@ const D={
     Object.assign(P("ロッカーの鍵をどこに入れたか分からなくなる","patting pockets for the misplaced locker key"),{locRe:/ロッカー|更衣室|銭湯|ジム/}),
     Object.assign(P("ICカードがエラーで改札に止められる","the ticket gate rejecting their IC card"),{locRe:/駅|ホーム/}),
     Object.assign(P("風で切符が飛ばされる","a paper ticket whisked away by the wind"),{locRe:/駅|ホーム/}),
-    Object.assign(P("自販機の下に小銭が転がり込む","a coin rolling away under the vending machine"),{locRe:/喫煙所|駅|コンビニ|待合室/})
+    Object.assign(P("自販機の下に小銭が転がり込む","a coin rolling away under the vending machine"),{locRe:/喫煙所|駅|コンビニ|待合室/}),
+    Object.assign(P("大当たりで台がまばゆく光る","the machine erupting in jackpot lights"),{locRe:/パチンコ/}),
+    Object.assign(P("ドル箱を積み上げている","stacking up boxes of won balls"),{locRe:/パチンコ/}),
+    Object.assign(P("玉が尽きて肩を落とす","shoulders slumping as the balls run out"),{locRe:/パチンコ/}),
+    Object.assign(P("カゴから商品が落ちそうになる","an item about to tumble from the basket"),{locRe:/スーパー/}),
+    Object.assign(P("リモコンがソファの隙間に落ちる","the remote slipping into the sofa gap"),{locRe:/リビング/}),
+    Object.assign(P("段を一つ踏み外しかける","nearly missing a step"),{locRe:/階段/}),
+    Object.assign(P("駆け下りてバランスを崩し、かかとが浮く","losing balance mid-descent, a heel lifting out of the shoe"),{locRe:/階段/}),
+    Object.assign(P("傘を車内に忘れて雨に打たれる","caught in the rain, umbrella forgotten inside the car"),{locRe:/営業車/}),
+    Object.assign(P("カーテンを開けようとしてバランスを崩す","losing balance while pulling the curtains open"),{locRe:/内見/}),
+    Object.assign(P("靴を履き直そうと片足立ちでふらつく","wobbling on one leg while putting a shoe back on"),{locRe:/コンビニ|エントランス|玄関|駐輪場/}),
+    Object.assign(P("マイクのコードが足に絡まる","the mic cable tangling around their feet"),{locRe:/配信部屋/}),
+    Object.assign(P("カメラが倒れて慌てて拾う","the camera tipping over — scrambling to catch it"),{locRe:/配信部屋/}),
+    Object.assign(P("画面共有に失敗して頭を抱える","head in hands as the screen share fails"),{locRe:/配信部屋/}),
+    Object.assign(P("配信中に宅配が来て立ち上がる","springing up mid-stream for a delivery at the door"),{locRe:/配信部屋/}),
+    Object.assign(P("ペットが突然フレームに乱入する","a pet suddenly barging into frame"),{locRe:/配信部屋|リビング|自室/}),
+    Object.assign(P("ネットが切れて「あれ？」の顔","frozen mid-sentence as the connection drops"),{locRe:/配信部屋/}),
+    Object.assign(P("コメント欄が荒れて慌てる","flustered as the chat suddenly goes wild"),{locRe:/配信部屋/}),
+    Object.assign(P("食べこぼしが口の周りについている","crumbs stuck around their mouth from snacking"),{locRe:/配信部屋|リビング|居酒屋/}),
+    Object.assign(P("サンダルを片方落としそうになる","one sandal about to slip off and drop"),{locRe:/花火|縁日|砂浜/})
   ],
   /* 背景との空間的な偶然（気づくと笑える一致） */
   coincidence:[
@@ -1117,7 +1206,9 @@ const D={
     P("動画から切り出した1コマ","a frame grabbed from a video — soft detail and compression artifacts"),
     P("証明写真ボックスの失敗カット","a reject frame from an ID photo booth — flat frontal lighting, plain backdrop"),
     P("使い捨てカメラで撮った","shot on a disposable film camera — heavy grain and harsh flash"),
-    P("子どもが低い位置から撮った","taken by a child from a low height, tilted and unsteady")
+    P("子どもが低い位置から撮った","taken by a child from a low height, tilted and unsteady"),
+    P("配信のスクリーンショット","a clean screenshot captured from their live stream, no interface overlays"),
+    P("視聴者が保存した配信の一コマ","a frame saved by a viewer from the stream, slightly compressed")
   ],
   /* A：シャッターのタイミング */
   timing:[
@@ -1287,7 +1378,9 @@ const D={
       P("床に座って両足を前に投げ出す","sitting on the floor with both legs thrown out in front"),
       P("膝を立てて座り靴が並ぶ","sitting with knees up and both shoes side by side"),
       P("足首を交差させて座る","seated with ankles crossed"),
-      P("片足だけ椅子に上げて座る","one foot up on the chair seat")
+      P("片足だけ椅子に上げて座る","one foot up on the chair seat"),
+      P("配信チェアに沈み、足を投げ出す","sunk into a streaming chair, socked feet thrown out in front"),
+      P("カウンター下で靴を脱いで足を組む","shoes off under the counter, legs crossed in socks")
     ],
     "歩く・走る":[
       P("歩き出す瞬間のかかとの浮き","the heel lifting as they begin to walk"),
@@ -1313,6 +1406,7 @@ const D={
       P("雪が靴に付着している","snow packed onto the shoes"),
       P("靴を洗っている","washing the shoes"),
       P("濡れた靴下を脱いでいる","peeling off wet socks"),
+      P("靴を脱いで濡れた靴下を指で確かめる","shoe off, pressing a finger to the soaked sock"),
       P("靴を日なたで乾かしている","shoes set out to dry in the sun"),
       P("水たまりを踏んで跳ねる","splashing through a puddle")
     ],
@@ -1416,13 +1510,67 @@ const D={
   ],
   special:[
     P("なし（現実的な場面）","none — keep the scene realistic"),
+    /* --- 物理法則のズレ --- */
     P("無重力（ふわりと浮いている）","zero gravity — the person and nearby objects float weightlessly"),
-    P("全身が粉まみれ（カラーパウダー）","covered head to toe in colorful powder, color-run style, clouds of powder in the air"),
-    P("大理石の彫刻になっている","transformed into a marble statue — carved stone texture while keeping the exact likeness and outfit shapes"),
-    P("魔法を使っている","casting a spell — glowing magical light and particles swirling from their hands"),
     P("空中に静かに浮かんでいる","hovering quietly a meter above the ground"),
-    P("周囲だけ時間が止まっている","time is frozen around them — passersby and objects stopped mid-motion while they move normally"),
-    P("ミニチュアの街に立つ巨人","standing like a giant in a miniature city diorama")
+    P("周囲だけ時間が止まっている","time frozen around them — passersby and objects stopped mid-motion while they move normally"),
+    P("雨粒だけがスローモーション","raindrops alone falling in slow motion, hanging glittering in the air"),
+    P("重力が横向き（壁に立っている）","sideways gravity — standing naturally on a wall"),
+    P("影だけが別の動きをしている","their shadow moving independently, striking a different pose"),
+    P("鏡の中の自分が違うポーズ","their mirror reflection holding a completely different pose"),
+    P("水が空中に球体になって浮く","water gathered into floating spheres in mid-air"),
+    P("残像が尾を引いている","motion afterimages trailing behind them"),
+    P("分身が数人いる（多重露光風）","several overlapping duplicates of them, multiple-exposure style"),
+    P("半透明になりかけている","turning slightly translucent, the background faintly showing through"),
+    P("空中に見えない足場がある","standing on invisible footholds in mid-air"),
+    P("靴だけ地面から数センチ浮いている","their footwear hovering a few centimeters off the ground"),
+    /* --- 質感・変身 --- */
+    P("大理石の彫刻になっている","transformed into a marble statue — carved stone texture while keeping the exact likeness and outfit shapes"),
+    P("ブロンズ像になっている","turned into a bronze statue with a weathered patina, likeness intact"),
+    P("ガラス細工になっている","rendered as translucent glasswork, likeness intact"),
+    P("折り紙でできている","made of folded origami paper, likeness intact"),
+    P("クレイアニメの粘土人形","claymation-style clay figure, likeness intact"),
+    P("台座付きフィギュアになっている","a collectible figure on a display base, likeness intact"),
+    P("ドット絵（レトロゲーム風）","rendered in retro pixel-art while the world stays photoreal"),
+    P("水彩画の世界に入り込んでいる","standing inside a watercolor-painted world"),
+    P("浮世絵の世界に入り込んでいる","standing inside an ukiyo-e woodblock-print world"),
+    P("新聞のモノクロ写真の中にいる","inside a grainy monochrome newspaper photograph"),
+    P("本人だけカラーで世界はモノクロ","the world in monochrome with only the person in full color"),
+    P("本人だけ実写で背景はイラスト","the person photoreal while the background is hand-drawn illustration"),
+    /* --- 環境の奇跡 --- */
+    P("全身が粉まみれ（カラーパウダー）","covered head to toe in colorful powder, color-run style, clouds of powder in the air"),
+    P("花吹雪が竜巻のように渦を巻く","petals swirling around them like a gentle tornado"),
+    P("金魚が空中を泳いでいる","goldfish swimming through the air around them"),
+    P("街ごと水中に沈んでいる","the whole street submerged underwater, hair and clothes drifting"),
+    P("空に月が二つある","two moons hanging in the sky"),
+    P("あり得ない大きさの満月","an impossibly huge full moon filling the sky behind them"),
+    P("頭上にオーロラ","an aurora rippling directly overhead"),
+    P("雲の上に立っている","standing on top of the clouds"),
+    P("桜満開と雪が同時に降る","cherry blossoms in full bloom and snow falling at the same time"),
+    P("蛍の大群に包まれる","wrapped in a swarm of fireflies"),
+    P("無数のシャボン玉が漂う","countless soap bubbles drifting through the scene"),
+    P("紙飛行機の大群が飛んでいく","a flock of paper airplanes streaming past"),
+    P("風船で体が少し浮いている","lifted slightly off the ground by a bunch of balloons"),
+    P("足元だけ水面になって波紋が広がる","the ground beneath them turned to water, ripples spreading from each step"),
+    P("床が鏡張りになっている","the ground turned into a perfect mirror"),
+    /* --- 魔法・SF --- */
+    P("魔法を使っている","casting a spell — glowing magical light and particles swirling from their hands"),
+    P("手から光の蝶があふれる","butterflies of light streaming from their hands"),
+    P("周囲に光の球が浮かんでいる","softly glowing orbs of light floating around them"),
+    P("異世界へのポータルが開いている","a portal to another world open beside them"),
+    P("静電気で髪が逆立ち小さな火花","hair standing on end with tiny crackling sparks of static"),
+    P("ホログラムのUIを操作している","interacting with floating holographic interface panels"),
+    P("小さなドローンが付きまとう","a tiny curious drone hovering around them"),
+    /* --- 日常のシュールなズレ --- */
+    P("ミニチュアの街に立つ巨人","standing like a giant in a miniature city diorama"),
+    P("逆に小人サイズになっている","shrunk to palm size among giant everyday objects"),
+    P("周囲の通行人が全員ペンギン","every passerby replaced by a penguin"),
+    P("空から食パンがゆっくり降ってくる","slices of bread drifting down from the sky like snow"),
+    P("横断歩道がピアノの鍵盤","the crosswalk turned into piano keys"),
+    P("マンホールから虹が立ちのぼる","a rainbow rising out of a manhole"),
+    P("自販機から花が咲きあふれる","flowers blooming out of a vending machine"),
+    P("傘だけが宙に浮いて差されている","an umbrella floating in mid-air, held by no one"),
+    P("影が猫の形になっている","their shadow cast in the shape of a cat")
   ],
   specialLevel:[
     P("ほんのり（現実にさりげなく混ざる）","subtle — a small uncanny touch blended into an otherwise realistic photo"),
@@ -1435,6 +1583,8 @@ const D={
     P("顔のアップ","a close-up of the face"),
     P("足元（靴と靴下）","the feet, shoes and socks"),
     P("足元強調（靴下の質感まで）","the feet with emphasis on sock texture and details"),
+    P("足裏（ソールをこちらへ向ける）","the soles of the feet, angled toward the camera"),
+    P("脇（腕を上げた時に見える）","the underarms, naturally visible as the arms are raised"),
     P("手元の仕草","the hands and their gesture"),
     P("後ろ姿","the back view"),
     P("横顔","the profile of the face")
@@ -1486,6 +1636,7 @@ const D={
     P("斜め構図（ダッチアングル）","a slight dutch angle"),
     P("超ローアングル（地面すれすれ）","an extreme ground-level low angle"),
     P("足元から見上げる","looking up from foot level"),
+    P("階段下から後ろ姿を見上げる","looking up from the bottom of the stairs at their back as they climb"),
     P("引きの遠景に小さく写す","a wide distant shot with the person small in the frame")
   ],
   camera:[
@@ -1503,7 +1654,9 @@ const D={
     P("チェキ風・インスタント写真","instant-camera style photo with soft focus"),
     P("スマホ写真風","casual smartphone photo look"),
     P("魚眼レンズ","a fisheye lens look"),
-    P("中判フィルム風","medium-format film look with shallow depth")
+    P("中判フィルム風","medium-format film look with shallow depth"),
+    P("縦スマホ固定の配信画面風（引きで全身）","vertical phone-on-tripod livestream framing, wide enough to show the full body"),
+    P("配信アーカイブの切り抜き風","a cropped frame from a stream archive, soft compression")
   ],
   quality:[
     P("実写風","photorealistic"),
@@ -1518,7 +1671,16 @@ const D={
     P("漫画風線画","manga-style line art"),
     P("雑誌のスナップページ風","magazine street-snap page style"),
     P("昭和の家族アルバム風","Showa-era family album print style"),
-    P("ドキュメンタリー写真風","documentary photography style")
+    P("ドキュメンタリー写真風","documentary photography style"),
+    P("YouTube配信画面風","the look of a YouTube live-stream frame — webcam quality, streaming compression, room lighting from the monitor and ring light (no interface text or overlays)"),
+    P("YouTubeサムネイル風","a YouTube thumbnail look — punchy contrast, expressive framing (no text or graphics)"),
+    P("インスタLIVE画面風","the look of an Instagram Live frame — vertical phone camera quality, casual handheld feel (no interface text or overlays)"),
+    P("インスタストーリーズ風","an Instagram Stories look — vertical casual phone shot with natural filter tones (no text or stickers)")
+  ],
+  uiOverlay:[
+    P("描かない（クリーンな画面）","no interface elements at all — a clean frame"),
+    P("うっすら（ぼかしたUIの気配）","a faint, blurred suggestion of streaming interface shapes at the edges — abstract, unreadable, out of focus"),
+    P("しっかり描く（コメント欄・アイコン等）","plausible streaming interface elements rendered in frame — a comment feed, viewer icons, floating hearts and reaction bubbles; keep all text generic, non-branded and slightly soft so no real words need to be legible")
   ],
   ratio:[
     P("4:5（縦・SNS向き）","aspect ratio 4:5 vertical (SNS-friendly)"),
@@ -2363,6 +2525,7 @@ function buildFieldDefs(){
   f.push({id:"composition",label:"構図",pool:()=>D.composition});
   f.push({id:"camera",label:"カメラ設定",pool:()=>D.camera});
   f.push({id:"quality",label:"仕上がりスタイル",pool:()=>D.quality});
+  f.push({id:"uiOverlay",label:"配信UI・オーバーレイ",pool:()=>D.uiOverlay,noneDefault:true});
   f.push({id:"ratio",label:"画像比率",pool:()=>D.ratio});
 
   f.push({section:"写真の偶然性・密度",secId:"sec-candid"});
@@ -2451,6 +2614,7 @@ function ctxPoolFor(id){
     case "postureCat":return postureCatPoolCtx();
     case "timeOfDay":return timeOfDayPoolCtx();
     case "shoeShow":return shoeShowPoolCtx();
+    case "companion":return companionRollPool();
     case "moment":return momentPoolCtx();
     case "expression":return expressionPoolCtx();
     case "jacket":case "tops":case "bottoms":return ctxClothesPool(id);
@@ -2461,13 +2625,14 @@ function ctxPoolFor(id){
 }
 function locRollPoolCtx(){
   let base=locRollPool();
-  if(uniformOn())base=base.filter(l=>!l.bath&&!l.lh&&!/歓楽街|ラブホテル|水中/.test(l.jp));
+  if(uniformOn())base=base.filter(l=>!l.bath&&!l.lh&&!/歓楽街|ラブホテル|水中|パチンコ|自室|寝室|リビング|居酒屋|配信部屋|外気浴|洗い場/.test(l.jp));
   return base.length?base:locRollPool();
 }
 function rollOne(id){
   if(id==="glasses"){rollGlasses();return;}
   if(["sockHeelThin","sockBallThin","sockToeThin"].includes(id)){rollThin(id);return;}
   if(id==="sockWearing"){rollSockWearing();return;}
+  if(id==="focus"){rollFocus();return;}
   const f=FIELDS.find(x=>x.id===id);
   const cp=ctxPoolFor(id);
   state[id].value=rand(cp||f.pool());
@@ -2513,7 +2678,9 @@ function generateAll(){
   if(un("moment"))state.moment.value=rand(momentPoolCtx());
   if(un("expression"))state.expression.value=rand(expressionPoolCtx());
   if(un("crowd"))state.crowd.value=rand(crowdPoolCtx());
-  ["focus","companion","hairStyle","hairColor"].forEach(id=>{if(!has(id))plain(id);});
+  rollFocus();
+  if(un("companion"))state.companion.value=rand(companionRollPool());
+  ["hairStyle","hairColor"].forEach(id=>{if(!has(id))plain(id);});
   /* 5. 撮り方 */
   ["composition","quality","ratio","timing"].forEach(id=>{if(!has(id))plain(id);});
   if(!has("camera"))plain("camera");
@@ -2594,17 +2761,17 @@ function seasonalRoll(id){
 ================================================================ */
 function locCtx(loc){
   const j=loc?loc.jp:"";
-  if(/露天風呂|サウナ|大浴場|銭湯/.test(j))return "bath";
+  if(/露天風呂|サウナ|大浴場|銭湯|外気浴|洗い場/.test(j))return "bath";
   if(/ロッカールーム|更衣室/.test(j))return "locker";
-  if(/自室|寝室/.test(j))return "home";
+  if(/自室|寝室|リビング|配信部屋/.test(j))return "home";
   if(/旅館|ビジネスホテル|カプセル|ラブホテルの室内/.test(j))return "stay";
   if(/電車|バス|新幹線|機内|運転席|助手席|後部座席|荷室/.test(j))return "vehicle";
   if(/砂浜|水中/.test(j))return "beach";
   if(/山の頂上|草むら|河川敷|海辺|公園|神社/.test(j))return "nature";
-  if(/縁日/.test(j))return "festival";
+  if(/縁日|花火大会/.test(j))return "festival";
   if(/オフィス|学校|図書館|自習室|待合室|銀行/.test(j))return "formalish";
   if(/壁紙の部屋/.test(j))return "studio";
-  if(/繁華街|歓楽街|ラブホテル街|屋台/.test(j))return "nightlife";
+  if(/繁華街|歓楽街|ラブホテル街|屋台|居酒屋/.test(j))return "nightlife";
   return "street";
 }
 const ctxNow=()=>locCtx(state.location?state.location.value:null);
@@ -2632,7 +2799,7 @@ function conditionPoolCtx(){
   const locJ=state.location?state.location.value.jp:"";
   const wj=state.weather?state.weather.value.jp:"";
   return D.condition.filter(p=>{
-    if(/喫煙|電子タバコ/.test(p.jp))return /喫煙所|屋台|歓楽街|繁華街|ベランダ|屋上|ラブホテル街/.test(locJ);
+    if(/喫煙|電子タバコ/.test(p.jp))return /喫煙所|屋台|歓楽街|繁華街|ベランダ|屋上|ラブホテル街|居酒屋/.test(locJ);
     if(/湯上がり/.test(p.jp))return ["bath","home","stay","locker"].includes(c);
     if(/雨に濡れ/.test(p.jp))return /雨/.test(wj);
     if(/日焼け/.test(p.jp))return isHotSeason();
@@ -2687,6 +2854,23 @@ function expressionPoolCtx(){
   else if(/驚き|ハプニング|サプライズ/.test(m))pool=pool.filter(p=>/驚|泣き笑い|眉/.test(p.jp));
   if(/眠気が限界|徹夜/.test(cond))pool=pool.filter(p=>!/爽やか|真剣/.test(p.jp));
   return pool.length?pool:D.expression;
+}
+/* 同伴者：女性（彼女・妻）は自動抽選に含めない（手動では選択可） */
+function companionRollPool(){
+  return D.companion.filter(p=>!/彼女|妻/.test(p.jp));
+}
+/* 注目する場所：全身・足元強調を重点的に抽選 */
+function rollFocus(){
+  if(!state.focus||state.focus.locked)return;
+  const find=re=>D.focus.find(p=>re.test(p.jp))||D.focus[0];
+  const r=Math.random();
+  if(r<0.35)state.focus.value=find(/^全身$/);
+  else if(r<0.65)state.focus.value=find(/足元強調/);
+  else if(r<0.80)state.focus.value=find(/^足元（靴と靴下）$/);
+  else{
+    const rest=D.focus.filter(p=>!/^全身$|足元/.test(p.jp));
+    state.focus.value=rand(rest.length?rest:D.focus);
+  }
 }
 /* 靴下の着用状態：片足のみは低確率（両足70%/素足12%/脱いで傍ら12%/片足6%） */
 function rollSockWearing(){
@@ -2968,11 +3152,10 @@ function createProfile(){
   state.ratio.value=D.ratio[ri];state.ratio.locked=true;
   const si=+document.getElementById("s-season").value;
   const ti=+document.getElementById("s-time").value;
-  const tempLocks=[];
-  if(si>=0){state.season.value=D.season[si];state.season.locked=true;tempLocks.push("season");}
-  if(ti>=0){state.timeOfDay.value=D.timeOfDay[ti];state.timeOfDay.locked=true;tempLocks.push("timeOfDay");}
+  /* 初期設定で選択した項目はプロフィールで固定（●固定）。ランダム選択時のみ変動する */
+  if(si>=0){state.season.value=D.season[si];state.season.locked=true;}
+  if(ti>=0){state.timeOfDay.value=D.timeOfDay[ti];state.timeOfDay.locked=true;}
   generateAll();
-  tempLocks.forEach(id=>state[id].locked=false);
   /* 3. 職業に応じた靴下・履物の初期値を最後に適用 */
   applySockDefaults();
 
@@ -3430,6 +3613,10 @@ function getWarnings(){
     w.push({msg:"和装トップスにボトムスが指定されています（和装は一着で完結します）。",fixFn:()=>{if(state.bottoms&&!state.bottoms.locked)state.bottoms.value=WAFUKU_NONE;},fixLabel:"下衣を不要に"});
   if(/ステテコ/.test(v("bottoms"))&&loc&&!["home","stay","bath"].includes(locCtx(loc)))
     w.push({msg:"ステテコ（部屋着）が外出先で指定されています。",fixFn:()=>{if(state.bottoms&&!state.bottoms.locked){const a=ctxClothesPool("bottoms").filter(p=>!/ステテコ/.test(p.jp));if(a.length)state.bottoms.value=rand(a);}},fixLabel:"ボトムスを引き直す"});
+  if(loc&&/パチンコ/.test(loc.jp)&&S.duty==="on")
+    w.push({msg:"勤務中の設定でパチンコ店が指定されています。",fix:null});
+  if(v("uiOverlay")&&v("uiOverlay")!=="描かない（クリーンな画面）"&&!(/配信|LIVE|ストーリーズ|サムネイル/.test(v("quality"))||/配信/.test(v("camera"))||/配信/.test(v("photographer"))))
+    w.push({msg:"配信UIの描画が指定されていますが、仕上がり・カメラ・撮影者が配信系ではありません。",fix:fixTo("uiOverlay","描かない（クリーンな画面）"),fixLabel:"UIを描かないに"});
   /* 履物なしの整合 */
   if(/履物なし/.test(v("shoeShow"))&&loc&&["street","vehicle","formalish","nightlife","festival"].includes(locCtx(loc))&&!/砂浜|水中|縁側/.test(loc.jp))
     w.push({msg:"屋外・公共の場所で「履物なし（裸足系）」が指定されています。",fix:fixTo("shoeShow","両足履いて表示する"),fixLabel:"履物を履かせる"});
@@ -3694,10 +3881,58 @@ ${accJP}`;
   }
 
   const sockBrandEN=s("sockBrand").en?`, brand direction: ${s("sockBrand").en}`:"";
+  const stj=s("sockType").jp;
+  const toeEN=stj==="五本指ソックス"
+    ?"five-toe socks with five separate toe pockets"
+    :stj==="足袋型ソックス"
+      ?"tabi split-toe socks — a single separation between the big toe and the other toes"
+      :"a normal rounded closed toe with one seam — NOT five-toe socks, NOT split-toe";
+  const toeJP=stj==="五本指ソックス"
+    ?"五本指（指が5本に分かれる）"
+    :stj==="足袋型ソックス"
+      ?"足袋型（親指だけ分かれる）"
+      :"通常の丸いつま先（五本指・足袋型にはしない）";
   const sockDamEN=[s("sockDirt").en,s("sockHeelThin").en,s("sockBallThin").en,s("sockToeThin").en,s("sockHole").en].join("; ");
 
   const charEN=S.charText?`\n[CHARACTER — from the character generator; this description is the authority on who the person is]\n${S.charText}\n[Keep every physical trait above unchanged. Only the situation below may change.]\n`:"";
   const charJP=S.charText?`\n【人物設定（偶然イケメンメーカーより／この人物像を最優先で維持する）】\n${S.charText}\n※上記の人物の特徴は一切変更しない。以下のシチュエーションのみを反映する。\n`:"";
+
+  const streamStyle=/配信|LIVE|ストーリーズ|サムネイル/.test(s("quality").jp)||/配信/.test(s("camera").jp)||/配信/.test(s("photographer").jp);
+  const uiOn=s("uiOverlay").jp!=="描かない（クリーンな画面）";
+  let qualityEN=s("quality").en;
+  if(streamStyle&&uiOn)qualityEN=qualityEN.replace(/ \(no [^)]*\)/,"");
+  const uiEN=streamStyle?`\nInterface overlay: ${uiOn?s("uiOverlay").en:"none — no interface text, overlays or stickers"}.`:"";
+  const uiJP=streamStyle?`\n■ 配信UI・オーバーレイ：${s("uiOverlay").jp}`:"";
+
+  /* 人体構造ガード：指定が複雑なほど崩れやすい箇所へ自動で注意を足す */
+  const anaExtraEN=[];
+  const anaExtraJP=[];
+  if(/足元|足裏/.test(s("focus").jp)||footOn){
+    anaExtraEN.push("feet are a focal point: exactly five toes per foot with natural lengths and spacing, correct left/right feet, natural ankle and arch shapes, toenails plausible");
+    anaExtraJP.push("足元が主役のため、足の指は左右各5本・自然な長さと間隔・左右の足の向きを正しく・足首と土踏まずの形状を自然に");
+  }
+  if(/組む|正座|あぐら|横座り|体育|膝を立て|ヤンキー|片膝/.test(s("posture").jp)){
+    anaExtraEN.push("the seated pose bends knees, hips and ankles only in naturally possible directions, with legs that connect correctly to the body");
+    anaExtraJP.push("座り方は膝・股関節・足首が自然に曲がる方向のみで、脚の付き方を正しく");
+  }
+  if(/ブレ/.test(s("accident").jp)){
+    anaExtraEN.push("motion blur is photographic only — the body beneath the blur keeps correct anatomy, never smeared into extra or fused limbs");
+    anaExtraJP.push("ブレは写真的な表現に留め、ブレの下の体は正しい構造を保つ（手足が増えたり融合したりしない）");
+  }
+  if(specialOn){
+    anaExtraEN.push("even under the surreal effect, the underlying body keeps correct human proportions and joint structure");
+    anaExtraJP.push("あり得ない演出の下でも、人体のプロポーションと関節構造は正しく保つ");
+  }
+  const anatomyEN=`[Anatomy integrity — second only to identity]
+Correct human anatomy at all times: exactly five fingers per hand and five toes per foot; natural joint angles and limb lengths; no extra, missing, fused or warped limbs; hands and feet fully and correctly formed even when small in frame, at the edge, partially hidden, or out of focus; body proportions consistent with the reference sheet.${anaExtraEN.length?"\n"+anaExtraEN.map(t=>"- "+t).join("\n"):""}
+If any specified pose, accident or effect would force impossible anatomy, natural anatomy wins — approximate the instruction with the nearest naturally possible version.`;
+  const anatomyJP=`《人体構造の維持（同一人物性に次ぐ最優先事項）》
+■ 手の指は左右各5本・足の指も左右各5本 ／ 関節は自然な角度・手足の長さは一定 ／ 手足の増減・融合・歪みは禁止
+■ 画面内で小さい・端にある・一部隠れている・ピントが外れている場合でも、手足は正しい形で描き切る
+■ 体型・プロポーションはリファレンスシートに一致させる${anaExtraJP.length?"\n"+anaExtraJP.map(t=>"■ "+t).join("\n"):""}
+■ 指定した体勢・事故・演出が人体的に不可能な場合は、自然な人体を優先し、最も近い自然な形で近似する
+
+`;
 
   const en =
 `${REF_PREFIX_EN}${charEN}
@@ -3720,15 +3955,19 @@ ${hairEN}
 
 [Shot]
 Composition: ${s("composition").en}. Camera: ${s("camera").en}.
-Finish: ${s("quality").en}, lighting consistent with the time of day and weather.
-${s("ratio").en}.${candidEN}${detailEN}
+Finish: ${qualityEN}, lighting consistent with the time of day and weather.
+${s("ratio").en}.${uiEN}${candidEN}${detailEN}
 
 [Outfit]
 ${outfitEN}
 
 [Socks]
 ${sockLeadEN}${s("sockColor").en} ${s("sockType").en}, ${s("sockShape").en}${s("sockRib").en?`, ${s("sockRib").en}`:""}, ${s("sockMaterial").en}, condition: ${s("sockUse").en}${sockBrandEN}.
+Toe construction: ${toeEN}.
+Render the sock shape exactly as specified, yet naturally as worn on a real human foot — no warped, fused or anatomically impossible shapes.
 ${barefootLike?"":`Sock detail (render faithfully): ${sockDamEN}.`}
+
+${anatomyEN}
 
 ${TARGET_GUIDE[target].en}
 ${count.en}`;
@@ -3755,16 +3994,17 @@ ${propsJP}${coincJP}${specialJP}${bathNoteJP}${lhNoteJP}
 
 《撮り方》
 ■ 構図：${s("composition").jp} ／ カメラ：${s("camera").jp}
-■ 仕上がり：${s("quality").jp} ／ 画像比率：${s("ratio").jp}${candidJP}${detailJP}
+■ 仕上がり：${s("quality").jp} ／ 画像比率：${s("ratio").jp}${uiJP}${candidJP}${detailJP}
 
 《服装》
 ${outfitJP}
 
 《靴下》${sockLeadJP}
 ■ ${s("sockBrand").jp} ／ ${s("sockType").jp} ／ ${s("sockShape").jp}${s("sockRib").en?` ／ リブ：${s("sockRib").jp}`:""} ／ ${s("sockMaterial").jp} ／ ${s("sockColor").jp} ／ 使用感：${s("sockUse").jp}
+■ つま先の作り：${toeJP} ／ 形状は指定に忠実に、かつ実際に履いた自然な形で描く
 ${barefootLike?"":`■ 汚れ：${s("sockDirt").jp} ／ かかとの薄れ：${s("sockHeelThin").jp} ／ 中足骨部の薄れ：${s("sockBallThin").jp} ／ つま先の薄れ：${s("sockToeThin").jp} ／ 穴：${s("sockHole").jp}（忠実に再現する）`}
 
-■ ${TARGET_GUIDE[target].jp}
+${anatomyJP}■ ${TARGET_GUIDE[target].jp}
 ■ 出力枚数：${count.jp}`;
 
   document.getElementById("out-en").textContent=en;
