@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>偶然シチュエーションメーカー V22</title>
+<title>偶然シチュエーションメーカー V25</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -106,7 +106,7 @@ details.sec .sec-body{padding:4px 14px 10px}
 
   <!-- ============ 初期設定 ============ -->
   <section id="setup">
-    <h1>偶然シチュエーションメーカー V22<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
+    <h1>偶然シチュエーションメーカー V25<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
     <div class="form">
       <label>性別
         <select id="s-gender">
@@ -139,6 +139,18 @@ details.sec .sec-body{padding:4px 14px 10px}
       </label>
       <label>時間帯
         <select id="s-time"><option value="-1" selected>ランダム</option></select>
+      </label>
+      <label>今日は何の日（日付を選ぶと候補が変わります）
+        <input type="date" id="s-kdate" style="padding:7px 8px;font-size:.9rem;border:1px solid var(--line-strong);border-radius:4px">
+      </label>
+      <label>その日の暦・記念日（テーマに使う場合に選択）
+        <select id="s-kinenbi"><option value="">使わない</option></select>
+      </label>
+      <label>主題設定モード（画像を貫くテーマ）
+        <select id="s-theme"><option value="">使わない</option></select>
+      </label>
+      <label>主題の自由入力（上で「自由入力」選択時）
+        <input type="text" id="s-theme-free" placeholder="例：歯車、青、影ぼうし" style="padding:7px 8px;font-size:.9rem;border:1px solid var(--line-strong);border-radius:4px">
       </label>
       <label>仕上がりスタイル
         <select id="s-quality"></select>
@@ -1766,6 +1778,9 @@ const D={
       P("リンガーTシャツ","a ringer T-shirt"),
       P("ヘンリーネックTシャツ","a henley-neck T-shirt"),
       P("Tシャツ＋ロンTのレイヤード","a T-shirt layered over a long-sleeve tee"),
+      P("ボーリングシャツ","a boxy bowling shirt"),
+      P("ゲームシャツ（メッシュ・オーバーサイズ）","an oversized mesh game shirt"),
+      P("フットボールTシャツ（袖切替）","a football tee with contrast sleeves"),
       P("ジップパーカー","a zip-up hoodie"),
       P("タートルネックニット","a turtleneck sweater"),
       P("フリースプルオーバー","a fleece pullover"),
@@ -1819,6 +1834,9 @@ const D={
       P("リネンパンツ","linen trousers"),
       P("スキニーデニム","skinny jeans"),
       P("ダメージデニム","distressed jeans"),
+      P("ケミカルウォッシュデニム","chemical-wash jeans"),
+      P("ローライズデニム","low-rise jeans"),
+      P("極太スケーターワークパンツ","extra-wide skater work pants"),
       P("ステテコ（部屋着）","suteteko lounge shorts (Japanese home wear)"),
       P("プリーツスカート","a pleated skirt","f"),
       P("ロングフレアスカート","a long flared skirt","f")
@@ -1886,6 +1904,32 @@ const D={
     P("タック入り","front pleats"),
     P("ワイドステッチ","contrast wide stitching")
   ],
+  underwear:[
+    P("ボクサーブリーフ","boxer briefs"),
+    P("ボクサーブリーフ（ローライズ）","low-rise boxer briefs"),
+    P("トランクス","loose boxer shorts (trunks)"),
+    P("ブリーフ","classic briefs"),
+    P("ロングボクサー","long-leg boxer briefs"),
+    P("シームレスボクサー","seamless boxer briefs"),
+    P("ショーツ（スタンダード）","standard underwear shorts","f"),
+    P("シームレスショーツ","seamless underwear shorts","f")
+  ],
+  underwearDesign:[
+    P("無地","plain"),
+    P("ウエストバンドにブランドロゴ","a branded logo waistband"),
+    P("ボーダー","horizontal stripes"),
+    P("チェック柄","a check pattern"),
+    P("ドット柄","a dot pattern"),
+    P("ワンポイント","a small one-point motif")
+  ],
+  underwearBrand:[
+    P("指定しない",""),
+    P("Calvin Klein","Calvin Klein"),P("POLO RALPH LAUREN","POLO RALPH LAUREN"),
+    P("TOMMY HILFIGER","TOMMY HILFIGER"),P("EMPORIO ARMANI","EMPORIO ARMANI"),
+    P("UNIQLO","UNIQLO"),P("無印良品","MUJI"),P("グンゼ","GUNZE"),
+    P("BODY WILD","BODY WILD"),P("BVD","BVD"),P("Champion","Champion"),
+    P("無地ノーブランド","plain unbranded")
+  ],
   clothesFit:[
     P("ジャストサイズ","a true-to-size fit"),
     P("ややゆったり","a slightly relaxed fit"),
@@ -1915,7 +1959,10 @@ const D={
       P("NIKE","NIKE"),P("adidas","adidas"),P("New Balance","New Balance"),P("Champion","Champion"),
       P("THE NORTH FACE","THE NORTH FACE"),P("LACOSTE","LACOSTE"),P("POLO RALPH LAUREN","POLO RALPH LAUREN"),
       P("TOMMY HILFIGER","TOMMY HILFIGER"),P("Calvin Klein","Calvin Klein"),P("GAP","GAP"),
-      P("A BATHING APE","A BATHING APE"),P("Stüssy","Stussy"),P("VAN","VAN"),P("Carhartt","Carhartt"),P("FREAK'S STORE","FREAK'S STORE"),P("coen","coen"),P("WEGO","WEGO"),
+      P("A BATHING APE","A BATHING APE"),P("Stüssy","Stussy"),
+      P("UNDERCOVER","UNDERCOVER"),P("NEIGHBORHOOD","NEIGHBORHOOD"),P("WTAPS","WTAPS"),
+      P("X-LARGE","X-LARGE"),P("HYSTERIC GLAMOUR","HYSTERIC GLAMOUR"),P("Supreme","Supreme"),
+      P("NAUTICA","NAUTICA"),P("KAPITAL","KAPITAL"),P("VAN","VAN"),P("Carhartt","Carhartt"),P("FREAK'S STORE","FREAK'S STORE"),P("coen","coen"),P("WEGO","WEGO"),
       P("無地ノーブランド","plain unbranded")
     ],
     work:[
@@ -2347,8 +2394,60 @@ function applyIntent(key){
   renderRows();renderOutput();
 }
 
+const KINENBI={"1-1":["元日","鉄腕アトムの日","資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）"],"1-2":["初夢の日（頃）","初夢の日","書き初め","初売り","箱根駅伝"],"1-3":["三が日","ひとみの日","箱根駅伝","くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）"],"1-4":["石の日","世界点字デー","みたらしだんごの日（毎月3〜5日）","冬至の頃（二十四節気）"],"1-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","小寒の頃（二十四節気）"],"1-6":["小寒の頃（二十四節気）"],"1-7":["七草の節句"],"1-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","小寒の頃（二十四節気）"],"1-9":["小寒の頃（二十四節気）"],"1-10":["110番の日","小寒の頃（二十四節気）"],"1-11":["鏡開き"],"1-12":["スキー記念日","桜島の日","小寒の頃（二十四節気）"],"1-13":["成人の日（頃）"],"1-14":["小寒の頃（二十四節気）"],"1-15":["いちごの日（毎月15日）","中華の日（毎月15日）","小寒の頃（二十四節気）"],"1-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","小寒の頃（二十四節気）"],"1-17":["防災とボランティアの日"],"1-18":["小寒の頃（二十四節気）"],"1-19":["小寒の頃（二十四節気）"],"1-20":["大寒の頃（二十四節気）"],"1-21":["大寒の頃（二十四節気）"],"1-22":["ショートケーキの日（毎月22日）"],"1-23":["大寒の頃（二十四節気）"],"1-24":["大寒の頃（二十四節気）"],"1-25":["大寒の頃（二十四節気）"],"1-26":["風呂の日（毎月26日）"],"1-27":["大寒の頃（二十四節気）"],"1-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","大寒の頃（二十四節気）"],"1-29":["肉の日（毎月29日）"],"1-30":["大寒の頃（二十四節気）"],"1-31":["大寒の頃（二十四節気）"],"2-1":["資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）","大寒の頃（二十四節気）"],"2-2":["大寒の頃（二十四節気）"],"2-3":["節分（頃）","くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）"],"2-4":["立春（頃）","みたらしだんごの日（毎月3〜5日）"],"2-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","立春の頃（二十四節気）"],"2-6":["立春の頃（二十四節気）"],"2-7":["立春の頃（二十四節気）"],"2-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","立春の頃（二十四節気）"],"2-9":["肉の日（2月9日）","服の日","立春の頃（二十四節気）"],"2-10":["立春の頃（二十四節気）"],"2-11":["建国記念の日"],"2-12":["立春の頃（二十四節気）"],"2-13":["立春の頃（二十四節気）"],"2-14":["バレンタインデー","チョコレートの日","ネクタイの日","煮干の日"],"2-15":["春一番名付けの日","いちごの日（毎月15日）","中華の日（毎月15日）","立春の頃（二十四節気）"],"2-16":["天気図記念日","寒天の日","トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","立春の頃（二十四節気）"],"2-17":["立春の頃（二十四節気）"],"2-18":["立春の頃（二十四節気）"],"2-19":["雨水の頃（二十四節気）"],"2-20":["雨水の頃（二十四節気）"],"2-21":["雨水の頃（二十四節気）"],"2-22":["猫の日","ショートケーキの日（毎月22日）"],"2-23":["天皇誕生日"],"2-24":["雨水の頃（二十四節気）"],"2-25":["雨水の頃（二十四節気）"],"2-26":["風呂の日（毎月26日）"],"2-27":["雨水の頃（二十四節気）"],"2-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","雨水の頃（二十四節気）"],"2-29":["肉の日（毎月29日）"],"3-1":["資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）","雨水の頃（二十四節気）"],"3-2":["雨水の頃（二十四節気）"],"3-3":["ひな祭り（桃の節句）","くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）"],"3-4":["みたらしだんごの日（毎月3〜5日）","雨水の頃（二十四節気）"],"3-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","啓蟄の頃（二十四節気）"],"3-6":["啓蟄の頃（二十四節気）"],"3-7":["啓蟄の頃（二十四節気）"],"3-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","啓蟄の頃（二十四節気）"],"3-9":["感謝（サンキュー）の日"],"3-10":["啓蟄の頃（二十四節気）"],"3-11":["啓蟄の頃（二十四節気）"],"3-12":["啓蟄の頃（二十四節気）"],"3-13":["サンドイッチデー","啓蟄の頃（二十四節気）"],"3-14":["ホワイトデー"],"3-15":["いちごの日（毎月15日）","中華の日（毎月15日）","啓蟄の頃（二十四節気）"],"3-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","啓蟄の頃（二十四節気）"],"3-17":["啓蟄の頃（二十四節気）"],"3-18":["啓蟄の頃（二十四節気）"],"3-19":["啓蟄の頃（二十四節気）"],"3-20":["春分の日（頃）"],"3-21":["春分の日（頃）","ランドセルの日","春分の頃（二十四節気）"],"3-22":["ショートケーキの日（毎月22日）"],"3-23":["春分の頃（二十四節気）"],"3-24":["春分の頃（二十四節気）"],"3-25":["春分の頃（二十四節気）"],"3-26":["風呂の日（毎月26日）"],"3-27":["春分の頃（二十四節気）"],"3-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","春分の頃（二十四節気）"],"3-29":["肉の日（毎月29日）"],"3-30":["春分の頃（二十四節気）"],"3-31":["春分の頃（二十四節気）"],"4-1":["エイプリルフール","資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）"],"4-2":["春分の頃（二十四節気）"],"4-3":["くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）","春分の頃（二十四節気）"],"4-4":["あんぱんの日","どらやきの日","みたらしだんごの日（毎月3〜5日）","清明の頃（二十四節気）"],"4-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","清明の頃（二十四節気）"],"4-6":["清明の頃（二十四節気）"],"4-7":["清明の頃（二十四節気）"],"4-8":["花まつり","歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）"],"4-9":["清明の頃（二十四節気）"],"4-10":["駅弁の日","ヨットの日","清明の頃（二十四節気）"],"4-11":["清明の頃（二十四節気）"],"4-12":["清明の頃（二十四節気）"],"4-13":["清明の頃（二十四節気）"],"4-14":["清明の頃（二十四節気）"],"4-15":["いちごの日（毎月15日）","中華の日（毎月15日）","清明の頃（二十四節気）"],"4-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","清明の頃（二十四節気）"],"4-17":["清明の頃（二十四節気）"],"4-18":["よい歯の日"],"4-19":["清明の頃（二十四節気）"],"4-20":["穀雨の頃（二十四節気）"],"4-21":["穀雨の頃（二十四節気）"],"4-22":["ショートケーキの日（毎月22日）","アースデイ"],"4-23":["穀雨の頃（二十四節気）"],"4-24":["穀雨の頃（二十四節気）"],"4-25":["穀雨の頃（二十四節気）"],"4-26":["風呂の日（毎月26日）"],"4-27":["穀雨の頃（二十四節気）"],"4-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","穀雨の頃（二十四節気）"],"4-29":["昭和の日","肉の日（毎月29日）"],"4-30":["穀雨の頃（二十四節気）"],"5-1":["資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）","穀雨の頃（二十四節気）"],"5-2":["穀雨の頃（二十四節気）"],"5-3":["憲法記念日","くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）"],"5-4":["みどりの日","みたらしだんごの日（毎月3〜5日）"],"5-5":["こどもの日（端午の節句）","立夏（頃）","おもちゃの日","わかめの日","自転車の日","みたらしだんごの日（毎月3〜5日）"],"5-6":["立夏の頃（二十四節気）"],"5-7":["立夏の頃（二十四節気）"],"5-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","立夏の頃（二十四節気）"],"5-9":["立夏の頃（二十四節気）"],"5-10":["コットンの日","母の日（頃）","立夏の頃（二十四節気）"],"5-11":["立夏の頃（二十四節気）"],"5-12":["立夏の頃（二十四節気）"],"5-13":["カクテルの日","立夏の頃（二十四節気）"],"5-14":["立夏の頃（二十四節気）"],"5-15":["いちごの日（毎月15日）","中華の日（毎月15日）","立夏の頃（二十四節気）"],"5-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","立夏の頃（二十四節気）"],"5-17":["立夏の頃（二十四節気）"],"5-18":["立夏の頃（二十四節気）"],"5-19":["立夏の頃（二十四節気）"],"5-20":["立夏の頃（二十四節気）"],"5-21":["小満の頃（二十四節気）"],"5-22":["ショートケーキの日（毎月22日）"],"5-23":["小満の頃（二十四節気）"],"5-24":["小満の頃（二十四節気）"],"5-25":["小満の頃（二十四節気）"],"5-26":["風呂の日（毎月26日）"],"5-27":["小満の頃（二十四節気）"],"5-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","小満の頃（二十四節気）"],"5-29":["肉の日（毎月29日）"],"5-30":["小満の頃（二十四節気）"],"5-31":["小満の頃（二十四節気）"],"6-1":["衣替え","資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）"],"6-2":["小満の頃（二十四節気）"],"6-3":["くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）","小満の頃（二十四節気）"],"6-4":["虫歯予防デー","みたらしだんごの日（毎月3〜5日）"],"6-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","芒種の頃（二十四節気）"],"6-6":["楽器の日","梅の日","芒種の頃（二十四節気）"],"6-7":["芒種の頃（二十四節気）"],"6-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","芒種の頃（二十四節気）"],"6-9":["芒種の頃（二十四節気）"],"6-10":["時の記念日"],"6-11":["芒種の頃（二十四節気）"],"6-12":["芒種の頃（二十四節気）"],"6-13":["芒種の頃（二十四節気）"],"6-14":["芒種の頃（二十四節気）"],"6-15":["いちごの日（毎月15日）","中華の日（毎月15日）","芒種の頃（二十四節気）"],"6-16":["和菓子の日","トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","芒種の頃（二十四節気）"],"6-17":["芒種の頃（二十四節気）"],"6-18":["芒種の頃（二十四節気）"],"6-19":["芒種の頃（二十四節気）"],"6-20":["芒種の頃（二十四節気）"],"6-21":["夏至（頃）"],"6-22":["ショートケーキの日（毎月22日）"],"6-23":["夏至の頃（二十四節気）"],"6-24":["夏至の頃（二十四節気）"],"6-25":["夏至の頃（二十四節気）"],"6-26":["風呂の日（毎月26日）"],"6-27":["夏至の頃（二十四節気）"],"6-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","夏至の頃（二十四節気）"],"6-29":["肉の日（毎月29日）"],"6-30":["夏至の頃（二十四節気）"],"7-1":["資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）","夏至の頃（二十四節気）"],"7-2":["夏至の頃（二十四節気）"],"7-3":["くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）","夏至の頃（二十四節気）"],"7-4":["みたらしだんごの日（毎月3〜5日）","夏至の頃（二十四節気）"],"7-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","夏至の頃（二十四節気）"],"7-6":["夏至の頃（二十四節気）"],"7-7":["七夕"],"7-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","小暑の頃（二十四節気）"],"7-9":["小暑の頃（二十四節気）"],"7-10":["納豆の日","ウルトラマンの日","指笛の日","小暑の頃（二十四節気）"],"7-11":["小暑の頃（二十四節気）"],"7-12":["小暑の頃（二十四節気）"],"7-13":["小暑の頃（二十四節気）"],"7-14":["小暑の頃（二十四節気）"],"7-15":["いちごの日（毎月15日）","中華の日（毎月15日）","小暑の頃（二十四節気）"],"7-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","小暑の頃（二十四節気）"],"7-17":["小暑の頃（二十四節気）"],"7-18":["小暑の頃（二十四節気）"],"7-19":["小暑の頃（二十四節気）"],"7-20":["ハンバーガーの日","小暑の頃（二十四節気）"],"7-21":["海の日（頃）"],"7-22":["ショートケーキの日（毎月22日）"],"7-23":["大暑の頃（二十四節気）"],"7-24":["大暑の頃（二十四節気）"],"7-25":["大暑の頃（二十四節気）"],"7-26":["風呂の日（毎月26日）"],"7-27":["スイカの日","大暑の頃（二十四節気）"],"7-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","大暑の頃（二十四節気）"],"7-29":["肉の日（毎月29日）"],"7-30":["大暑の頃（二十四節気）"],"7-31":["大暑の頃（二十四節気）"],"8-1":["資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）","大暑の頃（二十四節気）"],"8-2":["大暑の頃（二十四節気）"],"8-3":["くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）","大暑の頃（二十四節気）"],"8-4":["みたらしだんごの日（毎月3〜5日）","大暑の頃（二十四節気）"],"8-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","大暑の頃（二十四節気）"],"8-6":["大暑の頃（二十四節気）"],"8-7":["立秋（頃）"],"8-8":["そろばんの日","笑いの日","ひげの日","歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）"],"8-9":["立秋の頃（二十四節気）"],"8-10":["立秋の頃（二十四節気）"],"8-11":["山の日"],"8-12":["立秋の頃（二十四節気）"],"8-13":["立秋の頃（二十四節気）"],"8-14":["立秋の頃（二十四節気）"],"8-15":["終戦の日","いちごの日（毎月15日）","中華の日（毎月15日）"],"8-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","立秋の頃（二十四節気）"],"8-17":["立秋の頃（二十四節気）"],"8-18":["立秋の頃（二十四節気）"],"8-19":["立秋の頃（二十四節気）"],"8-20":["立秋の頃（二十四節気）"],"8-21":["立秋の頃（二十四節気）"],"8-22":["ショートケーキの日（毎月22日）"],"8-23":["処暑の頃（二十四節気）"],"8-24":["処暑の頃（二十四節気）"],"8-25":["処暑の頃（二十四節気）"],"8-26":["風呂の日（毎月26日）","レインボーブリッジ開通記念日","風呂の日"],"8-27":["ジェラートの日","『男はつらいよ』の日","処暑の頃（二十四節気）"],"8-28":["テレビCMの日","バイオリンの日","気象予報士の日","にわとりの日（毎月28日）","プレミアムフライデー（頃）","処暑の頃（二十四節気）"],"8-29":["焼き肉の日","肉の日（毎月29日）"],"8-30":["処暑の頃（二十四節気）"],"8-31":["野菜の日","処暑の頃（二十四節気）"],"9-1":["防災の日","資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）"],"9-2":["処暑の頃（二十四節気）"],"9-3":["くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）","処暑の頃（二十四節気）"],"9-4":["くしの日","クラシック音楽の日","串の日","くじらの日","みたらしだんごの日（毎月3〜5日）","処暑の頃（二十四節気）"],"9-5":["石炭の日","国民栄誉賞の日","みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","処暑の頃（二十四節気）"],"9-6":["処暑の頃（二十四節気）"],"9-7":["白露の頃（二十四節気）"],"9-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","白露の頃（二十四節気）"],"9-9":["重陽の節句"],"9-10":["下水道の日","カラーテレビ放送記念日","牛たんの日","白露の頃（二十四節気）"],"9-11":["白露の頃（二十四節気）"],"9-12":["白露の頃（二十四節気）"],"9-13":["白露の頃（二十四節気）"],"9-14":["白露の頃（二十四節気）"],"9-15":["敬老の日（頃）","いちごの日（毎月15日）","中華の日（毎月15日）"],"9-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","白露の頃（二十四節気）"],"9-17":["白露の頃（二十四節気）"],"9-18":["白露の頃（二十四節気）"],"9-19":["白露の頃（二十四節気）"],"9-20":["白露の頃（二十四節気）"],"9-21":["白露の頃（二十四節気）"],"9-22":["ショートケーキの日（毎月22日）"],"9-23":["秋分の日（頃）"],"9-24":["秋分の頃（二十四節気）"],"9-25":["秋分の頃（二十四節気）"],"9-26":["風呂の日（毎月26日）"],"9-27":["秋分の頃（二十四節気）"],"9-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","秋分の頃（二十四節気）"],"9-29":["肉の日（毎月29日）"],"9-30":["秋分の頃（二十四節気）"],"10-1":["衣替えの日","コーヒーの日","日本茶の日","日本酒の日","メガネの日"],"10-2":["秋分の頃（二十四節気）"],"10-3":["くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）","秋分の頃（二十四節気）"],"10-4":["天使の日","イワシの日","みたらしだんごの日（毎月3〜5日）","秋分の頃（二十四節気）"],"10-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","秋分の頃（二十四節気）"],"10-6":["秋分の頃（二十四節気）"],"10-7":["秋分の頃（二十四節気）"],"10-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","寒露の頃（二十四節気）"],"10-9":["寒露の頃（二十四節気）"],"10-10":["目の愛護デー／銭湯の日"],"10-11":["寒露の頃（二十四節気）"],"10-12":["寒露の頃（二十四節気）"],"10-13":["スポーツの日（頃）"],"10-14":["鉄道の日","寒露の頃（二十四節気）"],"10-15":["いちごの日（毎月15日）","中華の日（毎月15日）","寒露の頃（二十四節気）"],"10-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","寒露の頃（二十四節気）"],"10-17":["寒露の頃（二十四節気）"],"10-18":["寒露の頃（二十四節気）"],"10-19":["寒露の頃（二十四節気）"],"10-20":["寒露の頃（二十四節気）"],"10-21":["寒露の頃（二十四節気）"],"10-22":["ショートケーキの日（毎月22日）"],"10-23":["霜降の頃（二十四節気）"],"10-24":["霜降の頃（二十四節気）"],"10-25":["霜降の頃（二十四節気）"],"10-26":["風呂の日（毎月26日）"],"10-27":["霜降の頃（二十四節気）"],"10-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","霜降の頃（二十四節気）"],"10-29":["肉の日（毎月29日）"],"10-30":["霜降の頃（二十四節気）"],"10-31":["ハロウィン"],"11-1":["計量記念日","灯台記念日","紅茶の日","すしの日","犬の日","本格焼酎の日"],"11-2":["霜降の頃（二十四節気）"],"11-3":["文化の日","くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）"],"11-4":["みたらしだんごの日（毎月3〜5日）","霜降の頃（二十四節気）"],"11-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","霜降の頃（二十四節気）"],"11-6":["霜降の頃（二十四節気）"],"11-7":["立冬（頃）","鍋の日","立冬の頃（二十四節気）"],"11-8":["歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）","立冬の頃（二十四節気）"],"11-9":["119番の日"],"11-10":["立冬の頃（二十四節気）"],"11-11":["靴下の日／ポッキー＆プリッツの日"],"11-12":["立冬の頃（二十四節気）"],"11-13":["立冬の頃（二十四節気）"],"11-14":["立冬の頃（二十四節気）"],"11-15":["七五三","いちごの日（毎月15日）","中華の日（毎月15日）"],"11-16":["トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","立冬の頃（二十四節気）"],"11-17":["立冬の頃（二十四節気）"],"11-18":["立冬の頃（二十四節気）"],"11-19":["立冬の頃（二十四節気）"],"11-20":["立冬の頃（二十四節気）"],"11-21":["立冬の頃（二十四節気）"],"11-22":["いい夫婦の日","ショートケーキの日（毎月22日）"],"11-23":["勤労感謝の日"],"11-24":["小雪の頃（二十四節気）"],"11-25":["小雪の頃（二十四節気）"],"11-26":["風呂の日（毎月26日）","いい風呂の日"],"11-27":["小雪の頃（二十四節気）"],"11-28":["にわとりの日（毎月28日）","プレミアムフライデー（頃）","小雪の頃（二十四節気）"],"11-29":["いい肉の日","肉の日（毎月29日）"],"11-30":["小雪の頃（二十四節気）"],"12-1":["資格チャレンジの日（毎月1日）","釜飯の日（毎月1日）","あずきの日（毎月1日）","省エネルギーの日（毎月1日）","小雪の頃（二十四節気）"],"12-2":["小雪の頃（二十四節気）"],"12-3":["くるみパンの日（毎月3日）","みたらしだんごの日（毎月3〜5日）","小雪の頃（二十四節気）"],"12-4":["みたらしだんごの日（毎月3〜5日）","小雪の頃（二十四節気）"],"12-5":["みたらしだんごの日（毎月3〜5日）","長城清心丸の日（毎月5日）","小雪の頃（二十四節気）"],"12-6":["小雪の頃（二十四節気）"],"12-7":["大雪の頃（二十四節気）"],"12-8":["針供養","御事納め","ホールケーキの日","歯ブラシ交換デー（毎月8日）","果物の日（毎月8日）","生パスタの日（毎月7・8日）"],"12-9":["クレープの日","マウスの誕生日","大雪の頃（二十四節気）"],"12-10":["大雪の頃（二十四節気）"],"12-11":["大雪の頃（二十四節気）"],"12-12":["大雪の頃（二十四節気）"],"12-13":["大雪の頃（二十四節気）"],"12-14":["大雪の頃（二十四節気）"],"12-15":["年賀郵便特別扱い開始日","観光バス記念日","いちごの日（毎月15日）","中華の日（毎月15日）","大雪の頃（二十四節気）"],"12-16":["電話創業の日","紙の記念日","トロの日（毎月16日）","十六茶の日（毎月16日）","いい色髪の日（毎月16日）","大雪の頃（二十四節気）"],"12-17":["飛行機の日","大雪の頃（二十四節気）"],"12-18":["大雪の頃（二十四節気）"],"12-19":["大雪の頃（二十四節気）"],"12-20":["大雪の頃（二十四節気）"],"12-21":["冬至（頃）"],"12-22":["ショートケーキの日（毎月22日）"],"12-23":["冬至の頃（二十四節気）"],"12-24":["冬至の頃（二十四節気）"],"12-25":["クリスマス"],"12-26":["風呂の日（毎月26日）"],"12-27":["冬至の頃（二十四節気）"],"12-28":["仕事納め（頃）","にわとりの日（毎月28日）","プレミアムフライデー（頃）"],"12-29":["肉の日（毎月29日）"],"12-30":["冬至の頃（二十四節気）"],"12-31":["大晦日"]};
+
+/* ================= 主題設定モード：主題→モチーフ展開 ================= */
+const THEMES={
+"穴":["マンホール","フェンスの金網の穴","ドーナツ","靴下のつま先の穴","壁の覗き穴越しの構図","ベンチ板の節穴"],
+"傘":["差した傘","傘立ての傘","置き忘れの傘","壊れたビニール傘","看板の傘マーク","傘の影"],
+"鏡":["姿見","ショーウィンドウの反射","手鏡","バックミラー","水たまりの鏡面","エレベーターの鏡"],
+"赤":["赤い信号","赤い自販機","赤い靴下","赤いのれん","赤い消火栓","夕焼けの赤"],
+"丸":["丸いマンホール","丸時計","丸メガネ","丸いミラー","満月","丸椅子"],
+"階段":["駅の階段","神社の石段","非常階段","脚立","段差","階段の影の縞"],
+"影":["長く伸びた影","格子の影","木漏れ日の影","二重の影","壁に映る影","影だけのフレームイン"],
+"水":["水たまり","ペットボトルの水","噴水","雨粒","川面","水滴のレンズ"],
+"月":["空の月","月の看板","ミラーに映る月","三日月形の飾り","月見だんご","窓に映る月"],
+"数字":["看板の番地","時計の時刻","背番号","値札","カレンダー","ホームの号車表示"],
+"線":["横断歩道の白線","電線","ホームの黄色い線","ストライプの服","罫線ノート","レーンのライン"],
+"猫":["道端の猫","猫の看板","猫の形の影","招き猫","猫のプリントの靴下","塀の上の猫"],
+"光":["木漏れ日","ネオン","レンズフレア","自販機の光","スポットライト状の日差し","反射光"],
+"窓":["電車の窓","カフェの窓際","窓越しの構図","窓の格子","開いた窓","窓の反射"],
+"靴下":["履いている靴下","脱いだ靴下","干してある靴下","片方だけの靴下","靴下売り場","靴下の日のPOP"],
+"green（緑）":["街路樹","観葉植物","緑の信号","緑の靴下","芝生","緑ののれん"],
+"風":["なびく髪","はためくのれん","舞う落ち葉","風車","揺れる洗濯物","飛ばされそうな帽子"],
+"時計":["腕時計","駅の大時計","柱時計","砂時計","時計の看板","スマホの時刻表示"],
+"果物":["りんご","みかんの網袋","バナナ","果物屋の店先","フルーツ柄の靴下","ジュースの果実"],
+"音楽":["イヤホン","ヘッドホン","ギターケース","音符の看板","レコード","口ずさむ姿"]
+};
+/* ================= 流行ファッション（1990年以降） ================= */
+const FASHION_TRENDS=[
+{from:1990,to:1994,jp:"渋カジ・アメカジ全盛。紺ブレザー、ポロシャツ、ケミカルウォッシュデニム、ローファー。きれいめに整えた古着感。",
+ en:"early-90s Japanese 'shibu-kaji' American-casual: navy blazers, polo shirts, chemical-wash jeans, loafers — tidy prep-leaning vintage."},
+{from:1995,to:1999,jp:"裏原系ストリートの台頭。バギーデニムの腰パン、ビッグTシャツ、スニーカーブーム（AF1・エアマックス）。",
+ en:"late-90s ura-Harajuku street style: baggy sagging jeans, oversized tees, the sneaker boom (Air Force 1, Air Max)."},
+{from:2000,to:2004,jp:"お兄系・ストリート混在。ダメージデニム、重ね着で襟を出す、ロングノーズの尖った革靴、腰パン継続。",
+ en:"early-2000s onii-kei meets street: distressed denim, layered shirts with popped collars, long pointed dress shoes, sagging continues."},
+{from:2005,to:2009,jp:"スキニーデニム登場、細身シルエットへ。レイヤード盛り、チェック柄、ハイカットスニーカー。",
+ en:"late-2000s shift to skinny jeans and slim silhouettes: heavy layering, plaid, high-top sneakers."},
+{from:2010,to:2014,jp:"ノームコアと綺麗めカジュアル。無地・シンプル、スキニー×パーカー、白スニーカー。",
+ en:"early-2010s normcore and clean casual: plain simple pieces, skinny jeans with hoodies, white sneakers."},
+{from:2015,to:2019,jp:"ビッグシルエット化とスポーツMIX。ワイドパンツ、オーバーサイズ、ダッドスニーカー。",
+ en:"late-2010s oversizing and sports mix: wide pants, oversized tops, chunky dad sneakers."},
+{from:2020,to:2026,jp:"Y2Kリバイバルとジェンダーレス。バギーデニム再来、ビッグシルエット定着、サンバ系ローテクとテックウェア。",
+ en:"2020s Y2K revival and genderless styling: baggy jeans return, big silhouettes standard, low-tech Sambas and techwear."}
+];
+const TREND_WEAR=[
+ {from:1995,to:2007,p:P("腰パン（ボクサーのウエストバンドを見せる）","pants sagged low with the boxer waistband deliberately showing")},
+ {from:1995,to:2004,p:P("裾を靴に被せて履く","hems stacked loosely over the shoes")},
+ {from:2000,to:2008,p:P("重ね着したシャツの襟を立てて出す","layered shirt collars popped out")},
+ {from:2015,to:2026,p:P("オーバーサイズをあえてルーズに着る","oversized pieces worn intentionally loose")}
+];
+function trendBand(){
+  const y=eraYearNum(S.era);
+  return FASHION_TRENDS.find(t=>y>=t.from&&y<=t.to)||null;
+}
 /* ================= 状態 ================= */
-const S={gender:"male",era:"y2026",occ:"大学生",duty:"off",place:"any",charText:""};
+const S={gender:"male",era:"y2026",occ:"大学生",duty:"off",place:"any",charText:"",kinenbi:"",theme:""};
 const state={};
 let FIELDS=[];
 
@@ -2483,11 +2582,16 @@ function bottomsPoolDyn(){
 /* 和装かどうか（着こなしプールの整合に使用） */
 const isWafuku=()=>!uniformOn()&&state.tops&&/浴衣|甚平/.test(state.tops.value.jp);
 function clothesStatePool(){
-  return D.clothesState.filter(p=>{
+  let base=D.clothesState.filter(p=>{
     if(/浴衣・和装/.test(p.jp))return isWafuku();
     if(/ネクタイ/.test(p.jp))return uniformOn()||wmode()==="work";
     return true;
   });
+  if(!uniformOn()&&state.fashion&&state.fashion.value&&state.fashion.value.jp==="年代の流行に忠実"){
+    const y=eraYearNum(S.era);
+    TREND_WEAR.forEach(t=>{if(y>=t.from&&y<=t.to)base=base.concat([t.p]);});
+  }
+  return base;
 }
 
 /* ================= フィールド定義（場面→被写体→撮り方→服装→靴下） ================= */
@@ -2543,6 +2647,18 @@ function buildFieldDefs(){
     f.push({id:"clothesState",label:"着こなし・はだけ具合",pool:()=>clothesStatePool()});
     f.push({id:"shoes",label:"靴（制式が既定・変更可）",pool:()=>uniformShoePool()});
   }else{
+    f.push({id:"fashion",label:"ファッション方針",pool:()=>[
+      P("指定なし",""),
+      P("年代の流行に忠実","faithful to the era's mainstream fashion"),
+      P("流行を少し外す","slightly off-trend on purpose"),
+      P("奇抜・個性的","bold and idiosyncratic — clashing patterns, daring colors, asymmetry, styled with confidence")
+    ],noneDefault:true});
+    f.push({id:"dressLevel",label:"着衣レベル",pool:()=>[
+      P("通常（下着は見えない）",""),
+      P("アンダーウェアがちら見え","the underwear waistband is clearly visible — above sagged pants or at an untucked hem, worn fashion-style"),
+      P("Tシャツ＋アンダーウェア（部屋くつろぎ）","wearing just a T-shirt and underwear, relaxing at home"),
+      P("アンダーウェアのみ（部屋くつろぎ）","wearing underwear only, relaxing in a private room")
+    ],noneDefault:true});
     f.push({id:"jacket",label:"上着",pool:()=>D.jackets[wmode()]});
     f.push({id:"jacketColor",label:"上着カラー",pool:()=>D.clothesColor});
     f.push({id:"jacketDesign",label:"上着デザイン",pool:()=>D.designJacket});
@@ -2559,6 +2675,11 @@ function buildFieldDefs(){
     f.push({id:"bottomsDesign",label:"パンツデザイン",pool:()=>D.designBottoms});
     f.push({id:"bottomsFit",label:"パンツサイズ感",pool:()=>D.clothesFit});
     f.push({id:"bottomsBrand",label:"パンツブランド",pool:()=>D.brands[wmode()]});
+    f.push({id:"uwType",label:"アンダーウェア",pool:()=>byGender(D.underwear)});
+    f.push({id:"uwColor",label:"アンダーウェアカラー",pool:()=>D.clothesColor});
+    f.push({id:"uwDesign",label:"アンダーウェアデザイン",pool:()=>D.underwearDesign});
+    f.push({id:"uwFit",label:"アンダーウェアサイズ感",pool:()=>D.clothesFit});
+    f.push({id:"uwBrand",label:"アンダーウェアブランド",pool:()=>D.underwearBrand});
     f.push({id:"shoeType",label:"履物の種類",pool:()=>byGender(D.footwearType)});
     f.push({id:"shoeBrand",label:"履物ブランド",pool:()=>footwearBrandPool()});
     f.push({id:"shoes",label:"履物モデル",pool:()=>footwearModelPool()});
@@ -2615,6 +2736,9 @@ function ctxPoolFor(id){
     case "timeOfDay":return timeOfDayPoolCtx();
     case "shoeShow":return shoeShowPoolCtx();
     case "companion":return companionRollPool();
+    case "sockShape":return sockShapePoolCtx();
+    case "sockMaterial":return sockMaterialPoolCtx();
+    case "sockColor":return sockColorPoolCtx();
     case "moment":return momentPoolCtx();
     case "expression":return expressionPoolCtx();
     case "jacket":case "tops":case "bottoms":return ctxClothesPool(id);
@@ -2686,7 +2810,8 @@ function generateAll(){
   if(!has("camera"))plain("camera");
   /* 6. 服装（文脈：場所×季節×勤務） */
   rollOutfitCtx(preset);
-  ["jacketColor","jacketDesign","jacketFit","jacketBrand",
+  ["uwType","uwColor","uwDesign","uwFit","uwBrand",
+   "jacketColor","jacketDesign","jacketFit","jacketBrand",
    "topsColor","topsDesign","topsFit","topsBrand",
    "bottomsColor","bottomsDesign","bottomsFit","bottomsBrand"].forEach(plain);
   if(un("shoeShow"))state.shoeShow.value=rand(shoeShowPoolCtx());
@@ -2708,8 +2833,11 @@ function generateAll(){
     rollSockWearing();
   }
   /* 7. 靴下（薄れは低確率の重み付き） */
-  ["sockBrand","sockType","sockShape","sockMaterial","sockColor","sockUse",
-   "sockDirt","sockHole"].forEach(plain);
+  ["sockBrand","sockType"].forEach(plain);
+  if(un("sockShape"))state.sockShape.value=rand(sockShapePoolCtx());
+  if(un("sockMaterial"))state.sockMaterial.value=rand(sockMaterialPoolCtx());
+  if(un("sockColor"))state.sockColor.value=rand(sockColorPoolCtx());
+  ["sockUse","sockDirt","sockHole"].forEach(plain);
   ["sockHeelThin","sockBallThin","sockToeThin"].forEach(rollThin);
 }
 function rerollAll(){
@@ -2859,6 +2987,31 @@ function expressionPoolCtx(){
 function companionRollPool(){
   return D.companion.filter(p=>!/彼女|妻/.test(p.jp));
 }
+/* 靴下：種類に応じた自然な形状・素材・色柄（メーカー監修） */
+function sockShapePoolCtx(){
+  const t=(state.sockType&&state.sockType.value)?state.sockType.value.jp:"";
+  if(t==="ビジネスソックス")return D.sockShape.filter(p=>/薄手ビジネス|クルー丈|ミドル丈|リブ編み/.test(p.jp));
+  if(t==="スポーツソックス")return D.sockShape.filter(p=>/厚手スポーツ|クルー丈|ミドル丈|くるぶし丈|インビジブル/.test(p.jp));
+  if(t==="学生風ソックス")return D.sockShape.filter(p=>/クルー丈|ミドル丈|リブ編み/.test(p.jp));
+  if(t==="足袋型ソックス")return D.sockShape.filter(p=>!/厚手スポーツ/.test(p.jp));
+  return D.sockShape;
+}
+function sockMaterialPoolCtx(){
+  const t=(state.sockType&&state.sockType.value)?state.sockType.value.jp:"";
+  if(t==="ビジネスソックス")return D.sockMaterial.filter(p=>!/パイル|メッシュ/.test(p.jp));
+  if(t==="スポーツソックス")return D.sockMaterial.filter(p=>!/シルク|ウール混|リブ編みコットン/.test(p.jp));
+  return D.sockMaterial;
+}
+function sockColorPoolCtx(){
+  const t=(state.sockType&&state.sockType.value)?state.sockType.value.jp:"";
+  if(t==="ビジネスソックス")return D.sockColor.filter(p=>!/蛍光|タイダイ|花柄|レトロライン|ボーダー（2色）/.test(p.jp));
+  if(t==="スポーツソックス")return D.sockColor.filter(p=>!/小紋|アーガイル|千鳥格子|花柄/.test(p.jp));
+  return D.sockColor;
+}
+function sockRibOk(){
+  const t=(state.sockType&&state.sockType.value)?state.sockType.value.jp:"";
+  return !(t==="足袋型ソックス"&&state.sockRib&&/極太/.test(state.sockRib.value.jp));
+}
 /* 注目する場所：全身・足元強調を重点的に抽選 */
 function rollFocus(){
   if(!state.focus||state.focus.locked)return;
@@ -2955,7 +3108,7 @@ function fwTypePoolCtx(){
     const pool=all.filter(p=>names.some(n=>p.jp.includes(n)));
     return pool.length?pool:all;
   };
-  if(c==="bath"||["home","stay"].includes(c))return by(["スリッパ"]);
+  if(c==="bath"||["home","stay","locker"].includes(c)||/内見/.test(locJ))return by(["スリッパ"]);
   if(c==="beach")return by(["サンダル"]);
   if(/山の頂上/.test(locJ))return by(["スニーカー","ブーツ"]);
   if(c==="festival"&&state.tops&&/浴衣|甚平/.test(state.tops.value.jp))return by(["和装履物"]);
@@ -3115,6 +3268,21 @@ function fillSetup(){
   const sSel=document.getElementById("s-season");
   D.season.forEach((p,i)=>sSel.insertAdjacentHTML("beforeend",`<option value="${i}">${p.jp}</option>`));
   document.getElementById("intent-sel").innerHTML=INTENTS.map(i=>`<option value="${i.key}">${i.jp}</option>`).join("");
+  const kDate=document.getElementById("s-kdate");
+  const today=new Date();
+  kDate.value=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+  const fillKinenbi=()=>{
+    const kSel=document.getElementById("s-kinenbi");
+    kSel.innerHTML=`<option value="">使わない</option>`;
+    const d=kDate.value?new Date(kDate.value+"T00:00:00"):today;
+    const kKey=(d.getMonth()+1)+"-"+d.getDate();
+    (KINENBI[kKey]||[]).forEach(name=>kSel.insertAdjacentHTML("beforeend",`<option value="${name}">${name}</option>`));
+  };
+  fillKinenbi();
+  kDate.addEventListener("change",fillKinenbi);
+  const tSel2=document.getElementById("s-theme");
+  Object.keys(THEMES).forEach(t=>tSel2.insertAdjacentHTML("beforeend",`<option value="${t}">${t}</option>`));
+  tSel2.insertAdjacentHTML("beforeend",`<option value="__free__">自由入力（下の欄へ）</option>`);
   const qSel=document.getElementById("s-quality");
   D.quality.forEach((p,i)=>qSel.insertAdjacentHTML("beforeend",`<option value="${i}">${p.jp}</option>`));
   qSel.value=0;
@@ -3131,6 +3299,9 @@ function createProfile(){
   S.duty=document.getElementById("s-duty").value;
   S.place=document.getElementById("s-place").value;
   S.charText=(document.getElementById("s-char").value||"").trim();
+  S.kinenbi=document.getElementById("s-kinenbi").value||"";
+  const tv=document.getElementById("s-theme").value;
+  S.theme=tv==="__free__"?(document.getElementById("s-theme-free").value||"").trim():tv;
 
   FIELDS=buildFieldDefs();
   Object.keys(state).forEach(k=>delete state[k]);
@@ -3225,6 +3396,8 @@ function renderRows(){
         if(isWafuku()&&state.bottoms&&!state.bottoms.locked)state.bottoms.value=WAFUKU_NONE;
         refreshIds(["clothesState","bottoms"]);
       }
+      if(f.id==="fashion")refreshIds(["clothesState"]);
+      if(f.id==="sockType")refreshIds(["sockShape","sockMaterial","sockColor"]);
       if(f.id==="shoeType"){
         if(state.shoeBrand&&!state.shoeBrand.locked)state.shoeBrand.value=rand(footwearBrandPool());
         if(state.shoes&&!state.shoes.locked)state.shoes.value=rand(footwearModelPool());
@@ -3279,7 +3452,9 @@ const FW={
       P("エアジョーダン1","NIKE Air Jordan 1 sneakers"),
       P("ダンク LOW","NIKE Dunk Low sneakers"),
       P("コルテッツ","NIKE Cortez sneakers"),
-      P("ペガサス（ランニング）","NIKE Air Zoom Pegasus running shoes")
+      P("ペガサス（ランニング）","NIKE Air Zoom Pegasus running shoes"),
+      P("エアマックス97（シルバー）","NIKE Air Max 97 in silver"),
+      P("エアモアアップテンポ","NIKE Air More Uptempo sneakers")
     ],
     "adidas":[
       P("サンバ","adidas Samba sneakers"),
@@ -3536,6 +3711,14 @@ function getWarnings(){
   /* サンダル系×靴ひも色 */
   if(isSandalShoes()&&state.shoeColorLace&&state.shoeColorLace.value.en)
     w.push({msg:"サンダル・スリッパ系では靴ひも色の指定はプロンプトで省略されます。",fix:null});
+  if(v("sockType")==="ビジネスソックス"&&/厚手スポーツ/.test(v("sockShape")))
+    w.push({msg:"ビジネスソックスに厚手スポーツ形状は不自然です。",fix:fixTo("sockShape","薄手ビジネス形状"),fixLabel:"薄手ビジネス形状に"});
+  if(v("sockType")==="スポーツソックス"&&/シルク/.test(v("sockMaterial")))
+    w.push({msg:"スポーツソックスにシルク混は不自然です。",fix:fixTo("sockMaterial","吸汗速乾素材"),fixLabel:"吸汗速乾素材に"});
+  if(v("sockType")==="ビジネスソックス"&&/蛍光|タイダイ/.test(v("sockColor")))
+    w.push({msg:"ビジネスソックスに蛍光・タイダイ柄は不自然です。",fix:fixTo("sockColor","黒"),fixLabel:"色を黒に"});
+  if(!sockRibOk())
+    w.push({msg:"足袋型ソックスに極太リブは不自然です。",fix:fixTo("sockRib","細リブ（1×1）"),fixLabel:"細リブに"});
   /* リブ編み形状×リブ太さ未指定 */
   if(/リブ/.test(v("sockShape"))&&!state.sockRib.value.en)
     w.push({msg:"靴下形状がリブ編みですが、リブの太さが未指定です。",fix:fixTo("sockRib","標準リブ（2×2）"),fixLabel:"標準リブ（2×2）に"});
@@ -3604,6 +3787,9 @@ function getWarnings(){
     w.push({msg:"「目をつむった」事故と表情の指定が重なっています（表情は口元中心に解釈されます）。",fix:null});
   if(v("reflection")!=="なし"&&v("backStory")!=="なし"&&v("trace")!=="なし")
     w.push({msg:"隠し要素を3つとも入れると情報過多になりがちです（1〜2つ推奨）。",fix:fixTo("trace","なし"),fixLabel:"時間の痕跡をなしに"});
+  /* 初期設定の屋内外×場所 */
+  if(S.place!=="any"&&loc&&loc.io!==S.place)
+    w.push({msg:`初期設定は「${S.place==="in"?"室内":"屋外"}」ですが、場所が${loc.io==="in"?"室内":"屋外"}になっています。`,fixFn:()=>{if(state.location&&!state.location.locked){state.location.value=rand(locRollPoolCtx());rollProps();}},fixLabel:"場所を引き直す"});
   /* 重ね着・和装の整合 */
   if(!uniformOn()&&/羽織り|白衣|エプロン|浴衣|甚平|ラッシュガード|水着/.test(v("tops"))&&v("jacket")!=="上着なし"&&v("jacket"))
     w.push({msg:"羽織り・和装・白衣系のトップスに上着が重なっています。",fix:fixTo("jacket","上着なし"),fixLabel:"上着なしに"});
@@ -3617,6 +3803,21 @@ function getWarnings(){
     w.push({msg:"勤務中の設定でパチンコ店が指定されています。",fix:null});
   if(v("uiOverlay")&&v("uiOverlay")!=="描かない（クリーンな画面）"&&!(/配信|LIVE|ストーリーズ|サムネイル/.test(v("quality"))||/配信/.test(v("camera"))||/配信/.test(v("photographer"))))
     w.push({msg:"配信UIの描画が指定されていますが、仕上がり・カメラ・撮影者が配信系ではありません。",fix:fixTo("uiOverlay","描かない（クリーンな画面）"),fixLabel:"UIを描かないに"});
+  /* 着衣レベル×場所 */
+  if(state.dressLevel&&/のみ|Tシャツ＋アンダーウェア/.test(v("dressLevel"))&&loc&&!["home","stay","bath","locker"].includes(locCtx(loc)))
+    w.push({msg:"アンダーウェア姿は自宅・宿・脱衣所などのプライベートな場所でのみ自然です。",fix:fixTo("dressLevel","通常（下着は見えない）"),fixLabel:"着衣レベルを通常に"});
+  if(state.dressLevel&&/のみ|Tシャツ＋アンダーウェア/.test(v("dressLevel"))&&v("companion")!=="ひとり（ソロ）"&&!/通行人/.test(v("companion")))
+    w.push({msg:"アンダーウェア姿の場面では同伴者なし（ソロ）を推奨します。",fix:fixTo("companion","ひとり（ソロ）"),fixLabel:"ソロに"});
+  /* 土足禁の屋内×屋外靴 */
+  const NO_SHOES_RE=/自室|寝室|リビング|配信部屋|旅館|内見|脱衣所|カプセル|ラブホテルの室内/;
+  if(loc&&NO_SHOES_RE.test(loc.jp)&&v("shoeShow")==="両足履いて表示する"&&state.shoeType&&!/スリッパ|和装履物/.test(v("shoeType")))
+    w.push({msg:"土足で上がらない屋内（自宅・旅館・内見など）で屋外靴を履いた設定です。",fixFn:()=>{
+      if(state.shoeType&&!state.shoeType.locked){
+        state.shoeType.value=D.footwearType.find(p=>p.jp==="スリッパ")||state.shoeType.value;
+        if(state.shoeBrand&&!state.shoeBrand.locked)state.shoeBrand.value=footwearBrandPool()[0];
+        if(state.shoes&&!state.shoes.locked)state.shoes.value=footwearModelPool()[0];
+      }
+    },fixLabel:"スリッパに履き替える"});
   /* 履物なしの整合 */
   if(/履物なし/.test(v("shoeShow"))&&loc&&["street","vehicle","formalish","nightlife","festival"].includes(locCtx(loc))&&!/砂浜|水中|縁側/.test(loc.jp))
     w.push({msg:"屋外・公共の場所で「履物なし（裸足系）」が指定されています。",fix:fixTo("shoeShow","両足履いて表示する"),fixLabel:"履物を履かせる"});
@@ -3804,6 +4005,10 @@ function renderOutput(){
   if(s("shoeColorSole").en)partJP.push(`ソール：${s("shoeColorSole").jp}`);
   if(!isSandalShoes()&&s("shoeColorLace").en)partJP.push(`靴ひも：${s("shoeColorLace").jp}`);
   const shoeColJP=partJP.length?`\n　 部分カラー：${partJP.join(" ／ ")}`:"";
+  const fashionOn=state.fashion&&s("fashion").jp!=="指定なし";
+  const band=trendBand();
+  const fashionEN=fashionOn?(s("fashion").jp==="年代の流行に忠実"&&band?`\nFashion direction: ${band.en}`:`\nFashion direction: ${s("fashion").en}.`):"";
+  const fashionJP=fashionOn?(s("fashion").jp==="年代の流行に忠実"&&band?`\n　 ファッション方針：${band.jp}`:`\n　 ファッション方針：${s("fashion").jp}`):"";
   let shoeLineEN,shoeLineJP;
   if(noFootwear){
     shoeLineEN="Footwear: none — the person wears no shoes at all; no footwear appears anywhere in the frame (socks or bare feet per the socks section).";
@@ -3848,6 +4053,9 @@ ${accEN}`;
 ${shoeLineJP}
 ${accJP}`;
   }else{
+    const dl=state.dressLevel?s("dressLevel").jp:"通常（下着は見えない）";
+    const uwSpecEN=`${s("uwType").en}${s("uwColor").jp.startsWith("おまかせ")?"":`, color: ${s("uwColor").en}`}${s("uwDesign").jp!=="無地"?`, ${s("uwDesign").en}`:""}${s("uwBrand").en?`, brand direction: ${s("uwBrand").en}`:""}, ${s("uwFit").en}`;
+    const uwSpecJP=`${s("uwType").jp}（カラー：${s("uwColor").jp} ／ デザイン：${s("uwDesign").jp} ／ サイズ感：${s("uwFit").jp} ／ ブランド：${s("uwBrand").jp}）`;
     const waf=/浴衣|甚平/.test(s("tops").jp);
     const col=p=>p.jp.startsWith("おまかせ")?null:p.en;
     const segEN=(item,color,design,fit,brand)=>{
@@ -3864,18 +4072,52 @@ ${accJP}`;
     const jkEN=jkOn?segEN(s("jacket"),s("jacketColor"),s("jacketDesign"),s("jacketFit"),s("jacketBrand")):null;
     const tpEN=waf?s("tops").en:segEN(s("tops"),s("topsColor"),s("topsDesign"),s("topsFit"),s("topsBrand"));
     const btEN=waf?null:segEN(s("bottoms"),s("bottomsColor"),s("bottomsDesign"),s("bottomsFit"),s("bottomsBrand"));
-    outfitEN=
-`Outfit (${S.duty==="on"?"work clothes":"casual clothes"}):
-Top: ${tpEN}.${btEN?`\nBottoms: ${btEN}.`:""}${jkOn?`\nOuter layer: ${jkEN}.`:""}
+    if(dl==="アンダーウェアのみ（部屋くつろぎ）"){
+      outfitEN=
+`Outfit: underwear only — ${uwSpecEN}.
+A relaxed, completely ordinary private-room moment (fresh out of the bath, changing, or lounging). Keep it strictly tasteful and non-sexualized: natural posture, domestic mood, no suggestive posing, no explicit exposure.
 Worn state: ${s("clothesState").en}.
 ${shoeLineEN}
 ${accEN}`;
-    outfitJP=
+    }else if(dl==="Tシャツ＋アンダーウェア（部屋くつろぎ）"){
+      const tp0=/Tシャツ/.test(s("tops").jp)?s("tops").en:"a plain T-shirt";
+      outfitEN=
+`Outfit: just ${tp0} worn with ${uwSpecEN} — no pants.
+A relaxed private-room moment (fresh out of the bath or lounging at home). Keep it strictly tasteful and non-sexualized: natural posture, domestic mood, no suggestive posing, no explicit exposure.
+Worn state: ${s("clothesState").en}.
+${shoeLineEN}
+${accEN}`;
+    }else outfitEN=
+`Outfit (${S.duty==="on"?"work clothes":"casual clothes"}):
+Top: ${tpEN}.${btEN?`\nBottoms: ${btEN}.`:""}${jkOn?`\nOuter layer: ${jkEN}.`:""}
+Worn state: ${s("clothesState").en}.${fashionEN}
+Underwear: ${uwSpecEN} — ${dl==="アンダーウェアがちら見え"?"the waistband IS visible above the pants / at the hem, worn deliberately fashion-style; still modest, no explicit exposure":"strictly modest: visible only as far as the outfit naturally reveals; no explicit exposure whatsoever"}.
+${shoeLineEN}
+${accEN}`;
+    if(dl==="アンダーウェアのみ（部屋くつろぎ）"){
+      outfitJP=
+`■ 服装：アンダーウェアのみ
+　 ${uwSpecJP}
+　 ※風呂上がり・着替え中・部屋でくつろぐ等の、ごく日常的なプライベートの一場面として描く。自然な姿勢・生活感を重視し、性的な演出・扇情的なポーズ・過度な露出は一切しない
+　 着こなし：${s("clothesState").jp}
+${shoeLineJP}
+${accJP}`;
+    }else if(dl==="Tシャツ＋アンダーウェア（部屋くつろぎ）"){
+      outfitJP=
+`■ 服装：Tシャツ＋アンダーウェア（下はパンツを履いていない部屋くつろぎスタイル）
+　 トップス：${/Tシャツ/.test(s("tops").jp)?s("tops").jp:"無地Tシャツ"}
+　 ${uwSpecJP}
+　 ※風呂上がり・部屋でくつろぐ等の日常的な一場面として、非性的・自然に描く
+　 着こなし：${s("clothesState").jp}
+${shoeLineJP}
+${accJP}`;
+    }else outfitJP=
 `■ 服装（${S.duty==="on"?"仕事着":"私服"}）
 　 上着：${jkOn?segJP(s("jacket"),s("jacketColor"),s("jacketDesign"),s("jacketFit"),s("jacketBrand")):"上着なし"}
 　 トップス：${waf?s("tops").jp:segJP(s("tops"),s("topsColor"),s("topsDesign"),s("topsFit"),s("topsBrand"))}
 　 パンツ：${waf?"―（和装のため不要）":segJP(s("bottoms"),s("bottomsColor"),s("bottomsDesign"),s("bottomsFit"),s("bottomsBrand"))}
-　 着こなし・はだけ具合：${s("clothesState").jp}
+　 着こなし・はだけ具合：${s("clothesState").jp}${fashionJP}
+　 アンダーウェア：${uwSpecJP}${dl==="アンダーウェアがちら見え"?"※ウエストバンドが腰パン・裾からはっきり見えるファッションとして描く（露出はウエストバンドまで）":"※着こなしから自然に覗く範囲のみ。露出は一切なし"}
 ${shoeLineJP}
 ${accJP}`;
   }
@@ -3897,6 +4139,15 @@ ${accJP}`;
   const charEN=S.charText?`\n[CHARACTER — from the character generator; this description is the authority on who the person is]\n${S.charText}\n[Keep every physical trait above unchanged. Only the situation below may change.]\n`:"";
   const charJP=S.charText?`\n【人物設定（偶然イケメンメーカーより／この人物像を最優先で維持する）】\n${S.charText}\n※上記の人物の特徴は一切変更しない。以下のシチュエーションのみを反映する。\n`:"";
 
+  /* 今日は何の日・主題モード */
+  const kinenbiOn=!!S.kinenbi;
+  const kinenbiEN=kinenbiOn?`\n[Today's Theme] Today is "${S.kinenbi}" in Japan. Weave motifs of this day naturally into the scene — props, background details or the person's small actions — without turning it into an advertisement.`:"";
+  const kinenbiJP=kinenbiOn?`\n【今日のテーマ】今日は「${S.kinenbi}」。この日にちなんだモチーフを、小物・背景・人物のさりげない行動として自然に織り込む（宣伝っぽくしない）。`:"";
+  const themeOn=!!S.theme;
+  const themeMotifs=themeOn&&THEMES[S.theme]?`（例：${THEMES[S.theme].join("、")}）`:"";
+  const themeMotifsEN=themeOn&&THEMES[S.theme]?` (e.g., ${THEMES[S.theme].join(", ")})`:"";
+  const themeEN=themeOn?`\n[Visual Theme] The unifying theme of this image is "${S.theme}"${themeMotifsEN}. Plant the theme in at least three places at different scales — one obvious at first glance, two small enough to be found on a second look. The theme must feel discovered, not staged.`:"";
+  const themeJP=themeOn?`\n【画像の主題】この1枚の主題は「${S.theme}」${themeMotifs}。大小のスケールで最低3箇所に主題を仕込む — 1つは一目でわかる大きさ、2つは見返して気づく大きさ。仕込みは「偶然そこにあった」ように見せる。`:"";
   const streamStyle=/配信|LIVE|ストーリーズ|サムネイル/.test(s("quality").jp)||/配信/.test(s("camera").jp)||/配信/.test(s("photographer").jp);
   const uiOn=s("uiOverlay").jp!=="描かない（クリーンな画面）";
   let qualityEN=s("quality").en;
@@ -3908,8 +4159,8 @@ ${accJP}`;
   const anaExtraEN=[];
   const anaExtraJP=[];
   if(/足元|足裏/.test(s("focus").jp)||footOn){
-    anaExtraEN.push("feet are a focal point: exactly five toes per foot with natural lengths and spacing, correct left/right feet, natural ankle and arch shapes, toenails plausible");
-    anaExtraJP.push("足元が主役のため、足の指は左右各5本・自然な長さと間隔・左右の足の向きを正しく・足首と土踏まずの形状を自然に");
+    anaExtraEN.push("feet are a focal point: correct left/right feet, natural ankle and arch shapes, and toe rendering exactly as specified in the toe rule above");
+    anaExtraJP.push("足元が主役のため、左右の足の向き・足首と土踏まずの形状を正しく。指の描写は上のルール（素足／布越し）に厳密に従う");
   }
   if(/組む|正座|あぐら|横座り|体育|膝を立て|ヤンキー|片膝/.test(s("posture").jp)){
     anaExtraEN.push("the seated pose bends knees, hips and ankles only in naturally possible directions, with legs that connect correctly to the body");
@@ -3923,11 +4174,26 @@ ${accJP}`;
     anaExtraEN.push("even under the surreal effect, the underlying body keeps correct human proportions and joint structure");
     anaExtraJP.push("あり得ない演出の下でも、人体のプロポーションと関節構造は正しく保つ");
   }
+  /* 足の指の描写：素足なら5本をリアルに、靴下着用なら「布越しのシルエット」に留めて五本指ソックス化を防ぐ */
+  const sockedNow=/両足|片足/.test(s("sockWearing").jp)&&!/五本指|足袋/.test(s("sockType").jp);
+  const bareNow=/素足/.test(s("sockWearing").jp)||/素足になる/.test(s("footCat").jp);
+  const toeAnatomyEN=sockedNow
+    ?"feet: five toes exist beneath the fabric, but the sock itself has ONE smooth rounded toe — show the toes only as a soft natural silhouette and gentle ridges through the knit (realistic fabric tension over the big toe and toe row), never as separated sock toes"
+    :bareNow
+      ?"bare feet: exactly five toes per foot with realistic individual toes — natural lengths, toe pads, joint creases and plausible toenails"
+      :"feet: exactly five toes per foot, rendered consistently with the footwear and sock settings above";
+  const toeAnatomyJP=sockedNow
+    ?"足の指：布の下に5本あるが、靴下のつま先は丸い1つの袋のまま。指は編み地越しの自然なシルエットと起伏（親指や指の並びに布が張る感じ）だけで表現し、靴下の指を分けて描かない"
+    :bareNow
+      ?"素足：足の指は左右各5本を写実的に。長さ・指の腹・関節のしわ・爪まで自然に"
+      :"足の指：左右各5本。上の履物・靴下の設定と矛盾なく描く";
   const anatomyEN=`[Anatomy integrity — second only to identity]
-Correct human anatomy at all times: exactly five fingers per hand and five toes per foot; natural joint angles and limb lengths; no extra, missing, fused or warped limbs; hands and feet fully and correctly formed even when small in frame, at the edge, partially hidden, or out of focus; body proportions consistent with the reference sheet.${anaExtraEN.length?"\n"+anaExtraEN.map(t=>"- "+t).join("\n"):""}
+Correct human anatomy at all times: exactly five fingers per hand; natural joint angles and limb lengths; no extra, missing, fused or warped limbs; hands and feet fully and correctly formed even when small in frame, at the edge, partially hidden, or out of focus; body proportions consistent with the reference sheet.
+- ${toeAnatomyEN}${anaExtraEN.length?"\n"+anaExtraEN.map(t=>"- "+t).join("\n"):""}
 If any specified pose, accident or effect would force impossible anatomy, natural anatomy wins — approximate the instruction with the nearest naturally possible version.`;
   const anatomyJP=`《人体構造の維持（同一人物性に次ぐ最優先事項）》
-■ 手の指は左右各5本・足の指も左右各5本 ／ 関節は自然な角度・手足の長さは一定 ／ 手足の増減・融合・歪みは禁止
+■ 手の指は左右各5本 ／ 関節は自然な角度・手足の長さは一定 ／ 手足の増減・融合・歪みは禁止
+■ ${toeAnatomyJP}
 ■ 画面内で小さい・端にある・一部隠れている・ピントが外れている場合でも、手足は正しい形で描き切る
 ■ 体型・プロポーションはリファレンスシートに一致させる${anaExtraJP.length?"\n"+anaExtraJP.map(t=>"■ "+t).join("\n"):""}
 ■ 指定した体勢・事故・演出が人体的に不可能な場合は、自然な人体を優先し、最も近い自然な形で近似する
@@ -3938,7 +4204,7 @@ If any specified pose, accident or effect would force impossible anatomy, natura
 `${REF_PREFIX_EN}${charEN}
 A chance sighting: a candid, unposed snapshot, spotted by coincidence. ${genderEN[S.gender]}
 ${eraLine(S.era).en}
-Occupation: ${OCC_EN[S.occ]||S.occ} (${dutyEN}).
+Occupation: ${OCC_EN[S.occ]||S.occ} (${dutyEN}).${kinenbiEN}${themeEN}
 
 [Scene]
 ${s("season").en}; weather: ${s("weather").en}${indoorWeatherEN}; ${s("timeOfDay").en}; ${loc.en}.
@@ -3977,7 +4243,7 @@ ${count.en}`;
 
 【偶然シチュエーション】人物（${genderJP[S.gender]}）を日常の中で偶然見かけた場面として生成する。
 ${eraLine(S.era).jp}
-職業：${S.occ}（${dutyJP}）
+職業：${S.occ}（${dutyJP}）${kinenbiJP}${themeJP}
 
 《場面》
 ■ ${s("season").jp} ／ 天候：${s("weather").jp}${indoorWeatherJP} ／ ${s("timeOfDay").jp}
