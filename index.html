@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>偶然シチュエーションメーカー V26</title>
+<title>偶然シチュエーションメーカー V38</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -99,6 +99,23 @@ details.sec .sec-body{padding:4px 14px 10px}
   .r-label{grid-area:label}.r-value{grid-area:value}.r-ctrl{grid-area:ctrl;justify-content:flex-end}
   .r-ctrl select{flex:1;width:auto}
 }
+
+#topsum{position:sticky;top:0;z-index:30;background:var(--bg,#fff);border-bottom:1px solid var(--line-strong);
+  padding:6px 10px;font-size:.82rem;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+#topsum .ts{cursor:pointer;padding:2px 8px;border:1px solid var(--line-strong);border-radius:12px;background:#fafafa}
+#topsum .ts b{font-weight:600}
+#row-search{padding:5px 8px;border:1px solid var(--line-strong);border-radius:4px;font-size:.85rem;width:160px}
+.sec-badge{font-size:.72rem;margin-left:8px;padding:1px 7px;border-radius:10px;background:#eef;border:1px solid #ccd}
+.chg-dot{color:#d60;margin-right:2px}
+.lock-ico{margin-right:2px}
+@media(min-width:1280px){
+  .sheet{max-width:1560px}
+  .sec-body{column-count:2;column-gap:36px}
+  .sec-body>.row{break-inside:avoid}
+}
+.row.warn-bg{background:#fbeeec}
+.row.chg-bg{background:#e6f4f9}
+.row.none-bg{background:#f1f0ec;opacity:.75}
 </style>
 </head>
 <body>
@@ -106,7 +123,7 @@ details.sec .sec-body{padding:4px 14px 10px}
 
   <!-- ============ 初期設定 ============ -->
   <section id="setup">
-    <h1>偶然シチュエーションメーカー V26<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
+    <h1>偶然シチュエーションメーカー V38<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
     <div class="form">
       <label>性別
         <select id="s-gender">
@@ -201,14 +218,13 @@ details.sec .sec-body{padding:4px 14px 10px}
         <select id="intent-sel"></select>
       </label>
       <button class="btn small" id="intent-apply">このねらいで整える</button>
-      <label style="margin-left:8px">
-        <select id="outfit-preset-sel"></select>
-      </label>
-      <button class="btn sub small" id="outfit-preset-apply">服装を整える</button>
+
       <span class="tip">撮影者・事故・ハプニング・隠し要素などをまとめて設定します（🔒固定した項目は変更しません）</span>
     </div>
 
-    <div id="rows"></div>
+    <div id="topsum"></div>
+<div style="padding:4px 10px"><input id="row-search" type="text" placeholder="項目名で検索（例：靴下）"></div>
+<div id="rows"></div>
 
     <div id="warn-panel">
       <h3>整合性チェック</h3>
@@ -288,21 +304,25 @@ const OCC=[
   ]},
   {group:"学生",items:[
     ["大学生","University student"],["大学院生","Graduate student"],["専門学校生","Vocational school student"],["就活中の大学生","Job-hunting university student"]
-  ]},
+  ,
+    ["高校生","High school student"],["ニート","NEET (not in employment)"]]},
   {group:"オフィス・専門職",items:[
     ["営業職","Sales representative"],["経理・事務職","Accounting / office clerk"],["公務員（事務）","Civil servant (clerical)"],["銀行員","Bank employee"],["コンサルタント","Consultant"],
     ["ITエンジニア","IT engineer"],["Webデザイナー","Web designer"],["ゲーム開発者","Game developer"],
     ["看護師","Nurse"],["薬剤師","Pharmacist"],["高校教師","High school teacher"],["塾講師","Cram school teacher"],["大学研究員","University researcher"],["新聞記者","Newspaper reporter"]
   ]},
   {group:"接客・サービス",items:[
+    ["保育士","Nursery school teacher"],["セールスマン","Door-to-door salesman"],["ホスト","Host club host"],["居酒屋の客引き","Izakaya street tout"],["キャッチ","Nightlife street catch"],
     ["カフェ店員","Cafe staff"],["アパレル店員","Apparel shop staff"],["美容師","Hair stylist"],["バーテンダー","Bartender"],["書店員","Bookstore clerk"],["ホテルスタッフ","Hotel staff"],["コンビニ店長","Convenience store manager"]
   ]},
   {group:"技術・現場",items:[
-    ["自動車整備士","Car mechanic"],["電気工事士","Electrician"],["大工","Carpenter"],["工場勤務","Factory worker"],["配送ドライバー","Delivery driver"],["農家","Farmer"],["漁師","Fisherman"]
+    ["自動車整備士","Car mechanic"],["電気工事士","Electrician"],["大工","Carpenter"],["工場勤務","Factory worker"],["配送ドライバー","Delivery driver"],["農家","Farmer"],["漁師","Fisherman"],
+    ["左官職人","Plasterer"],["解体業","Demolition worker"],["鳶職人","Tobi scaffolding worker"],["引っ越し業者","Mover"],["宅配便ドライバー","Parcel delivery driver"],["トラックドライバー","Truck driver"],["バス運転手","Bus driver"],["フードデリバリー配達員","Food delivery rider"]
   ]},
   {group:"クリエイティブ・その他",items:[
     ["カメラマン","Photographer"],["ミュージシャン","Musician"],["イラストレーター","Illustrator"],["編集者","Editor"],["パティシエ","Pastry chef"],["寿司職人","Sushi chef"],["ラーメン店店主","Ramen shop owner"],
-    ["ジムトレーナー","Gym trainer"],["モデル","Model"],["俳優","Actor"],["声優","Voice actor"],["YouTuber","YouTuber"],["プロゲーマー","Pro gamer"],["書道家","Calligrapher"],["悠々自適（定年後）","Comfortably retired"]
+    ["ジムトレーナー","Gym trainer"],["モデル","Model"],["俳優","Actor"],["声優","Voice actor"],["YouTuber","YouTuber"],["プロゲーマー","Pro gamer"],["書道家","Calligrapher"],["悠々自適（定年後）","Comfortably retired"],
+    ["アナウンサー","TV announcer"],["アイドル歌手","Idol singer"]
   ]}
 ];
 const OCC_EN={};OCC.forEach(g=>g.items.forEach(([jp,en])=>OCC_EN[jp]=en));
@@ -350,6 +370,15 @@ const REF_PREFIX_EN =
 
 /* ================= 制服詳細（UNIFORM_VARIANTSを忠実に移植） ================= */
 const UNIFORMS={
+  "高校生":[
+    P("学ラン（黒の詰襟）","a black gakuran school uniform with a standing collar"),
+    P("ブレザー制服（ネクタイ）","a blazer school uniform with a necktie"),
+    P("ブレザー制服（夏服・シャツのみ）","the summer version of a blazer uniform — shirt only, no jacket"),
+    P("Yシャツ＋黒の学生スラックス","a white dress shirt with black school slacks"),
+    P("Yシャツ＋グレーの学生スラックス","a white dress shirt with gray school slacks"),
+    P("Yシャツ＋グレンチェックの制服スラックス","a white dress shirt with glen-check uniform slacks"),
+    P("Yシャツ＋ノータックの細身学生スラックス","a white dress shirt with slim no-tuck school slacks")
+  ],
   "警察官":[
     {jp:"警察官の冬制服風（濃紺の長袖＋ネクタイ）",en:"a winter police-style uniform (dark navy long sleeves with tie)",
      top:"濃紺の長袖制服シャツ＋ネクタイ",bottom:"濃紺の制服スラックス",
@@ -461,6 +490,52 @@ const isUniformOcc=occ=>!!UNIFORMS[occ];
 
 /* ================= 勤務中の場所・シーン ================= */
 const DUTY_LOCS={
+  "高校生":[
+    {jp:"教室（放課後）",en:"in a classroom after school",io:"in",props:[
+      P("夕日の差す机の列","rows of desks in the sunset light"),P("黒板の落書き","doodles on the blackboard"),
+      P("開いた窓のカーテン","curtains swaying at the open window"),P("置き忘れの体操着袋","a forgotten gym-clothes bag"),
+      P("チョークの粉","chalk dust in the air"),P("日直の当番表","the class duty roster")]},
+    {jp:"学校の廊下",en:"in a school hallway",io:"in",props:[
+      P("並ぶロッカー","rows of lockers"),P("上履きの足音","the squeak of indoor shoes"),
+      P("掲示板のプリント","notices on the bulletin board"),P("窓越しの校庭","the schoolyard through the windows"),
+      P("消火栓の赤","the red fire hydrant box"),P("スローガンの垂れ幕","a motto banner")]},
+    {jp:"校門前",en:"at the school gate",io:"out",props:[
+      P("校名の門柱","the school nameplate pillar"),P("下校する生徒たち","students heading home"),
+      P("並ぶ自転車","lined-up bicycles"),P("桜並木","a row of cherry trees"),
+      P("通学カバン","school bags"),P("横断歩道の旗","the crossing-guard flags")]},
+    {jp:"昇降口（下駄箱）",en:"at the school entrance shoe lockers (getabako)",io:"in",props:[
+      P("木の下駄箱の列","rows of wooden shoe cubbies"),P("並ぶ上履きと外履き","uwabaki and outdoor shoes side by side"),
+      P("履き替えの段差","the step for changing shoes"),P("傘立て","the umbrella stand"),
+      P("朝礼のチャイム","the morning chime"),P("落とし物の片方の靴下","a lost single sock")]},
+    {jp:"体育館（部活中）",en:"in the school gymnasium during club practice",io:"in",props:[
+      P("ワックスの効いた床","the waxed gym floor"),P("バスケットゴール","the basketball hoops"),
+      P("並ぶボールかご","carts of balls"),P("2階のギャラリー","the upper gallery"),
+      P("響くシューズの音","squeaking shoes echoing"),P("得点板","the scoreboard")]},
+    {jp:"部室",en:"in a school club room",io:"in",props:[
+      P("雑多なロッカー","cluttered lockers"),P("戦績の賞状","award certificates on the wall"),
+      P("干された練習着","practice wear hung to dry"),P("古いソファ","a battered sofa"),
+      P("ホワイトボードの作戦図","tactics on the whiteboard"),P("扇風機","an old electric fan")]},
+    {jp:"学食・購買",en:"at the school cafeteria and shop",io:"in",props:[
+      P("食券の券売機","the meal-ticket machine"),P("人気パンの争奪戦","the scramble for popular bread"),
+      P("長テーブルの列","rows of long tables"),P("カレーの匂い","the smell of curry"),
+      P("牛乳パック","milk cartons"),P("売り切れの札","sold-out signs")]},
+    {jp:"図書室",en:"in the school library",io:"in",props:[
+      P("高い書架","tall bookshelves"),P("貸出カウンター","the checkout counter"),
+      P("静けさの貼り紙","the quiet-please sign"),P("窓際の閲覧席","reading seats by the window"),
+      P("ブックトラック","a book cart"),P("日差しの舞うほこり","dust motes in the sunlight")]},
+    {jp:"保健室",en:"in the school infirmary",io:"in",props:[
+      P("白いカーテンのベッド","beds with white curtains"),P("身長計と体重計","the height and weight scales"),
+      P("消毒液の匂い","the smell of antiseptic"),P("体温計","a thermometer"),
+      P("保健の先生の机","the nurse's desk"),P("視力検査表","the eye chart")]},
+    {jp:"学校の屋上（フェンス際）",en:"on the school rooftop by the fence",io:"out",props:[
+      P("金網フェンス","the chain-link fence"),P("給水タンク","the water tank"),
+      P("風になびくシャツ","shirts fluttering in the wind"),P("眼下の校庭","the schoolyard below"),
+      P("立入注意の札","the keep-out sign"),P("置きっぱなしのボール","an abandoned ball")]},
+    {jp:"通学路",en:"on the way to school",io:"out",props:[
+      P("通学カバンの列","a line of school bags"),P("スクールゾーンの標識","the school-zone sign"),
+      P("寄り道のコンビニ","a convenience store detour"),P("ガードレール","the guardrail"),
+      P("信号待ちの生徒","students waiting at the light"),P("朝の眠そうな顔","sleepy morning faces")]}
+  ],
   "警察官":[
     {jp:"交番の前",en:"in front of a neighborhood police box (koban)",io:"out",props:[
       P("赤色灯","the red lamp of the police box"),P("地域安全のポスター","community safety posters"),
@@ -650,6 +725,35 @@ const D={
     P("梅雨","the rainy season")
   ],
   /* 分割：時間帯（光のみ） */
+  light:[
+    P("自然なまま（指定なし）","natural, unspecified lighting"),
+    P("順光","frontal sunlight"),
+    P("逆光","backlight"),
+    P("サイド光","strong side light"),
+    P("木漏れ日","dappled light through leaves"),
+    P("窓際の光","soft window light"),
+    P("曇天のフラットな光","flat overcast light"),
+    P("ゴールデンアワーの光","warm golden-hour light"),
+    P("ブルーアワーの光","cool blue-hour light"),
+    P("街灯の光","the glow of street lamps"),
+    P("ネオンの光","colorful neon light"),
+    P("蛍光灯の光","flat fluorescent lighting"),
+    P("白熱灯の暖色","warm incandescent light"),
+    P("モニターの光","the cold glow of a monitor"),
+    P("リングライトの光","even ring-light illumination"),
+    P("雷光","a flash of lightning"),
+    P("月明かり","clear moonlight"),
+    P("雪明かり","the soft glow of snow reflecting the night sky"),
+    P("提灯の光","the warm glow of festival lanterns"),
+    P("花火の光","bursts of fireworks lighting the scene"),
+    P("水面の反射光","light reflecting up off the water surface"),
+    P("車のヘッドライト","passing car headlights"),
+    P("看板のライトアップ","illuminated signboards"),
+    P("薄曇りの柔らかい光","soft diffused light through thin clouds"),
+    P("間接照明","warm indirect room lighting"),
+    P("雨上がりの反射光","light reflecting off wet pavement after rain"),
+    P("フラッシュの明滅","the strobing of press camera flashes")
+  ],
   timeOfDay:[
     P("早朝の澄んだ光","clear early-morning light"),
     P("午前のさわやかな光","fresh mid-morning light"),
@@ -908,6 +1012,91 @@ const D={
       P("立ち食いカウンター","the stand-up counter"),P("七味の缶","a tin of shichimi pepper"),
       P("食券の券売機","the meal-ticket machine"),P("湯気の立つかけそば","a steaming bowl of soba"),
       P("急いで食べる隣客","a neighbor eating in a hurry"),P("茹で場の湯気","steam from the boiling station")]},
+    {jp:"ファミレスのボックス席",en:"in a family-restaurant booth",io:"in",props:[
+      P("ドリンクバーのグラス","drink-bar glasses"),P("呼び出しボタン","the call button"),
+      P("メニューの山","stacked menus"),P("窓際のパーテーション","the window-side partition"),
+      P("深夜の空席","empty late-night booths"),P("運ばれるハンバーグの鉄板","a sizzling hamburger plate passing by")]},
+    {jp:"ラーメン屋のカウンター",en:"at a ramen shop counter",io:"in",props:[
+      P("湯気の向こうの厨房","the kitchen beyond the steam"),P("重ねたどんぶり","stacked bowls"),
+      P("餃子の焼き音","gyoza sizzling"),P("券売機","the ticket machine"),
+      P("コショウと酢の瓶","pepper and vinegar bottles"),P("替え玉の札","the noodle-refill sign")]},
+    {jp:"回転寿司",en:"at a conveyor-belt sushi restaurant",io:"in",props:[
+      P("流れる皿","plates gliding past"),P("タッチパネル","the order touchscreen"),
+      P("積み上がった皿","a tower of finished plates"),P("湯呑みと粉茶","tea cups and powdered tea"),
+      P("特急レーン","the express lane"),P("ガリの容器","the pickled-ginger box")]},
+    {jp:"ドラッグストア",en:"in a drugstore",io:"in",props:[
+      P("洗剤の棚","shelves of detergent"),P("ポイントカードのポップ","point-card signage"),
+      P("店頭の特売ワゴン","the bargain wagon"),P("マスクの棚","the mask shelf"),
+      P("レジ待ちの列","the checkout line"),P("薬剤師の白衣","a pharmacist's white coat")]},
+    {jp:"書店",en:"in a bookstore",io:"in",props:[
+      P("平積みの新刊","new releases stacked flat"),P("立ち読みの人","browsers reading standing"),
+      P("雑誌の棚","the magazine rack"),P("ブックカバーの束","paper book covers"),
+      P("POPの手書き推薦文","hand-written staff picks"),P("文庫の背表紙の壁","walls of paperback spines")]},
+    {jp:"河川敷",en:"on a riverside field",io:"out",props:[
+      P("草野球のグラウンド","a sandlot baseball field"),P("土手の斜面","the grassy embankment"),
+      P("鉄橋を渡る電車","a train crossing the iron bridge"),P("犬の散歩の人","dog walkers"),
+      P("夕日に光る川面","the river glinting in the sunset"),P("転がるサッカーボール","a stray soccer ball")]},
+    {jp:"歩道橋の上",en:"on a pedestrian overpass",io:"out",props:[
+      P("眼下の車の流れ","traffic flowing below"),P("階段の手すり","the stair handrails"),
+      P("フェンス越しの街","the city through the fence"),P("横断歩道の白線","crosswalk stripes below"),
+      P("風にあおられる髪","hair whipped by the wind"),P("遠くのビル群","distant buildings")]},
+    {jp:"ガード下",en:"under the railway girders",io:"out",props:[
+      P("頭上を過ぎる電車の轟音","the roar of a train overhead"),P("裸電球の赤提灯","bare bulbs and red lanterns"),
+      P("錆びた鉄骨","rusted steel beams"),P("立ち飲みの人々","standing drinkers"),
+      P("焼き鳥の煙","yakitori smoke"),P("濡れた石畳","wet cobblestones")]},
+    {jp:"路線バスの車内",en:"inside a city bus",io:"in",props:[
+      P("整理券","the numbered ticket"),P("降車ボタン","the stop-request button"),
+      P("つり革の列","rows of hand straps"),P("運賃表示器","the fare display"),
+      P("優先席","priority seats"),P("窓の外の流れる街","the town sliding past the windows")]},
+    {jp:"タクシーの後部座席",en:"in the back seat of a taxi",io:"in",props:[
+      P("白いレースのシートカバー","white lace seat covers"),P("料金メーター","the fare meter"),
+      P("運転手の帽子","the driver's cap"),P("自動ドアのレバー","the automatic door lever"),
+      P("夜の窓を流れる光","night lights streaming past the window"),P("領収書プリンタ","the receipt printer")]},
+    {jp:"神社の祭り（境内）",en:"at a shrine festival in the precincts",io:"out",props:[
+      P("連なる提灯","strings of paper lanterns"),P("出店の明かり","the glow of festival stalls"),
+      P("参道の人混み","crowds along the approach"),P("神楽殿の賑わい","the kagura stage bustle"),
+      P("焼きそばの湯気","steam from a yakisoba stall"),P("鳥居","the torii gate"),
+      P("御神灯の旗","festival banner flags"),P("石畳に落ちた紙吹雪","confetti on the stone path")]},
+    {jp:"お神輿の担ぎ手たち",en:"among mikoshi bearers carrying a portable shrine",io:"out",props:[
+      P("金色に輝く神輿","the gilded portable shrine"),P("揃いの法被","matching happi coats"),
+      P("ねじり鉢巻","twisted hachimaki headbands"),P("掛け声の熱気","the heat of chanting bearers"),
+      P("担ぎ棒","the carrying poles"),P("沿道の観客","spectators lining the street"),
+      P("飛び散る汗","sweat flying in the air"),P("交通規制のコーン","traffic-control cones")]},
+    {jp:"滝行の滝つぼ",en:"at a waterfall training site under the falls",io:"out",props:[
+      P("打ち付ける滝","the pounding waterfall"),P("白装束","white ritual robes"),
+      P("注連縄","the sacred shimenawa rope"),P("岩場の苔","moss on the rocks"),
+      P("水しぶきの霧","mist from the spray"),P("合掌の手","hands pressed in prayer")]},
+    {jp:"事故現場（規制線の外）",en:"at the edge of a roadside accident scene, outside the tape",io:"out",props:[
+      P("黄色い規制線テープ","yellow cordon tape"),P("パトカーの赤色灯","the red flash of police lights"),
+      P("交通整理の誘導棒","a traffic-control light baton"),P("停まった車の列","a line of stopped cars"),
+      P("ブルーシート","a blue tarp"),P("集まる野次馬","onlookers gathering"),
+      P("現場記録の測量機材","scene-documentation equipment")]},
+    {jp:"事件現場（規制線の外）",en:"at the edge of a police incident scene, outside the tape",io:"out",props:[
+      P("KEEP OUTの規制線","KEEP OUT cordon tape"),P("複数のパトカー","several police cars"),
+      P("鑑識の青い作業服","forensic officers in blue"),P("報道のカメラ","press cameras"),
+      P("ナンバーの立て札","numbered evidence markers"),P("立ち話の捜査員","detectives conferring"),
+      P("野次馬の人垣","a wall of onlookers")]},
+    {jp:"党大会の大会議場（社会主義風セット）",en:"in a grand congress hall staged in a socialist-realism style — a fictional party convention set",io:"in",props:[
+      P("赤い垂れ幕","huge red banners"),P("金の星の紋章","a golden star emblem"),
+      P("整然と並ぶ代表席","orderly rows of delegate seats"),P("演壇と一列のマイク","the podium with a row of microphones"),
+      P("赤旗の列","ranks of red flags"),P("重厚なシャンデリア","a massive chandelier"),
+      P("一斉に上がる拍手","synchronized applause"),P("赤い絨毯","the red carpet aisle")]},
+    {jp:"記者会見場",en:"at a press conference venue",io:"in",props:[
+      P("マイクの列","a row of microphones"),P("フラッシュの明滅","strobing camera flashes"),
+      P("社名ボードの壁","the sponsor-logo backdrop"),P("記者席のノートPC","reporters' laptops"),
+      P("テレビカメラの砲列","a battery of TV cameras"),P("長机と白布","the long white-clothed table")]},
+    {jp:"謝罪会見場",en:"at a formal apology press conference",io:"in",props:[
+      P("深く下げられた頭","heads bowed deep"),P("突き出されるマイク","microphones thrust forward"),
+      P("フラッシュの嵐","a storm of camera flashes"),P("硬い表情の司会","a grim-faced moderator"),
+      P("長机の水のグラス","water glasses on the long table"),P("報道陣のひしめき","the press pack crowding in")]},
+    {jp:"薄暗いセット部屋（脱出ゲーム風）",en:"in a dim escape-game style set room — clearly a staged attraction",io:"in",props:[
+      P("裸電球","a bare hanging bulb"),P("古びた木の椅子","an old wooden chair"),
+      P("鎖の掛かった扉（小道具）","a prop door with chains"),P("謎解きのメモ","puzzle notes on the wall"),
+      P("退出用の非常灯","the exit safety light"),P("剥がれかけの壁紙","peeling wallpaper")]},
+    {jp:"ネットカフェの個室ブース",en:"in a private booth at an internet cafe",io:"in",props:[
+      P("リクライニングシート","the reclining seat"),P("並ぶモニター","the glowing monitor"),
+      P("ドリンクバーのカップ","a drink-bar cup"),P("漫画の山","a stack of manga volumes"),
+      P("ブースの仕切り","the booth partitions"),P("脱いだ靴と備え付けスリッパ","shoes off with the provided slippers")]},
     {jp:"スーパーマーケット",en:"in a supermarket",io:"in",props:[
       P("買い物カゴ","a shopping basket"),P("特売のPOP","bargain-sale signs"),
       P("野菜の陳列棚","the produce shelves"),P("カート","a shopping cart"),
@@ -1096,7 +1285,18 @@ const D={
     Object.assign(P("カウンター下で靴を脱いで足を休める","shoes slipped off under the counter, resting their feet"),{cats:["座る"],locRe:/居酒屋|カウンター|そば/}),
     Object.assign(P("コメントを読んで笑う","laughing at the comments on screen"),{locRe:/配信部屋/}),
     Object.assign(P("片足を椅子に上げてくつろぐ","one foot pulled up onto the chair, relaxed"),{cats:["座る"],locRe:/配信部屋|自室|リビング/}),
-    Object.assign(P("濡れた靴下を指で確かめる","pressing a finger to their soaked sock"),{cats:["座る","立つ"],locRe:/ホーム|駅|営業車/})
+    Object.assign(P("濡れた靴下を指で確かめる","pressing a finger to their soaked sock"),{cats:["座る","立つ"],locRe:/ホーム|駅|営業車/}),
+    Object.assign(P("神輿の担ぎ棒に肩を入れる","shoulder set under the mikoshi pole"),{cats:["立つ"],locRe:/神輿/}),
+    Object.assign(P("滝に打たれて合掌する","palms pressed together under the falls"),{cats:["立つ"],locRe:/滝行/}),
+    Object.assign(P("規制線の前で足を止める","stopped short at the cordon tape"),{cats:["立つ"],locRe:/事故現場|事件現場/}),
+    Object.assign(P("深々と頭を下げる","bowing deeply at the waist"),{cats:["立つ"],locRe:/会見/}),
+    Object.assign(P("マイクの前で手元の紙を確かめる","checking notes before the microphones"),{cats:["座る","立つ"],locRe:/会見/}),
+    Object.assign(P("リクライニングを倒して沈み込む","sunk deep into the reclined seat"),{cats:["座る"],locRe:/ネットカフェ/}),
+    Object.assign(P("謎解きのメモを見上げる","looking up at the puzzle notes"),{locRe:/セット部屋/}),
+    Object.assign(P("挙手の敬礼をする","giving a crisp hand salute"),{cats:["立つ"]}),
+    Object.assign(P("気を付けの姿勢で直立する","standing rigidly at attention"),{cats:["立つ"]}),
+    Object.assign(P("起立して拍手を送る","standing to applaud"),{cats:["立つ"],locRe:/党大会|会見|式|ホール/}),
+    Object.assign(P("胸に手を当てて整列する","lined up with a hand on the chest"),{cats:["立つ"],locRe:/党大会/})
   ],
   /* 被写体側のハプニング（out:屋外向き / locRe:特定の場所向き。未指定は汎用） */
   happening:[
@@ -1188,7 +1388,13 @@ const D={
     Object.assign(P("ネットが切れて「あれ？」の顔","frozen mid-sentence as the connection drops"),{locRe:/配信部屋/}),
     Object.assign(P("コメント欄が荒れて慌てる","flustered as the chat suddenly goes wild"),{locRe:/配信部屋/}),
     Object.assign(P("食べこぼしが口の周りについている","crumbs stuck around their mouth from snacking"),{locRe:/配信部屋|リビング|居酒屋/}),
-    Object.assign(P("サンダルを片方落としそうになる","one sandal about to slip off and drop"),{locRe:/花火|縁日|砂浜/})
+    Object.assign(P("サンダルを片方落としそうになる","one sandal about to slip off and drop"),{locRe:/花火|縁日|砂浜|神社の祭り/}),
+    Object.assign(P("担ぎ手の波に揉まれてよろける","staggering in the surge of bearers"),{locRe:/神輿/}),
+    Object.assign(P("水しぶきで息を呑む","gasping at the cold spray"),{locRe:/滝行/}),
+    Object.assign(P("フラッシュの嵐に目がくらむ","dazzled by the storm of flashes"),{locRe:/会見/}),
+    Object.assign(P("お辞儀が深すぎてマイクに頭が当たりそう","bowing so deep the head nearly hits the mics"),{locRe:/謝罪会見/}),
+    Object.assign(P("ドリンクバーのカップを倒しかける","nearly knocking over the drink-bar cup"),{locRe:/ネットカフェ/}),
+    Object.assign(P("鎖の小道具がガチャリと鳴って驚く","startled by the rattle of the prop chains"),{locRe:/セット部屋/})
   ],
   /* 背景との空間的な偶然（気づくと笑える一致） */
   coincidence:[
@@ -1704,6 +1910,7 @@ const D={
     P("YouTube配信画面風","the look of a YouTube live-stream frame — webcam quality, streaming compression, room lighting from the monitor and ring light (no interface text or overlays)"),
     P("YouTubeサムネイル風","a YouTube thumbnail look — punchy contrast, expressive framing (no text or graphics)"),
     P("インスタLIVE画面風","the look of an Instagram Live frame — vertical phone camera quality, casual handheld feel (no interface text or overlays)"),
+    P("NETFLIX風ドラマサムネイル","a NETFLIX-style drama key-art thumbnail — cinematic moody color grading, the subject large and dramatic in frame, shallow depth, poster-like composition"),
     P("インスタストーリーズ風","an Instagram Stories look — vertical casual phone shot with natural filter tones (no text or stickers)")
   ],
   uiOverlay:[
@@ -1795,7 +2002,25 @@ const D={
       P("リンガーTシャツ","a ringer T-shirt"),
       P("ヘンリーネックTシャツ","a henley-neck T-shirt"),
       P("Tシャツ＋ロンTのレイヤード","a T-shirt layered over a long-sleeve tee"),
+      P("コンプレッションインナー＋Tシャツ","a compression base layer under a T-shirt"),
+      P("ハイネックコンプレッション","a high-neck compression top"),
+      P("法被（祭り半纏）","a festival happi coat"),
+      P("人民服（マオカラースーツ）","a Mao-collar zhongshan suit"),
+      P("白装束（行衣）","white ritual robes for waterfall training"),
       P("ボーリングシャツ","a boxy bowling shirt"),
+      P("スタンドカラーシャツ","a stand-collar shirt"),
+      P("デニムシャツ","a denim shirt"),
+      P("コーデュロイシャツ","a corduroy shirt"),
+      P("バスクシャツ","a basque shirt"),
+      P("ポケットTシャツ","a pocket T-shirt"),
+      P("ラグランTシャツ","a raglan-sleeve T-shirt"),
+      P("スキッパーポロ","a skipper polo shirt"),
+      P("鹿の子ポロシャツ","a pique polo shirt"),
+      P("クルーネックニット","a crew-neck knit sweater"),
+      P("モヘアニット","a fuzzy mohair sweater"),
+      P("ジップモックネック","a zip mock-neck top"),
+      P("カレッジロゴスウェット","a college-logo sweatshirt"),
+      P("ノースリーブニットベスト＋シャツ","a sleeveless knit vest over a shirt"),
       P("ゲームシャツ（メッシュ・オーバーサイズ）","an oversized mesh game shirt"),
       P("フットボールTシャツ（袖切替）","a football tee with contrast sleeves"),
       P("ジップパーカー","a zip-up hoodie"),
@@ -1810,7 +2035,7 @@ const D={
     ],
     work:[
       P("白シャツ","a white dress shirt"),
-      P("サックスブルーシャツ","a sax blue shirt"),
+      P("Yシャツ（ワイシャツ）","a sax blue shirt"),
       P("ネクタイ付きシャツ","a shirt with a necktie"),
       P("シャツ＋ベスト","a dress shirt with a vest"),
       P("バンドカラーシャツ（ビジネスカジュアル）","a band-collar shirt, business-casual"),
@@ -1838,13 +2063,14 @@ const D={
       P("カーゴパンツ","cargo pants"),
       P("スウェットパンツ","sweatpants"),
       P("ジャージパンツ","track pants"),
+      P("ライン入りジャージパンツ","track pants with side stripes"),
       P("ナイロントラックパンツ","nylon track pants"),
       P("ハーフパンツ","half pants"),
       P("デニムショーツ","denim shorts"),
       P("サーフパンツ（スイムショーツ）","surf shorts (swim trunks, worn as swimwear)"),
       P("競泳風スイムパンツ","competition-style swim shorts"),
       P("タック入りワイドスラックス","pleated wide slacks"),
-      P("黒スラックス（細身）","slim black slacks"),
+      P("スラックス（細身）","slim slacks"),
       P("ジョガーパンツ","jogger pants"),
       P("ペインターパンツ","painter pants"),
       P("ベイカーパンツ","baker pants"),
@@ -1852,6 +2078,19 @@ const D={
       P("スキニーデニム","skinny jeans"),
       P("ダメージデニム","distressed jeans"),
       P("ケミカルウォッシュデニム","chemical-wash jeans"),
+      P("フレアデニム","flared jeans"),
+      P("ブーツカットデニム","bootcut jeans"),
+      P("ワイドデニム","wide-leg jeans"),
+      P("テーパードデニム","tapered jeans"),
+      P("セルビッジデニム","selvedge jeans"),
+      P("コーデュロイパンツ","corduroy trousers"),
+      P("5ポケットパンツ","five-pocket pants"),
+      P("カーペンターパンツ","carpenter pants"),
+      P("パラシュートパンツ","parachute pants"),
+      P("ナイロントラックパンツ","nylon track pants"),
+      P("ピンタックスラックス","pin-tuck slacks"),
+      P("アンクル丈スラックス","ankle-length slacks"),
+      P("フランネルスラックス","flannel slacks"),
       P("ローライズデニム","low-rise jeans"),
       P("極太スケーターワークパンツ","extra-wide skater work pants"),
       P("ステテコ（部屋着）","suteteko lounge shorts (Japanese home wear)"),
@@ -1859,9 +2098,12 @@ const D={
       P("ロングフレアスカート","a long flared skirt","f")
     ],
     work:[
-      P("黒スラックス","black slacks"),
+      P("スラックス（センタープレス）","center-creased slacks"),
+      P("スリムストレッチデニム作業パンツ","slim high-stretch denim work pants — fitted silhouette, built for climbing scaffolds"),
+      P("ニッカポッカ","traditional tobi knickerbocker work pants"),
+      P("ライン入りジャージパンツ","track pants with side stripes"),
       P("紺スラックス","navy slacks"),
-      P("グレースラックス","gray slacks"),
+      P("スラックス","slacks"),
       P("センタープレスパンツ","center-crease trousers"),
       P("タック入りワイドスラックス","pleated wide slacks"),
       P("チノスラックス","chino slacks"),
@@ -1920,6 +2162,225 @@ const D={
     P("センタープレス","a sharp center crease"),
     P("タック入り","front pleats"),
     P("ワイドステッチ","contrast wide stitching")
+  ],
+  uwaDirt:{
+    cloth:[
+      P("洗いたて（白さが戻っている）","freshly washed — the canvas back to near-white, only faint shadows of old stains"),
+      P("うっすら使用感（数ヶ月）","lightly used — a faint gray cast over the canvas, the toe cap slightly dulled"),
+      P("全体がグレーに（1年もの）","a year of wear — the whole canvas turned an even light gray, set-in blotches, the colored toe cap scuffed dull, though the fabric insole stays surprisingly white inside"),
+      P("濃いグレー・縁がほつれる（2年もの）","two years of wear — deep gray-beige canvas, the collar binding fraying into fuzz, the instep band grayed to match, grime lines along every seam"),
+      P("極限まで使い込み（部活勢）","worn to the limit — the canvas a dark greige all over, the collar edge frayed and torn the whole way around, threads hanging, the band the same dirt color as the body, the toe cap chipped and clouded")
+    ],
+    pvc:[
+      P("洗いたて（艶が戻る）","freshly rinsed — the PVC's dull sheen restored, water beading on it"),
+      P("うっすらくすみ","lightly clouded — the PVC sheen fading, faint scuffs"),
+      P("ソール側面が黄ばむ","the sole sidewall yellowed to cream, the body scratched matte"),
+      P("側面が茶色く汚れる・突起に垢","the sole edge stained brown, dark grime packed between the massage-dot bumps of the footbed"),
+      P("土の固着・底が剥がれかけ（極限）","caked dirt hardened into the tread and around every footbed bump, the sole layer starting to split and peel at the edge")
+    ],
+    gym:[
+      P("洗いたて","freshly washed white"),
+      P("うっすら使用感","lightly used, faint floor dust"),
+      P("飴色ソールに黒スジ","black scuff streaks across the amber sole, the canvas dulled"),
+      P("全体がくすみメッシュに毛玉","the whole shoe dulled, the mesh pilled and snagged"),
+      P("極限（メッシュ破れ・ソール減り）","worn out — torn mesh, the amber sole ground thin and darkened")
+    ]
+  },
+  uwaLine:[
+    P("青","navy blue"),P("赤","red"),P("緑","green"),P("黄","yellow"),P("エンジ","dark wine red"),P("白（ラインなし）","plain white, no trim line")
+  ],
+  uwaTear:[
+    P("なし",""),
+    P("つま先キャンバスのほつれ","frayed canvas threads at the toe"),
+    P("親指の位置がうっすら透ける","the big-toe spot worn thin and faintly translucent"),
+    P("小指側に穴が開きかけ","a hole starting to open at the little-toe side"),
+    P("小指側に大きな穴（靴下がのぞく）","a LARGE hole at the little-toe side with the sock showing through"),
+    P("つま先のソール剥がれが口を開ける","the toe sole peeling open like a mouth"),
+    P("甲が裂けて中が見える","the upper split open, the inside visible"),
+    P("かかと履き口が大きく裂ける","the heel collar torn wide"),
+    P("ゴムバンド片側がちぎれてぶら下がる","one end of the elastic band torn loose and dangling"),
+    P("ソールが半分剥がれてめくれる","the sole half-detached, flapping with each step"),
+    P("メッシュの大きな破れ（体育館）","a large tear in the mesh (gym shoes)"),
+    P("前バンドの亀裂（サンダル）","a crack across the front band (sandals)"),
+    P("前バンド片側断裂（サンダル）","the front band snapped on one side (sandals)")
+  ],
+  uwaRepair:[
+    P("なし",""),
+    P("つま先を布ガムテープで補強","the toe reinforced with cloth duct tape — show the tape's wrinkles, lifted edges and grime"),
+    P("ソール剥がれを銀のダクトテープでぐるり","silver duct tape wrapped fully around the peeling sole"),
+    P("かかとの裂けをテープで留める","the torn heel held together with tape"),
+    P("透明テープでバンド付け根を補強","clear tape reinforcing the band's base"),
+    P("マジックで補修跡を塗って隠す","repair marks colored over with permanent marker")
+  ],
+  uwaDoodle:[
+    P("なし",""),
+    P("星の落書き","a hand-drawn star"),P("ハートの落書き","a hand-drawn heart"),
+    P("にこちゃんマーク","a doodled smiley face"),P("稲妻マーク","a doodled lightning bolt"),
+    P("花の落書き","a doodled flower"),P("音符の落書き","doodled music notes"),
+    P("サッカーボールの落書き","a doodled soccer ball"),
+    P("つま先をマジックで塗りつぶし","the toe cap colored in with permanent marker"),
+    P("ペンでチェック柄に塗る","a pen-drawn check pattern"),
+    P("寄せ書き風（判読不能の文字群）","friends' scribbled messages — illegible writing marks"),
+    P("自由入力","custom (see free-input note)")
+  ],
+  wearSleeve:[
+    P("そのまま","sleeves worn as-is"),
+    P("肘までまくる","sleeves rolled to the elbows"),
+    P("無造作にたくし上げる","sleeves pushed up carelessly"),
+    P("袖口のボタンだけ開ける","cuff buttons undone"),
+    P("片袖だけまくれている","one sleeve accidentally pushed up")
+  ],
+  wearCollar:[
+    P("整える","collar neat"),
+    P("第一ボタンを開ける","top button undone"),
+    P("第二ボタンまで開ける","top two buttons undone"),
+    P("襟を立てる","collar popped"),
+    P("重ね着の襟を出す","the layered shirt's collar pulled out")
+  ],
+  wearButton:[
+    P("全部留める","all buttons fastened"),
+    P("胸元だけ開ける","open at the chest"),
+    P("羽織りは全開でインナー見せ","the outer layer fully open, inner showing")
+  ],
+  wearHem:[
+    P("タックイン","hem tucked in"),
+    P("タックアウト","hem worn out"),
+    P("前だけイン","french-tucked, front only"),
+    P("片側だけ裾が出ている","one side of the hem slipped out")
+  ],
+  bottomsHem:[
+    P("普通に履く","hems worn normally"),
+    P("裾を一折りロールアップ","hems rolled up once"),
+    P("裾をダブルで折る","hems double-cuffed"),
+    P("裾を靴に被せる","hems stacked over the shoes"),
+    P("クロップド気味に足首を見せる","cropped to show the ankles"),
+    P("裾を絞る（ジョガー風）","hems cinched jogger-style"),
+    P("片方だけ裾がまくれている","one hem accidentally turned up")
+  ],
+  bottomsWaist:[
+    P("しっかり履く","worn properly at the waist"),
+    P("普通","worn normally"),
+    P("やや浅めに履く","worn slightly low"),
+    P("腰パン（下着は見せない）","sagged low without showing underwear"),
+    P("腰パン（ウエストバンドを見せる）","sagged low with the waistband showing")
+  ],
+  belt:[
+    P("指定なし",""),
+    P("黒レザーベルト","a black leather belt"),
+    P("茶レザーベルト","a brown leather belt"),
+    P("編み込みメッシュベルト","a woven mesh belt"),
+    P("キャンバスベルト","a canvas belt"),
+    P("ガチャベルト（余りを垂らす）","a GI web belt with the excess hanging down"),
+    P("白ベルト","a white belt"),
+    P("スタッズベルト","a studded belt")
+  ],
+  bagType:[
+    P("なし","no bag"),
+    P("トートバッグ","a tote bag"),
+    P("リュック","a backpack"),
+    P("ボディバッグ","a crossbody sling bag"),
+    P("サコッシュ","a small sacoche pouch"),
+    P("メッセンジャーバッグ","a messenger bag"),
+    P("ショルダーバッグ","a shoulder bag"),
+    P("ブリーフケース","a leather briefcase"),
+    P("3WAYビジネスバッグ","a 3-way business bag"),
+    P("クラッチバッグ","a clutch bag"),
+    P("ドラムバッグ","a drum duffle bag"),
+    P("エナメルバッグ（部活）","a glossy enamel club-sports bag"),
+    P("スクールバッグ（学生鞄）","a classic Japanese school bag"),
+    P("レザーの手提げ","a leather hand tote")
+  ],
+  bagBrand:[
+    P("指定しない",""),
+    P("PORTER（吉田カバン）","PORTER by Yoshida & Co."),
+    P("master-piece","master-piece"),
+    P("Manhattan Portage","Manhattan Portage"),
+    P("GREGORY","GREGORY"),
+    P("THE NORTH FACE","THE NORTH FACE"),
+    P("OUTDOOR PRODUCTS","OUTDOOR PRODUCTS"),
+    P("anello","anello"),
+    P("FJALLRAVEN（カンケン）","Fjallraven Kanken"),
+    P("TUMI","TUMI"),
+    P("Samsonite","Samsonite"),
+    P("ACE","ACE"),
+    P("無印良品","MUJI"),
+    P("UNIQLO","UNIQLO"),
+    P("ノーブランド","unbranded")
+  ],
+  bagCarryStyle:[
+    P("肩に掛ける","slung over one shoulder"),
+    P("斜め掛け","worn crossbody"),
+    P("手に提げる","carried in one hand"),
+    P("背負う","worn on the back"),
+    P("片肩掛けで背負う","backpack hanging off one shoulder"),
+    P("肘に掛ける","hooked on the elbow"),
+    P("小脇に抱える","tucked under one arm"),
+    P("手首にぶら下げる","dangling from the wrist")
+  ],
+  earPos:[
+    P("なし","no earrings"),
+    P("両耳","earrings in both ears"),
+    P("片耳（左）","an earring in the left ear only"),
+    P("片耳（右）","an earring in the right ear only")
+  ],
+  earCount:[
+    P("1個ずつ","one per ear"),
+    P("2個ずつ","two per ear"),
+    P("複数・重ね付け","multiple stacked piercings")
+  ],
+  earShape:[
+    P("小さなスタッド","tiny stud earrings"),
+    P("シルバーの小ぶりフープ","small silver hoops"),
+    P("中サイズのフープ","medium hoops"),
+    P("ドロップ型","small drop earrings"),
+    P("バーベル型","barbell studs"),
+    P("軟骨ピアス（ヘリックス）","a helix cartilage piercing")
+  ],
+  carry:[
+    P("なし",""),
+    P("コンビニのレジ袋","a convenience-store plastic bag"),
+    P("トートバッグ","a tote bag"),
+    P("リュック","a backpack"),
+    P("ボディバッグ","a crossbody sling bag"),
+    P("書類鞄","a briefcase"),
+    P("エコバッグ","a reusable shopping bag"),
+    P("紙のショッパー","a paper shopping bag"),
+    P("ビニール傘","a clear vinyl umbrella"),
+    Object.assign(P("折りたたみ傘","a folded compact umbrella"),{}),
+    P("文庫本","a paperback book"),
+    P("缶コーヒー","a canned coffee"),
+    P("ペットボトルの水","a bottle of water"),
+    Object.assign(P("タピオカドリンク","a bubble tea"),{since:2018}),
+    Object.assign(P("ホットスナック（肉まん等）","a hot snack from a convenience store"),{cold:true}),
+    Object.assign(P("アイスキャンディー","a popsicle"),{hot:true}),
+    Object.assign(P("うちわ","a paper uchiwa fan"),{hot:true}),
+    Object.assign(P("使い捨てカイロ","a disposable hand warmer"),{cold:true}),
+    Object.assign(P("携帯ゲーム機","a handheld game console"),{since:1990}),
+    Object.assign(P("フィルムカメラ","a compact film camera"),{}),
+    P("スケッチブック","a sketchbook"),
+    P("花束","a small bouquet"),
+    P("ギターケース","a guitar case"),
+    P("ビニール袋のたい焼き","taiyaki in a paper bag"),
+    Object.assign(P("スーパーの買い物袋","a supermarket shopping bag"),{}),
+    P("クリーニングの衣類","dry-cleaned clothes on a hanger"),
+    P("段ボール箱","a cardboard box"),
+    Object.assign(P("タオル","a rolled towel"),{bathOK:true}),
+    Object.assign(P("銭湯セット（桶と手ぬぐい）","a bath set with a small basin and tenugui"),{bathOK:true,bathOnly:true}),
+    P("差し入れの菓子袋","a bag of snacks to share"),
+    P("水筒","a thermos bottle"),
+    Object.assign(P("かき氷","a shaved-ice cup"),{hot:true}),
+    P("丸めたポスター","a rolled-up poster"),
+    P("弁当袋","a bento pouch"),
+    P("部活のエナメルバッグ","a sports enamel duffle bag"),
+    Object.assign(P("学食の焼きそばパン","a yakisoba bread from the school shop"),{locRe:/学食|購買|教室|廊下|屋上/}),
+    Object.assign(P("部活のドリンクボトル","a club-practice squeeze bottle"),{locRe:/体育館|部室|校庭|グラウンド/}),
+    Object.assign(P("図書室で借りた本","books borrowed from the library"),{locRe:/図書室|教室|通学路/}),
+    Object.assign(P("単語帳と参考書","a vocab book and study guides"),{locRe:/教室|図書室|通学路|駅|電車/}),
+    Object.assign(P("体育館シューズ袋","a gym-shoes drawstring bag"),{locRe:/昇降口|廊下|体育館|通学路/}),
+    Object.assign(P("ドリンクバーのグラス","a drink-bar glass"),{locRe:/ファミレス/}),
+    Object.assign(P("会計の皿カウンター伝票","the plate-count receipt"),{locRe:/回転寿司/}),
+    Object.assign(P("買ったばかりの文庫本","a just-bought paperback"),{locRe:/書店/}),
+    Object.assign(P("整理券","a numbered bus ticket"),{locRe:/バス/})
   ],
   hatType:[
     P("なし","no hat"),
@@ -2013,31 +2474,45 @@ const D={
     P("浴衣・和装の襟元が少し崩れる","yukata collar slightly loosened from a day of wear",undefined),
     P("汗で服が少し張り付く","clothes clinging slightly with sweat")
   ],
-  brands:{
-    casual:[
-      P("指定しない",""),
-      P("UNIQLO","UNIQLO"),P("GU","GU"),P("無印良品","MUJI"),P("ZARA","ZARA"),P("H&M","H&M"),
-      P("BEAMS","BEAMS"),P("UNITED ARROWS","UNITED ARROWS"),P("SHIPS","SHIPS"),
-      P("GLOBAL WORK","GLOBAL WORK"),P("URBAN RESEARCH","URBAN RESEARCH"),P("JOURNAL STANDARD","JOURNAL STANDARD"),
-      P("NIKE","NIKE"),P("adidas","adidas"),P("New Balance","New Balance"),P("Champion","Champion"),
-      P("THE NORTH FACE","THE NORTH FACE"),P("LACOSTE","LACOSTE"),P("POLO RALPH LAUREN","POLO RALPH LAUREN"),
-      P("TOMMY HILFIGER","TOMMY HILFIGER"),P("Calvin Klein","Calvin Klein"),P("GAP","GAP"),
-      P("A BATHING APE","A BATHING APE"),P("Stüssy","Stussy"),
-      P("UNDERCOVER","UNDERCOVER"),P("NEIGHBORHOOD","NEIGHBORHOOD"),P("WTAPS","WTAPS"),
-      P("X-LARGE","X-LARGE"),P("HYSTERIC GLAMOUR","HYSTERIC GLAMOUR"),P("Supreme","Supreme"),
-      P("NAUTICA","NAUTICA"),P("KAPITAL","KAPITAL"),P("VAN","VAN"),P("Carhartt","Carhartt"),P("FREAK'S STORE","FREAK'S STORE"),P("coen","coen"),P("WEGO","WEGO"),
-      P("無地ノーブランド","plain unbranded")
-    ],
-    work:[
-      P("指定しない",""),
-      P("AOKI","AOKI"),P("ORIHICA","ORIHICA"),P("SUIT SELECT","SUIT SELECT"),
-      P("THE SUIT COMPANY","THE SUIT COMPANY"),P("P.S.FA","P.S.FA"),
-      P("洋服の青山","Aoyama Tailor"),P("はるやま","Haruyama"),
-      P("TAKEO KIKUCHI","TAKEO KIKUCHI"),P("UNITED ARROWS","UNITED ARROWS"),
-      P("UNIQLO","UNIQLO"),P("無印良品","MUJI"),P("D'URBAN","D'URBAN"),
-      P("無地ノーブランド","plain unbranded")
-    ]
-  },
+  brandsAll:[
+    P("指定しない",""),
+    /* 定番・量販 */
+    P("UNIQLO","UNIQLO"),P("GU","GU"),P("無印良品","MUJI"),P("ZARA","ZARA"),P("H&M","H&M"),
+    P("GAP","GAP"),P("WEGO","WEGO"),P("coen","coen"),P("GLOBAL WORK","GLOBAL WORK"),
+    /* セレクト系 */
+    P("BEAMS","BEAMS"),P("UNITED ARROWS","UNITED ARROWS"),P("SHIPS","SHIPS"),
+    P("JOURNAL STANDARD","JOURNAL STANDARD"),P("URBAN RESEARCH","URBAN RESEARCH"),
+    P("nano・universe","nano universe"),P("TOMORROWLAND","TOMORROWLAND"),
+    P("green label relaxing","green label relaxing"),P("FREAK'S STORE","FREAK'S STORE"),
+    P("STUDIOUS","STUDIOUS"),P("HARE","HARE"),P("RAGEBLUE","RAGEBLUE"),P("niko and...","niko and..."),
+    /* スポーツ */
+    P("NIKE","NIKE"),P("adidas","adidas"),P("New Balance","New Balance"),P("Champion","Champion"),
+    P("PUMA","PUMA"),P("ASICS","ASICS"),P("MIZUNO","MIZUNO"),P("FILA","FILA"),P("KAPPA","KAPPA"),
+    /* アウトドア */
+    P("THE NORTH FACE","THE NORTH FACE"),P("patagonia","patagonia"),P("CANADA GOOSE","CANADA GOOSE"),P("mont-bell","mont-bell"),
+    P("Columbia","Columbia"),P("CHUMS","CHUMS"),P("GREGORY","GREGORY"),
+    /* アメカジ・ワーク */
+    P("Carhartt","Carhartt"),P("Carhartt WIP","Carhartt WIP"),P("Dickies","Dickies"),
+    P("BEN DAVIS","BEN DAVIS"),P("LEVI'S","Levi's"),P("EDWIN","EDWIN"),P("Lee","Lee"),
+    P("Wrangler","Wrangler"),P("orSlow","orSlow"),P("DANTON","DANTON"),
+    P("Hanes","Hanes"),P("FRUIT OF THE LOOM","Fruit of the Loom"),P("GILDAN","GILDAN"),
+    /* トラッド・きれいめ */
+    P("POLO RALPH LAUREN","POLO RALPH LAUREN"),P("TOMMY HILFIGER","TOMMY HILFIGER"),
+    P("LACOSTE","LACOSTE"),P("FRED PERRY","FRED PERRY"),P("Calvin Klein","Calvin Klein"),
+    P("Paul Smith","Paul Smith"),P("A.P.C.","A.P.C."),P("BROOKS BROTHERS","Brooks Brothers"),
+    P("J.PRESS","J.PRESS"),P("NEWYORKER","NEWYORKER"),P("VAN","VAN"),P("NAUTICA","NAUTICA"),
+    /* ストリート・裏原 */
+    P("A BATHING APE","A BATHING APE"),P("Stüssy","Stussy"),P("Supreme","Supreme"),
+    P("UNDERCOVER","UNDERCOVER"),P("NEIGHBORHOOD","NEIGHBORHOOD"),P("WTAPS","WTAPS"),
+    P("X-LARGE","X-LARGE"),P("HYSTERIC GLAMOUR","HYSTERIC GLAMOUR"),P("KAPITAL","KAPITAL"),
+    P("COMME des GARÇONS","COMME des GARCONS"),P("Y-3","Y-3"),
+    /* スーツ・ビジネス */
+    P("AOKI","AOKI"),P("ORIHICA","ORIHICA"),P("SUIT SELECT","SUIT SELECT"),
+    P("THE SUIT COMPANY","THE SUIT COMPANY"),P("P.S.FA","P.S.FA"),
+    P("洋服の青山","Aoyama Tailor"),P("はるやま","Haruyama"),
+    P("TAKEO KIKUCHI","TAKEO KIKUCHI"),P("D'URBAN","D'URBAN"),
+    P("無地ノーブランド","plain unbranded")
+  ],
   glassesBrand:[
     P("指定しない",""),
     P("JINS","JINS"),P("Zoff","Zoff"),P("OWNDAYS","OWNDAYS"),P("眼鏡市場","Meganeichiba"),
@@ -2056,7 +2531,7 @@ const D={
     P("革靴・ローファー","leather shoes / loafers"),
     P("ブーツ","boots"),
     P("サンダル","sandals"),
-    P("スリッパ","slippers"),
+    P("上履き・校内履き","school indoor footwear (uwabaki)"),P("スリッパ","slippers"),
     P("和装履物","traditional Japanese footwear"),
     P("スパイク・競技用シューズ","sports spikes / competition shoes"),
     P("作業靴・安全靴","work / safety shoes"),
@@ -2153,6 +2628,29 @@ const D={
     pumps:[
       P("普通に履く","worn normally"),
       P("かかとを浮かせ気味に履く","worn with the heels slightly lifted out")
+    ],
+    boots:[
+      P("普通に履く","worn normally"),
+      P("サイドジップを半分開けて履く","worn with the side zips half open"),
+      P("上まで紐を締めずに履く","worn with the upper laces left unlaced"),
+      P("パンツの裾を被せて履く","worn with the trouser hems over the shafts"),
+      P("パンツインで履く","worn with the trousers tucked into the shafts")
+    ],
+    slipper:[
+      P("普通に履く","worn normally"),
+      P("つま先だけ引っ掛けて履く","hanging off just the toes"),
+      P("かかとを潰したまま履く","worn with the heels permanently crushed flat")
+    ],
+    uwabaki:[
+      P("普通に履く","worn normally"),
+      P("かかとを踏んで履く","worn with the heels crushed down"),
+      P("つま先だけ引っ掛ける","hanging off just the toes"),
+      P("バンドに足を通さず浅履き","worn shallow without the strap seated")
+    ],
+    loafer:[
+      P("普通に履く","worn normally"),
+      P("かかとを踏んで履く","worn with the heels crushed down"),
+      P("浅く引っ掛けて履く","slipped on shallowly, heels barely in")
     ]
   },
   glasses:[
@@ -2166,7 +2664,12 @@ const D={
     P("金縁メガネ","gold-rimmed glasses"),
     P("クリアフレームメガネ","clear-frame glasses"),
     P("ボストン型メガネ","boston-shaped glasses"),
-    P("黒のサングラス","black sunglasses")
+    P("黒のサングラス","black sunglasses"),
+    P("カラーサングラス（薄いブルー）","sunglasses with light blue tinted lenses"),
+    P("カラーサングラス（薄いパープル）","sunglasses with light purple tinted lenses"),
+    P("カラーサングラス（オレンジ）","sunglasses with orange tinted lenses"),
+    P("カラーサングラス（グリーン）","sunglasses with green tinted lenses"),
+    P("カラーサングラス（イエロー）","sunglasses with yellow tinted lenses")
   ],
   watch:[
     P("なし","no wristwatch"),
@@ -2261,6 +2764,7 @@ const D={
     P("Fukuske","Fukuske"),P("グンゼ","GUNZE"),P("BODY WILD","BODY WILD"),P("BVD","BVD"),
     P("POLO RALPH LAUREN","POLO RALPH LAUREN"),P("Calvin Klein","Calvin Klein"),
     P("TOMMY HILFIGER","TOMMY HILFIGER"),P("Paul Smith","Paul Smith"),P("BURBERRY","BURBERRY"),
+    P("HALISON","HALISON"),P("Aquascutum","Aquascutum"),P("Brooks Brothers","Brooks Brothers"),P("CHICSTOCKS","CHICSTOCKS"),
     P("EMPORIO ARMANI","EMPORIO ARMANI"),
     P("NIKE","NIKE"),P("adidas","adidas"),P("Champion","Champion"),P("PUMA","PUMA"),
     P("New Balance","New Balance"),P("ASICS","ASICS"),P("MIZUNO","MIZUNO"),
@@ -2296,25 +2800,56 @@ const D={
     P("メッシュ編み","mesh knit")
   ],
   sockColor:[
-    P("黒","black"),P("紺","navy"),P("白","white"),P("チャコール","charcoal"),
-    P("グレー","gray"),P("杢グレー","heather gray"),P("ブラウン","brown"),
-    P("オートミール","oatmeal"),P("ダークグリーン","dark green"),P("ワインレッド","wine red"),
-    P("マスタード","mustard"),P("水色","light blue"),P("ラベンダー","lavender"),
-    P("ピンク","pink"),P("ミントグリーン","mint green"),P("蛍光イエロー","neon yellow"),
-    P("ネイビー地ストライプ","navy striped"),
-    P("黒地ドット","black with dots"),
-    P("白地ドット","white with dots"),
-    P("アーガイル柄","argyle pattern"),
-    P("千鳥格子柄","houndstooth pattern"),
-    P("ボーダー（2色）","two-tone horizontal stripes"),
-    P("レトロライン（白地に2本線）","retro white with two stripes at the cuff"),
-    P("レトロライン（白地に3本線）","retro white with three stripes at the cuff"),
-    P("ライン入り白","white with lines"),
-    P("タイダイ柄","tie-dye pattern"),
-    P("花柄ワンポイント","a small flower motif"),
-    P("ワンポイント刺繍入り","with a small one-point embroidery"),
-    P("履き口にブランドロゴ入り","with a brand logo knitted at the cuff"),
-    P("小紋柄（ビジネス向け）","small repeating pattern for business wear")
+    P("黒","black"),P("紺","navy"),P("白","white"),P("オフホワイト","off-white"),
+    P("チャコール","charcoal"),P("グレー","gray"),P("杢グレー","heather gray"),
+    P("ブラウン","brown"),P("ベージュ","beige"),P("オートミール","oatmeal"),
+    P("カーキ","khaki"),P("ダークグリーン","dark green"),P("ワインレッド","wine red"),
+    P("テラコッタ","terracotta"),P("マスタード","mustard"),P("水色","light blue"),
+    P("サックスブルー","saxe blue"),P("ラベンダー","lavender"),P("ピンク","pink"),
+    P("ミントグリーン","mint green"),P("蛍光イエロー","neon yellow"),P("メランジミックス","a melange mix")
+  ],
+  sockPattern:[
+    P("無地","solid, no pattern"),
+    P("細ボーダー","fine horizontal stripes"),
+    P("太ボーダー","bold horizontal stripes"),
+    P("マルチボーダー","multicolor stripes"),
+    P("ヘリンボーン","a herringbone weave pattern"),
+    P("バイカラー（切替）","a two-tone color-blocked design"),
+    P("トゥ＆ヒール配色","contrast-colored toes and heels"),
+    P("センター1本ライン","a single vertical line up the center"),
+    P("カレッジライン（履き口2本線）","two college stripes at the cuff"),
+    P("レトロライン（履き口3本線）","three retro stripes at the cuff"),
+    P("アーガイル","an argyle pattern"),
+    P("千鳥格子","houndstooth"),
+    P("グレンチェック","glen check"),
+    P("タータンチェック","tartan check"),
+    P("ハウスチェック（クラブチェック）","a classic house check"),
+    P("ピンドット","pin dots"),
+    P("大きめドット","bold polka dots"),
+    P("小紋柄","a small repeating komon pattern"),
+    P("幾何学柄","a geometric pattern"),
+    P("ノルディック柄","a Nordic pattern"),
+    P("フェアアイル柄","a Fair Isle pattern"),
+    P("ケーブル編み柄","a cable-knit texture pattern"),
+    P("ジャカード総柄","an all-over jacquard pattern"),
+    P("パネル切替","paneled color blocking"),
+    P("タイダイ柄","tie-dye"),
+    P("履き口にブランドロゴ","a brand logo knitted at the cuff")
+  ],
+  sockMotif:[
+    P("なし",""),
+    P("星の刺繍","a small embroidered star"),
+    P("ハートの刺繍","a small embroidered heart"),
+    P("音符の刺繍","a small embroidered music note"),
+    P("イカリの刺繍","a small embroidered anchor"),
+    P("王冠の刺繍","a small embroidered crown"),
+    P("犬の刺繍","a small embroidered dog"),
+    P("猫の刺繍","a small embroidered cat"),
+    P("クローバーの刺繍","a small embroidered clover"),
+    P("稲妻の刺繍","a small embroidered lightning bolt"),
+    P("スマイルの刺繍","a small embroidered smiley"),
+    P("花の刺繍","a small embroidered flower"),
+    P("モノグラム風ワンポイント","a small monogram-style motif")
   ],
   sockRib:[
     P("該当なし（リブではない・平編み）",""),
@@ -2383,21 +2918,199 @@ const D={
   ]
 };
 
+/* ================= 職業別ワークウェア（勤務中） ================= */
+const OCC_WORKWEAR={
+  "鳶職人":{style:"kensetsu"},"解体業":{style:"kensetsu"},"左官職人":{style:"kensetsu"},
+  "居酒屋の客引き":{style:"catch"},"キャッチ":{style:"catch"},
+  "ホスト":{jacket:["テーラードジャケット","上着なし"],tops:["柄シャツ","Yシャツ（レギュラーカラー）","Vネックニット"],bottoms:["スラックス（細身）","ピンタックスラックス"],shoeType:["革靴・ローファー"],note:"flashy host-club styling, glossy fabrics"},
+  "保育士":{jacket:["上着なし","ジップパーカー"],tops:["ポロシャツ","無地Tシャツ（クルーネック）"],bottoms:["ジャージパンツ","チノパン"],extra:"a childcare apron over the top",extraJP:"保育用エプロンを重ねる"},
+  "アナウンサー":{jacket:["テーラードジャケット","ネイビージャケット"],tops:["Yシャツ（レギュラーカラー）"],bottoms:["スラックス","スラックス（センタープレス）"],shoeType:["革靴・ローファー"],extra:"a hand-held broadcast microphone nearby",extraJP:"手元に放送用マイク"},
+  "引っ越し業者":{jacket:["上着なし","ウィンドブレーカー"],tops:["ポロシャツ","無地Tシャツ（クルーネック）"],bottoms:["ワイドカーゴパンツ","ジャージパンツ"],extra:"a lumbar support belt",extraJP:"腰のサポートベルト"},
+  "宅配便ドライバー":{jacket:["ウィンドブレーカー","上着なし"],tops:["ポロシャツ","ボタンダウンシャツ"],bottoms:["チノパン","ワイドカーゴパンツ"],extra:"a parcel scanner and delivery slips",extraJP:"荷物スキャナーと伝票"},
+  "フードデリバリー配達員":{since:2016,jacket:["ウィンドブレーカー","上着なし","マウンテンパーカー"],tops:["速乾Tシャツ","ジップパーカー"],bottoms:["ジョガーパンツ","ハーフパンツ"],shoeType:["スニーカー"],extra:"a large insulated delivery backpack",extraJP:"大きな保温配達バッグ"},
+  "セールスマン":{jacket:["テーラードジャケット"],tops:["Yシャツ（レギュラーカラー）","ボタンダウンシャツ"],bottoms:["スラックス"],shoeType:["革靴・ローファー"],extra:"a sales briefcase",extraJP:"営業鞄"},
+  "トラックドライバー":{jacket:["ワークジャケット","上着なし"],tops:["無地Tシャツ（クルーネック）","チェックネルシャツ"],bottoms:["ワイドカーゴパンツ","ストレートデニム"],extra:"work gloves tucked in a pocket",extraJP:"ポケットに軍手"},
+  "バス運転手":{jacket:["上着なし","カーディガン"],tops:["Yシャツ（レギュラーカラー）","半袖Yシャツ"],bottoms:["スラックス（センタープレス）"],shoeType:["革靴・ローファー"],extra:"a driver's cap and white gloves",extraJP:"運転士の制帽と白手袋"},
+  "アイドル歌手":{jacket:["上着なし","トラックジャケット"],tops:["ビッグシルエットTシャツ","ジップパーカー"],bottoms:["ジョガーパンツ","ワイドデニム"],shoeType:["スニーカー"],extra:"stage-lesson wear with an ID lanyard",extraJP:"レッスン着とスタッフパス"}
+};
+function applyOccWorkwear(){
+  if(S.duty!=="on"||uniformOn())return;
+  const w=OCC_WORKWEAR[S.occ];
+  if(!w)return;
+  const c0=ctxNow();
+  const lj0=state.location&&state.location.value?state.location.value.jp:"";
+  if(["bath","locker"].includes(c0)||/滝行|神輿|水中/.test(lj0))return;
+  const hot=isHotSeason(),cold=isColdSeason();
+  const pickBy=(id,cands,poolFn)=>{
+    if(!cands||!state[id]||state[id].locked)return;
+    let hits=poolFn().filter(p=>cands.includes(p.jp));
+    if(id==="jacket"&&hot){
+      const none=poolFn().find(p=>p.jp==="上着なし");
+      if(none){state[id].value=none;return;}
+    }
+    const seasonal=seasonalPool(hits);
+    if(seasonal.length)hits=seasonal;
+    if(hits.length)state[id].value=rand(hits);
+  };
+  if(w.style==="kensetsu"){
+    /* 現代の建設職人：スリムストレッチデニム作業着＋コンプレッション＋ハイカット安全スニーカー */
+    pickBy("jacket",[hot?"上着なし":"デニム作業ジャケット（スリム）","上着なし"],()=>D.jackets.casual.concat(D.jackets.work));
+    pickBy("tops",["コンプレッションインナー＋Tシャツ","ハイネックコンプレッション","無地Tシャツ（クルーネック）"],()=>byGender(D.tops.casual.concat(D.tops.work)));
+    pickBy("bottoms",["スリムストレッチデニム作業パンツ","ニッカポッカ"],()=>byGender(D.bottoms.casual.concat(D.bottoms.work)));
+    if(state.shoeType&&!state.shoeType.locked){
+      const t=byGender(D.footwearType).filter(p=>p.jp==="作業靴・安全靴");
+      if(t.length){state.shoeType.value=t[0];}
+      if(state.shoeBrand&&!state.shoeBrand.locked)state.shoeBrand.value=P("セーフティスニーカー","sneaker-type safety shoes");
+      if(state.shoes&&!state.shoes.locked){
+        const hi=(FW["作業靴・安全靴"]["セーフティスニーカー"]||[]).filter(p=>/ハイカット/.test(p.jp));
+        if(hi.length)state.shoes.value=hi[0];
+      }
+    }
+    return;
+  }
+  if(w.style==="catch"){
+    /* 客引き・キャッチ：夏＝ベナッシ＋ジャージ＋Supreme/StussyのT／冬＝ジャージ＋カナダグース */
+    pickBy("bottoms",["ライン入りジャージパンツ","ジャージパンツ"],()=>byGender(D.bottoms.casual.concat(D.bottoms.work)));
+    if(state.bottomsBrand&&!state.bottomsBrand.locked)state.bottomsBrand.value=D.brandsAll.find(p=>p.jp==="adidas")||state.bottomsBrand.value;
+    if(hot){
+      if(state.tops&&!state.tops.locked){
+        const bt=D.tops.casual.find(p=>/ビッグシルエットTシャツ/.test(p.jp))||D.tops.casual.find(p=>/無地Tシャツ/.test(p.jp));
+        if(bt)state.tops.value=bt;
+      }
+      if(state.topsBrand&&!state.topsBrand.locked)state.topsBrand.value=rand(D.brandsAll.filter(p=>/Supreme|Stüssy/.test(p.jp)));
+      pickBy("jacket",["上着なし"],()=>D.jackets.casual.concat(D.jackets.work));
+      if(state.shoeType&&!state.shoeType.locked){
+        const t=byGender(D.footwearType).filter(p=>p.jp==="サンダル");
+        if(t.length){state.shoeType.value=t[0];
+          if(state.shoeBrand&&!state.shoeBrand.locked)state.shoeBrand.value=P("NIKE","NIKE");
+          if(state.shoes&&!state.shoes.locked){
+            const b=footwearModelPool().filter(p=>/ベナッシ/.test(p.jp));
+            if(b.length)state.shoes.value=b[0];
+          }}
+      }
+    }else{
+      pickBy("tops",["ロングスリーブTシャツ","無地スウェット","パーカー"],()=>byGender(D.tops.casual.concat(D.tops.work)));
+      pickBy("jacket",cold?["ダウンジャケット"]:["コーチジャケット","MA-1"],()=>D.jackets.casual.concat(D.jackets.work));
+      if(cold&&state.jacketBrand&&!state.jacketBrand.locked)state.jacketBrand.value=D.brandsAll.find(p=>p.jp==="CANADA GOOSE")||state.jacketBrand.value;
+      pickBy("shoeType",["スニーカー"],()=>byGender(D.footwearType));
+    }
+    return;
+  }
+  pickBy("jacket",w.jacket,()=>D.jackets.casual.concat(D.jackets.work));
+  pickBy("tops",w.tops,()=>byGender(D.tops.casual.concat(D.tops.work)));
+  pickBy("bottoms",w.bottoms,()=>byGender(D.bottoms.casual.concat(D.bottoms.work)));
+  if(w.shoeType&&state.shoeType&&!state.shoeType.locked){
+    const t=byGender(D.footwearType).filter(p=>w.shoeType.includes(p.jp));
+    if(t.length){state.shoeType.value=rand(t);
+      if(state.shoeBrand&&!state.shoeBrand.locked)state.shoeBrand.value=rand(footwearBrandPool());
+      if(state.shoes&&!state.shoes.locked)state.shoes.value=rand(footwearModelPool());}
+  }
+}
+
+/* 場所による服装の強制（滝行＝白装束／神輿＝法被） */
+const RE_SCHOOL_IN=/教室|学校の廊下|体育館|音楽室|保健室|職員室|図書室|部室|学食|購買/;
+function forcedLocOutfit(){
+  const lj=state.location&&state.location.value?state.location.value.jp:"";
+  if(uniformOn()&&S.occ!=="高校生")return;
+  if(uniformOn()&&S.occ==="高校生"){
+    if(RE_SCHOOL_IN.test(lj)&&state.shoes&&!state.shoes.locked)state.shoes.value=rand(uwaModels());
+    else if(/校門|通学路/.test(lj)&&state.shoes&&!state.shoes.locked&&RE_UWA_MODEL.test(state.shoes.value.jp))
+      state.shoes.value=rand(uniformShoePool().filter(p=>!RE_UWA_MODEL.test(p.jp)));
+    return;
+  }
+  const unionTops=byGender(D.tops.casual.concat(D.tops.work));
+  if(/滝行/.test(lj)&&state.tops&&!state.tops.locked){
+    const w=unionTops.filter(p=>/白装束/.test(p.jp));
+    if(w.length){state.tops.value=w[0];
+      if(state.bottoms&&!state.bottoms.locked)state.bottoms.value=WAFUKU_NONE;
+      if(state.jacket&&!state.jacket.locked)state.jacket.value=D.jackets.casual.find(p=>p.jp==="上着なし")||state.jacket.value;}
+  }
+  if(S.occ==="高校生"&&uniformOn()&&RE_SCHOOL_IN.test(lj)&&state.shoes&&!state.shoes.locked){
+    state.shoes.value=rand(uwaModels());
+  }
+  if(S.occ==="高校生"&&uniformOn()&&/校門|通学路/.test(lj)&&state.shoes&&!state.shoes.locked&&RE_UWA_MODEL.test(state.shoes.value.jp)){
+    state.shoes.value=rand(uniformShoePool().filter(p=>!RE_UWA_MODEL.test(p.jp)));
+  }
+  if(S.occ==="高校生"&&!uniformOn()&&RE_SCHOOL_IN.test(lj)&&state.shoeType&&!state.shoeType.locked){
+    const t=byGender(D.footwearType).filter(p=>p.jp==="上履き・校内履き");
+    if(t.length){state.shoeType.value=t[0];
+      if(state.shoeBrand&&!state.shoeBrand.locked)state.shoeBrand.value=rand(footwearBrandPool());
+      if(state.shoes&&!state.shoes.locked)state.shoes.value=rand(footwearModelPool());}
+  }
+  if(/校門|通学路/.test(lj)&&state.shoeType&&!state.shoeType.locked&&/上履き/.test(state.shoeType.value.jp)){
+    const t=byGender(D.footwearType).filter(p=>/革靴|スニーカー/.test(p.jp));
+    if(t.length){state.shoeType.value=rand(t);
+      if(state.shoeBrand&&!state.shoeBrand.locked)state.shoeBrand.value=rand(footwearBrandPool());
+      if(state.shoes&&!state.shoes.locked)state.shoes.value=rand(footwearModelPool());}
+  }
+  if(/党大会/.test(lj)&&state.tops&&!state.tops.locked){
+    const mao=unionTops.filter(p=>/人民服|Yシャツ/.test(p.jp));
+    if(mao.length&&Math.random()<0.7){state.tops.value=mao.find(p=>/人民服/.test(p.jp))||mao[0];
+      if(/人民服/.test(state.tops.value.jp)){
+        if(state.bottoms&&!state.bottoms.locked)state.bottoms.value=WAFUKU_NONE;
+        if(state.jacket&&!state.jacket.locked)state.jacket.value=D.jackets.casual.find(p=>p.jp==="上着なし")||state.jacket.value;
+      }}
+  }
+  if(/神輿/.test(lj)&&state.tops&&!state.tops.locked){
+    const h=unionTops.filter(p=>/法被/.test(p.jp));
+    if(h.length){state.tops.value=h[0];
+      if(state.jacket&&!state.jacket.locked)state.jacket.value=D.jackets[wmode()].find(p=>p.jp==="上着なし")||state.jacket.value;}
+  }
+}
 /* ================= 服装プリセット ================= */
 const OUTFIT_PRESETS=[
  {key:"none",jp:"（服装プリセット）",set:null},
- {key:"clean",jp:"きれいめカジュアル",set:{jacket:["カーディガン","テーラードジャケット（カジュアル）","上着なし"],tops:["オックスフォードシャツ","バンドカラーシャツ","ニットポロ","白Tシャツ"],bottoms:["黒スラックス（細身）","ワイドスラックス","テーパードチノ"],shoeType:["革靴・ローファー","スニーカー"],clothesState:["きちんと着ている"]}},
+ {key:"clean",jp:"きれいめカジュアル",set:{jacket:["カーディガン","テーラードジャケット（カジュアル）","上着なし"],tops:["オックスフォードシャツ","バンドカラーシャツ","ニットポロ","無地Tシャツ（クルーネック）"],bottoms:["スラックス（細身）","ワイドスラックス","テーパードチノ"],shoeType:["革靴・ローファー","スニーカー"],clothesState:["きちんと着ている"]}},
  {key:"urahara",jp:"ストリート（90s裏原）",set:{jacket:["コーチジャケット","MA-1","上着なし"],tops:["ビッグシルエットTシャツ","ゲームシャツ（メッシュ・オーバーサイズ）","グラフィックパーカー"],bottoms:["バギージーンズ","極太スケーターワークパンツ","ワイドカーゴパンツ"],shoeType:["スニーカー"],clothesState:["腰パン（ボクサーのウエストバンドを見せる）","裾を靴に被せて履く","ラフに着崩す"]}},
  {key:"amekaji",jp:"アメカジ",set:{jacket:["デニムジャケット","ネルシャツ（羽織り）","上着なし"],tops:["ヘンリーネックTシャツ","ボーダーTシャツ","チェックネルシャツ"],bottoms:["ストレートデニム","ペインターパンツ","ベイカーパンツ"],shoeType:["スニーカー","ブーツ"],clothesState:["ラフに着崩す","袖をまくる"]}},
- {key:"norm",jp:"ミニマル・ノームコア",set:{jacket:["上着なし","ステンカラーコート"],tops:["白Tシャツ","無地スウェット","タートルネックニット"],bottoms:["スキニーデニム","テーパードチノ","黒スラックス（細身）"],shoeType:["スニーカー"],clothesState:["きちんと着ている"]}},
+ {key:"norm",jp:"ミニマル・ノームコア",set:{jacket:["上着なし","ステンカラーコート"],tops:["無地Tシャツ（クルーネック）","無地スウェット","タートルネックニット"],bottoms:["スキニーデニム","テーパードチノ","スラックス（細身）"],shoeType:["スニーカー"],clothesState:["きちんと着ている"]}},
  {key:"onii",jp:"お兄系（00s）",set:{jacket:["レザージャケット","テーラードジャケット（カジュアル）","上着なし"],tops:["重ね着シャツ＋Tシャツ","Vネックニット","柄シャツ"],bottoms:["ダメージデニム","ローライズデニム"],shoeType:["革靴・ローファー"],clothesState:["重ね着したシャツの襟を立てて出す","ラフに着崩す"]}},
  {key:"outdoor",jp:"アウトドアMIX",set:{jacket:["マウンテンパーカー","アノラック","フリースプルオーバー"],tops:["サーマルロンT","速乾Tシャツ","チェックネルシャツ"],bottoms:["ワイドカーゴパンツ","クライミングパンツ"],shoeType:["スニーカー","ブーツ"],clothesState:["きちんと着ている","袖をまくる"]}},
  {key:"relax",jp:"部屋着リラックス",set:{jacket:["上着なし"],tops:["無地スウェット","パーカー","ロングスリーブTシャツ"],bottoms:["スウェットパンツ","イージーパンツ","ステテコ（部屋着）"],shoeType:["スリッパ"],clothesState:["ラフに着崩す"]}},
  {key:"sports",jp:"スポーツMIX",set:{jacket:["トラックジャケット","ウィンドブレーカー","上着なし"],tops:["速乾Tシャツ","ゲームシャツ（メッシュ・オーバーサイズ）","フットボールTシャツ（袖切替）"],bottoms:["ジョガーパンツ","ジャージパンツ","ハーフパンツ"],shoeType:["スニーカー"],clothesState:["きちんと着ている","ラフに着崩す"]}}
+,
+ {key:"cityboy",jp:"シティボーイ",minYear:2015,set:{jacket:["シャツジャケット（シャケット）","上着なし","マウンテンパーカー"],tops:["ビッグシルエットTシャツ","バスクシャツ","オックスフォードシャツ"],bottoms:["ワイドスラックス","ワイドデニム","ベイカーパンツ"],shoeType:["スニーカー"],clothesState:["きちんと着ている","ラフに着崩す"]}},
+ {key:"y2ktech",jp:"Y2Kテック",minYear:2018,set:{jacket:["ウィンドブレーカー","ナイロンジャケット","上着なし"],tops:["ジップモックネック","ゲームシャツ（メッシュ・オーバーサイズ）","速乾Tシャツ"],bottoms:["パラシュートパンツ","ナイロントラックパンツ","ワイドカーゴパンツ"],shoeType:["スニーカー"],clothesState:["ラフに着崩す"]}},
+ {key:"frenchivy",jp:"フレンチアイビー",set:{jacket:["テーラードジャケット（カジュアル）","カーディガン","上着なし"],tops:["バスクシャツ","Yシャツ（レギュラーカラー）","クルーネックニット"],bottoms:["スラックス（細身）","アンクル丈スラックス","セルビッジデニム"],shoeType:["革靴・ローファー","スニーカー"],clothesState:["きちんと着ている"]}},
+ {key:"korean",jp:"韓国系ミニマル",minYear:2016,set:{jacket:["オーバーサイズシャツ（羽織り）","上着なし","ステンカラーコート"],tops:["無地Tシャツ（クルーネック）","ジップパーカー","スタンドカラーシャツ"],bottoms:["ワイドスラックス","ワイドデニム"],shoeType:["スニーカー","革靴・ローファー"],clothesState:["きちんと着ている"]}},
+ {key:"furugi",jp:"古着MIX",set:{jacket:["デニムジャケット","コーチジャケット","スタジャン"],tops:["カレッジロゴスウェット","ボーリングシャツ","リンガーTシャツ","柄シャツ"],bottoms:["ケミカルウォッシュデニム","ペインターパンツ","コーデュロイパンツ"],shoeType:["スニーカー","ブーツ"],clothesState:["ラフに着崩す","袖をまくる"]}},
+ {key:"sento",jp:"銭湯・サウナ帰り",set:{jacket:["上着なし"],tops:["無地Tシャツ（クルーネック）","無地スウェット","甚平（上下）"],bottoms:["イージーパンツ","ステテコ（部屋着）","ハーフパンツ"],shoeType:["サンダル","スリッパ"],clothesState:["ラフに着崩す"]}},
+ {key:"w_jacketpan",jp:"【仕事】ジャケパン",duty:"on",set:{jacket:["テーラードジャケット","ネイビージャケット"],tops:["Yシャツ（レギュラーカラー）","ボタンダウンシャツ"],bottoms:["スラックス","スラックス（センタープレス）"],shoeType:["革靴・ローファー"],clothesState:["きちんと着ている"]}},
+ {key:"w_coolbiz",jp:"【仕事】クールビズ",duty:"on",set:{jacket:["上着なし"],tops:["半袖Yシャツ","Yシャツ（レギュラーカラー）","ポロシャツ"],bottoms:["スラックス","アンクル丈スラックス"],shoeType:["革靴・ローファー"],clothesState:["ノータイで第一ボタンを開ける","きちんと着ている"]}},
+ {key:"w_officecasual",jp:"【仕事】オフィスカジュアル",duty:"on",set:{jacket:["カーディガン","上着なし","テーラードジャケット（カジュアル）"],tops:["バンドカラーシャツ","ニットポロ","オックスフォードシャツ"],bottoms:["テーパードチノ","スラックス（細身）"],shoeType:["革靴・ローファー","スニーカー"],clothesState:["きちんと着ている"]}}
 ];
+function outfitPresetChoices(){
+  const y=eraYearNum(S.era);
+  return OUTFIT_PRESETS.filter(p=>{
+    if(p.minYear&&y<p.minYear)return false;
+    if(p.duty==="on"&&S.duty!=="on")return false;
+    if(!p.duty&&p.set&&S.duty==="on")return false; /* 勤務中は仕事プリセットのみ */
+    return true;
+  });
+}
+const KIKONASHI_PRESETS=[
+ {key:"none",jp:"（着こなしプリセット）"},
+ {key:"seito",jp:"きっちり優等生",set:{wearSleeve:"そのまま",wearCollar:"整える",wearButton:"全部留める",wearHem:"タックイン",bottomsWaist:"しっかり履く",bottomsHem:"普通に履く",belt:"黒レザーベルト"}},
+ {key:"coolbiz",jp:"クールビズ風",set:{wearSleeve:"肘までまくる",wearCollar:"第一ボタンを開ける",wearButton:"全部留める",wearHem:"タックイン",bottomsWaist:"普通",bottomsHem:"普通に履く"}},
+ {key:"darashina",jp:"だらしなカッコいい",set:{wearSleeve:"無造作にたくし上げる",wearCollar:"第二ボタンまで開ける",wearButton:"胸元だけ開ける",wearHem:"前だけイン",bottomsWaist:"やや浅めに履く",bottomsHem:"裾を一折りロールアップ"}},
+ {key:"bukatsu",jp:"運動部帰り",set:{wearSleeve:"肘までまくる",wearCollar:"第一ボタンを開ける",wearButton:"胸元だけ開ける",wearHem:"タックアウト",bottomsWaist:"普通",bottomsHem:"裾を絞る（ジョガー風）"}},
+ {key:"yancha",jp:"ヤンチャ",set:{wearSleeve:"無造作にたくし上げる",wearCollar:"襟を立てる",wearButton:"胸元だけ開ける",wearHem:"タックアウト",bottomsWaist:"腰パン（下着は見せない）",bottomsHem:"裾を靴に被せる",belt:"ガチャベルト（余りを垂らす）"}}
+];
+function applyKikonashi(key){
+  const pr=KIKONASHI_PRESETS.find(x=>x.key===key);
+  if(!pr||!pr.set)return;
+  Object.keys(pr.set).forEach(id=>{
+    if(!state[id]||state[id].locked)return;
+    const f0=FIELDS.find(x=>x.id===id);
+    const hit=f0&&f0.pool().find(p=>p.jp===pr.set[id]);
+    if(hit)state[id].value=hit;
+  });
+  renderRows();renderOutput();
+}
 function applyOutfitPreset(key){
   const pr=OUTFIT_PRESETS.find(x=>x.key===key);
   if(!pr||!pr.set||uniformOn())return;
+  if(pr.duty==="on"&&S.duty!=="on")return;
   const pick=(id,cands,poolFn)=>{
     if(!state[id]||state[id].locked)return;
     const pool=poolFn();
@@ -2409,8 +3122,8 @@ function applyOutfitPreset(key){
     if(!hits.length)hits=pool.filter(p=>cands.includes(p.jp));
     if(hits.length)state[id].value=rand(hits);
   };
-  pick("jacket",pr.set.jacket,()=>D.jackets[wmode()]);
-  pick("tops",pr.set.tops,()=>byGender(D.tops[wmode()]));
+  pick("jacket",pr.set.jacket,()=>D.jackets.casual.concat(D.jackets.work));
+  pick("tops",pr.set.tops,()=>byGender(D.tops.casual.concat(D.tops.work)));
   pick("bottoms",pr.set.bottoms,()=>bottomsPoolDyn());
   if(pr.set.shoeType&&state.shoeType&&!state.shoeType.locked){
     const t=byGender(D.footwearType).filter(p=>pr.set.shoeType.includes(p.jp));
@@ -2619,7 +3332,17 @@ function applyFootPreset(){
   });
   if(pre.postureCat&&state.posture&&!state.posture.locked)state.posture.value=rand(posturePool());
 }
-function posturePool(){
+const POSTURE_LOC_RE=[
+ [/階段を上|階段を下|段差に腰/, /階段|神社|歩道橋|駅|石段|祭り/],
+ [/つり革|手すりにつかま/, /電車|バス|地下鉄/],
+ [/カウンターにもたれ|カウンターに肘/, /カウンター|バー|蕎麦|居酒屋|カフェ/]
+];
+function postureLocOk(p){
+  const lj=state.location&&state.location.value?state.location.value.jp:"";
+  for(const [pre,lre] of POSTURE_LOC_RE)if(pre.test(p.jp))return lre.test(lj);
+  return true;
+}
+function posturePoolRaw(){
   const cat=state.postureCat?state.postureCat.value.jp:"立つ";
   let pool=D.postures[cat];
   const cond=(state.condition&&state.condition.value)?state.condition.value.jp:"";
@@ -2627,6 +3350,7 @@ function posturePool(){
     pool=pool.filter(p=>/歩いて|早歩き/.test(p.jp))||pool;
   return pool.length?pool:D.postures[cat];
 }
+function posturePool(){return posturePoolRaw().filter(postureLocOk);}
 function happeningPool(){
   const loc=state.location?state.location.value:null;
   const locJp=loc?loc.jp:"";
@@ -2646,7 +3370,25 @@ function gesturePool(){
     return true;
   });
 }
-function locPool(){return uniformOn()?[...DUTY_LOCS[S.occ],...D.locations]:D.locations;}
+const LOC_CAT_DEFS=[
+ ["学校・学び",/教室|学校|校門|通学路|昇降口|部室|学食|図書室|保健室|体育館|大学|キャンパス|自習室|図書館/],
+ ["街・日常",/コンビニ|商店街|路地|横断歩道|歩道橋|自販機|ガード下|スーパー|ドラッグストア|書店|コインランドリー|駐輪場|マンション|エントランス|廊下|喫煙所|古着屋|ビルの屋上|スポーツ施設|スポーツジム/],
+ ["駅・乗り物",/駅|ホーム|電車|バス|タクシー|新幹線|車|運転席|助手席|後部座席|荷室|機内|改札|階段/],
+ ["自宅・プライベート",/自室|寝室|リビング|配信部屋|ベランダ|玄関|キッチン|風呂場|洗面/],
+ ["店・飲食",/カフェ|喫茶|ファミレス|ラーメン|回転寿司|そば|居酒屋|ファストフード|フードコート|バー|屋台/],
+ ["銭湯・サウナ・水辺",/銭湯|サウナ|風呂|浴場|脱衣所|外気浴|洗い場|プール|海|砂浜|川|滝|水中/],
+ ["自然・公園",/公園|河川敷|山|森|神社(?!の祭り)|寺|田舎|畑|土手|縁側|草むら/],
+ ["宿泊",/ホテル|旅館|カプセル|ネットカフェ/],
+ ["夜の街",/繁華街|歓楽街|ラブホテル|ネオン|クラブ|パチンコ|ゲームセンター|ネットカフェ|カプセル/],
+ ["行事・祭り",/縁日|祭り|神輿|花火|会見|党大会|式/],
+ ["仕事・現場",/オフィス|会議|工事|現場|営業車|内見|銀行|役所|病院|待合/],
+ ["特殊・ドラマ",/事故現場|事件現場|セット部屋|監禁|スタジオ/]
+];
+function locCatName(l){
+  for(const [name,re] of LOC_CAT_DEFS)if(re.test(l.jp))return name;
+  return "その他";
+}
+function locPool(){return uniformOn()?[...(DUTY_LOCS[S.occ]||[]),...D.locations]:D.locations;}
 function locRollPool(){
   const base=locPool();
   if(S.place==="any")return base;
@@ -2673,7 +3415,67 @@ const NDA_SPORT_SHOES=[
   P("MIZUNO ランニングシューズ","MIZUNO running shoes"),
   P("無地ノーブランドスニーカー","plain unbranded sneakers")
 ];
+function uwaModels(){
+  const t=FW["上履き・校内履き"];let out=[];
+  Object.keys(t).forEach(b=>{out=out.concat(t[b]);});
+  return out;
+}
+const RE_UWA_MODEL=/上履き|校内|バレー|フロアー|センターゴア|ゴムバンド|体育|ジムスター|スクールサンダル|ニューモード|No\.700|前つっかけ/;
+function uniJacketBrandPool(){
+  const j=state.uniJacket&&state.uniJacket.value?state.uniJacket.value.jp:"";
+  if(/セーター|ベスト|カーディガン/.test(j))return [
+    P("指定なし",""),P("POLO RALPH LAUREN","POLO RALPH LAUREN"),P("LACOSTE","LACOSTE"),
+    P("EASTBOY","EASTBOY"),P("UNIQLO","UNIQLO"),P("無印良品","MUJI"),
+    P("カンコー学生服","Kanko"),P("トンボ学生服","Tombow")];
+  return [
+    P("指定なし",""),P("カンコー学生服","Kanko school uniform"),P("トンボ学生服","Tombow school uniform"),
+    P("富士ヨット","Fuji Yacht school uniform"),P("スクールタイガー","School Tiger uniform")];
+}
+function uniTopsBrandPool(){
+  const t=state.uniTops&&state.uniTops.value?state.uniTops.value.jp:"";
+  if(/トレーナー|ラガー|Tシャツ|ポロ/.test(t))return D.brandsAll;
+  return [P("指定なし",""),P("カンコー","Kanko"),P("トンボ","Tombow"),P("ノーブランドスクールシャツ","a plain school shirt brand")];
+}
+function uwaDirtPool(){
+  const mj=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
+  if(/体育|ジムスター/.test(mj))return D.uwaDirt.gym;
+  if(/サンダル|ニューモード|前つっかけ|No\.700/.test(mj))return D.uwaDirt.pvc;
+  return D.uwaDirt.cloth;
+}
+function uniJacketColorPool(){
+  const j=state.uniJacket&&state.uniJacket.value?state.uniJacket.value.jp:"";
+  if(/学ラン|短ラン|長ラン/.test(j))return [P("黒","black"),P("濃紺","dark navy")];
+  if(/セーター|ベスト|カーディガン/.test(j))return [
+    P("グレー","gray"),P("チャコール","charcoal"),P("ネイビー","navy"),P("黒","black"),
+    P("オフホワイト","off-white"),P("ベージュ","beige"),P("キャメル","camel"),P("ブラウン","brown"),
+    P("ワインレッド","wine red"),P("ダークグリーン","dark green"),P("杢グレー","heather gray")];
+  if(/ブレザー/.test(j))return [
+    P("濃紺","dark navy"),P("黒","black"),P("チャコール","charcoal"),P("ミディアムグレー","medium gray"),
+    P("エンジ","dark wine red"),P("ダークグリーン","dark green"),P("ブラウン","brown"),P("キャメル","camel")];
+  return [P("—","")];
+}
+function uniTopsColorPool(){
+  const t=state.uniTops&&state.uniTops.value?state.uniTops.value.jp:"";
+  if(/トレーナー|ラガー|Tシャツ/.test(t))return [P("グレー","gray"),P("杢グレー","heather gray"),P("黒","black"),P("ネイビー","navy"),P("白","white"),P("ベージュ","beige"),P("ワインレッド","wine red"),P("ダークグリーン","dark green")];
+  if(/ポロ/.test(t))return [P("白","white"),P("紺","navy"),P("サックスブルー","saxe blue"),P("グレー","gray"),P("黒","black")];
+  return [P("白","white"),P("オフホワイト","off-white"),P("サックスブルー","saxe blue"),P("ライトブルー","light blue"),
+    P("アイスグレー","ice gray"),P("ライトグレー","light gray"),P("クリーム","cream"),P("薄いピンク","pale pink"),
+    P("薄いイエロー","pale yellow"),P("薄いグリーン","pale green")];
+}
+function uniShoeWearPool(){
+  const m=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
+  if(RE_UWA_MODEL.test(m))return D.shoeWear.uwabaki;
+  if(/ローファー/.test(m))return D.shoeWear.loafer;
+  return D.shoeWear.laced;
+}
 function uniformShoePool(){
+  if(S.occ==="高校生")return [
+    P("HARUTA コインローファー","Haruta coin loafers — the classic Japanese school loafer"),
+    P("HARUTA タッセルローファー","Haruta tassel loafers"),
+    P("通学用白スニーカー","plain white commuting sneakers"),
+    P("黒の通学スニーカー","plain black commuting sneakers")
+  ].concat(uwaModels());
+
   const u=state.uniform?state.uniform.value:UNIFORMS[S.occ][0];
   const first=P(u.shoe,u.shoeEN);
   if(S.occ==="防衛大学校学生")return [first,...NDA_SPORT_SHOES];
@@ -2705,11 +3507,14 @@ function buildFieldDefs(){
   f.push({section:"場面",secId:"sec-scene"});
   f.push({id:"season",label:"季節",pool:()=>D.season});
   f.push({id:"weather",label:"天候",pool:()=>D.weather});
-  f.push({id:"timeOfDay",label:"時間帯・光",pool:()=>D.timeOfDay});
+  f.push({id:"timeOfDay",label:"時間帯",pool:()=>D.timeOfDay});
+  f.push({id:"light",label:"光",pool:()=>lightPoolCtx()});
   f.push({id:"location",label:"場所（背景）",pool:()=>locPool()});
   f.push({id:"crowd",label:"人の多さ",pool:()=>D.crowd});
   f.push({id:"prop1",label:"追加小物 ①",pool:()=>propPool()});
   f.push({id:"prop2",label:"追加小物 ②",pool:()=>propPool()});
+  f.push({id:"carry1",label:"持ち物",pool:()=>carryPoolCtx(),noneDefault:true});
+  f.push({id:"carry2",label:"持ち物（2つ目）",pool:()=>carryPoolCtx(),noneDefault:true});
   f.push({id:"prop3",label:"追加小物 ③",pool:()=>propPool()});
   f.push({id:"coincidence",label:"空間の偶然（背景との一致）",pool:()=>D.coincidence,noneDefault:true});
   f.push({id:"special",label:"あり得ない場面",pool:()=>D.special,noneDefault:true});
@@ -2748,10 +3553,66 @@ function buildFieldDefs(){
 
   f.push({section:"服装",secId:"sec-outfit"});
   if(uniformOn()){
+    if(S.occ==="高校生"){
+      f.push({id:"uniJacket",label:"制服の上着",pool:()=>[
+        P("学ラン上着（黒の詰襟）","a black gakuran jacket with a standing collar"),
+        P("短ラン（丈の短い学ラン）","a tanran — a delinquent-style gakuran cut short at the waist, worn open"),
+        P("長ラン（丈の長い学ラン）","a choran — a delinquent-style gakuran with an extra-long hem reaching the knees"),
+        P("ブレザー","a school blazer"),
+        P("スクールセーター","a school sweater"),
+        P("ニットベスト","a school knit vest"),
+        P("カーディガン","a school cardigan"),
+        P("上着なし（夏）","no jacket (summer)")
+      ]});
+      f.push({id:"uniTops",label:"制服のトップス",pool:()=>[
+        P("Yシャツ（長袖）","a long-sleeve dress shirt"),
+        P("半袖Yシャツ","a short-sleeve dress shirt"),
+        P("スクールポロシャツ","a school polo shirt"),
+        P("開襟シャツ","an open-collar summer shirt"),
+        P("トレーナー（スウェット）","a crew-neck sweatshirt worn over the school shirt"),
+        P("ラガーシャツ","a rugby shirt"),
+        P("Tシャツ（着崩し）","a plain T-shirt worn loose under the jacket")
+      ]});
+      f.push({id:"uniJacketColor",label:"制服上着の色",pool:()=>uniJacketColorPool()});
+      f.push({id:"uniJacketBrand",label:"制服上着ブランド",pool:()=>uniJacketBrandPool()});
+      f.push({id:"uniTopsColor",label:"制服トップスの色",pool:()=>uniTopsColorPool()});
+      f.push({id:"uniTopsBrand",label:"制服トップスブランド",pool:()=>uniTopsBrandPool()});
+      f.push({id:"wearSleeve",label:"着こなし：袖",pool:()=>D.wearSleeve});
+      f.push({id:"wearCollar",label:"着こなし：襟",pool:()=>D.wearCollar});
+      f.push({id:"wearButton",label:"着こなし：ボタン",pool:()=>D.wearButton});
+      f.push({id:"wearHem",label:"着こなし：トップス裾",pool:()=>D.wearHem});
+      f.push({id:"uniBtmForm",label:"制服スラックスの形",pool:()=>[
+        P("ノータック細身","slim no-tuck"),P("ワンタック","single-pleat"),P("ストレート","straight-cut"),
+        P("ボンタン（極太タック）","bontan — extreme wide-tapered delinquent slacks with deep pleats"),
+        P("ドカン（太めストレート）","dokan — thick straight-cut delinquent slacks")
+      ]});
+      f.push({id:"uniBtmDesign",label:"制服スラックスのデザイン",pool:()=>[
+        P("無地","plain"),P("グレンチェック","glen check"),P("千鳥格子","houndstooth"),P("シャドーストライプ","shadow stripe")
+      ]});
+      f.push({id:"uniBtmColor",label:"制服スラックスの色",pool:()=>[
+        P("黒","black"),P("濃紺","dark navy"),P("ネイビー","navy"),P("チャコール","charcoal"),
+        P("ダークグレー","dark gray"),P("ミディアムグレー","medium gray"),P("ライトグレー","light gray"),
+        P("グレージュ","greige"),P("ブラウングレー","brown-gray"),P("ダークオリーブ","dark olive")
+      ]});
+      f.push({id:"bottomsHem",label:"ボトムスの裾の着こなし",pool:()=>D.bottomsHem});
+      f.push({id:"bottomsWaist",label:"腰の履き方",pool:()=>D.bottomsWaist});
+      f.push({id:"belt",label:"ベルト",pool:()=>D.belt,noneDefault:true});
+      f.push({id:"bagType",label:"カバン",pool:()=>bagPoolCtx(),noneDefault:true});
+      f.push({id:"bagColor",label:"カバンの色",pool:()=>D.clothesColor});
+      f.push({id:"bagBrand",label:"カバンブランド",pool:()=>bagBrandPoolCtx()});
+      f.push({id:"bagCarry",label:"カバンの持ち方",pool:()=>bagCarryPoolCtx()});
+    }else{
     f.push({id:"uniform",label:"制服（詳細）",pool:()=>UNIFORMS[S.occ]});
     f.push({id:"capState",label:"制帽のかぶり具合",pool:()=>D.uniformCapState});
     f.push({id:"capOff",label:"脱帽時の扱い",pool:()=>D.uniformCapOff,noneDefault:true});
-    f.push({id:"clothesState",label:"着こなし・はだけ具合",pool:()=>clothesStatePool()});
+    f.push({id:"wearSleeve",label:"着こなし：袖",pool:()=>D.wearSleeve});
+    f.push({id:"wearCollar",label:"着こなし：襟",pool:()=>D.wearCollar});
+    f.push({id:"wearButton",label:"着こなし：ボタン",pool:()=>D.wearButton});
+    f.push({id:"wearHem",label:"着こなし：トップス裾",pool:()=>D.wearHem});
+    f.push({id:"bottomsHem",label:"ボトムスの裾の着こなし",pool:()=>D.bottomsHem});
+    f.push({id:"bottomsWaist",label:"腰の履き方",pool:()=>D.bottomsWaist});
+    f.push({id:"belt",label:"ベルト",pool:()=>D.belt,noneDefault:true});
+    }
     f.push({id:"shoes",label:"靴（制式が既定・変更可）",pool:()=>uniformShoePool()});
   }else{
     f.push({id:"fashion",label:"ファッション方針",pool:()=>[
@@ -2766,22 +3627,28 @@ function buildFieldDefs(){
       P("Tシャツ＋アンダーウェア（部屋くつろぎ）","wearing just a T-shirt and underwear, relaxing at home"),
       P("アンダーウェアのみ（部屋くつろぎ）","wearing underwear only, relaxing in a private room")
     ],noneDefault:true});
-    f.push({id:"jacket",label:"上着",pool:()=>D.jackets[wmode()]});
+    f.push({id:"jacket",label:"上着",pool:()=>D.jackets.casual.concat(D.jackets.work)});
     f.push({id:"jacketColor",label:"上着カラー",pool:()=>D.clothesColor});
     f.push({id:"jacketDesign",label:"上着デザイン",pool:()=>D.designJacket});
     f.push({id:"jacketFit",label:"上着サイズ感",pool:()=>D.clothesFit});
-    f.push({id:"jacketBrand",label:"上着ブランド",pool:()=>D.brands[wmode()]});
-    f.push({id:"tops",label:"トップス",pool:()=>byGender(D.tops[wmode()])});
+    f.push({id:"jacketBrand",label:"上着ブランド",pool:()=>D.brandsAll});
+    f.push({id:"tops",label:"トップス",pool:()=>byGender(D.tops.casual.concat(D.tops.work))});
     f.push({id:"topsColor",label:"トップスカラー",pool:()=>D.clothesColor});
     f.push({id:"topsDesign",label:"トップスデザイン",pool:()=>D.designTops});
     f.push({id:"topsFit",label:"トップスサイズ感",pool:()=>D.clothesFit});
-    f.push({id:"topsBrand",label:"トップスブランド",pool:()=>D.brands[wmode()]});
-    f.push({id:"clothesState",label:"着こなし・はだけ具合",pool:()=>clothesStatePool()});
+    f.push({id:"topsBrand",label:"トップスブランド",pool:()=>D.brandsAll});
+    f.push({id:"wearSleeve",label:"着こなし：袖",pool:()=>D.wearSleeve});
+    f.push({id:"wearCollar",label:"着こなし：襟",pool:()=>D.wearCollar});
+    f.push({id:"wearButton",label:"着こなし：ボタン",pool:()=>D.wearButton});
+    f.push({id:"wearHem",label:"着こなし：トップス裾",pool:()=>D.wearHem});
     f.push({id:"bottoms",label:"パンツ／ボトムス",pool:()=>bottomsPoolDyn()});
     f.push({id:"bottomsColor",label:"パンツカラー",pool:()=>D.clothesColor});
     f.push({id:"bottomsDesign",label:"パンツデザイン",pool:()=>D.designBottoms});
     f.push({id:"bottomsFit",label:"パンツサイズ感",pool:()=>D.clothesFit});
-    f.push({id:"bottomsBrand",label:"パンツブランド",pool:()=>D.brands[wmode()]});
+    f.push({id:"bottomsBrand",label:"パンツブランド",pool:()=>D.brandsAll});
+    f.push({id:"bottomsHem",label:"ボトムスの裾の着こなし",pool:()=>D.bottomsHem});
+    f.push({id:"bottomsWaist",label:"腰の履き方",pool:()=>D.bottomsWaist});
+    f.push({id:"belt",label:"ベルト",pool:()=>D.belt,noneDefault:true});
     f.push({id:"uwType",label:"アンダーウェア",pool:()=>byGender(D.underwear)});
     f.push({id:"uwColor",label:"アンダーウェアカラー",pool:()=>D.clothesColor});
     f.push({id:"uwDesign",label:"アンダーウェアデザイン",pool:()=>D.underwearDesign});
@@ -2792,17 +3659,34 @@ function buildFieldDefs(){
     f.push({id:"hatDesign",label:"帽子デザイン",pool:()=>D.hatDesign});
     f.push({id:"hatWear",label:"帽子のかぶり方",pool:()=>D.hatWear});
     f.push({id:"hatBrand",label:"帽子ブランド",pool:()=>D.hatBrand});
-    f.push({id:"shoeType",label:"履物の種類",pool:()=>byGender(D.footwearType)});
+    f.push({id:"earPos",label:"ピアス",pool:()=>D.earPos,noneDefault:true});
+    f.push({id:"earCount",label:"ピアスの数",pool:()=>D.earCount});
+    f.push({id:"earShape",label:"ピアスの形状",pool:()=>D.earShape});
+    f.push({id:"bagType",label:"カバン",pool:()=>bagPoolCtx(),noneDefault:true});
+    f.push({id:"bagColor",label:"カバンの色",pool:()=>D.clothesColor});
+    f.push({id:"bagBrand",label:"カバンブランド",pool:()=>bagBrandPoolCtx()});
+    f.push({id:"bagCarry",label:"カバンの持ち方",pool:()=>bagCarryPoolCtx()});
+    f.push({id:"shoeType",label:"履物の種類",pool:()=>fwTypeRollGuard(byGender(D.footwearType))});
     f.push({id:"shoeBrand",label:"履物ブランド",pool:()=>footwearBrandPool()});
     f.push({id:"shoes",label:"履物モデル",pool:()=>footwearModelPool()});
   }
+  f.push({id:"shoeColorway",label:"カラーウェイ",pool:()=>[
+    P("モデル標準（定番カラー）","the model's standard, most iconic colorway"),
+    P("おまかせ",""),
+    P("部分カラーを指定する","custom part colors as specified below")
+  ]});
   f.push({id:"shoeColorUpper",label:"履物カラー（アッパー）",pool:()=>D.shoePartColor,noneDefault:true});
   f.push({id:"shoeColorSole",label:"履物カラー（ソール）",pool:()=>D.shoePartColor,noneDefault:true});
   f.push({id:"shoeColorLace",label:"履物カラー（靴ひも）",pool:()=>D.shoePartColor,noneDefault:true});
   f.push({id:"shoeShow",label:"靴の表示・着脱",pool:()=>D.shoeShow});
   f.push({id:"shoeWear",label:"靴の履き方",pool:()=>shoeWearPool()});
-  f.push({id:"shoeFit",label:"靴のサイズ感",pool:()=>D.shoeFit});
+  f.push({id:"shoeFit",label:"靴のサイズ感",pool:()=>shoeFitPoolCtx()});
   f.push({id:"shoeCond",label:"靴の状態（形状変化）",pool:()=>shoeCondPool()});
+  f.push({id:"uwaLine",label:"上履きラインカラー",pool:()=>D.uwaLine});
+  f.push({id:"uwaDirt",label:"上履きの汚れ具合（段階）",pool:()=>uwaDirtPool()});
+  f.push({id:"uwaTear",label:"上履きの破れ・傷み",pool:()=>D.uwaTear,noneDefault:true});
+  f.push({id:"uwaRepair",label:"上履きの補修（テープ等）",pool:()=>D.uwaRepair,noneDefault:true});
+  f.push({id:"uwaDoodle",label:"上履きの落書き",pool:()=>D.uwaDoodle,noneDefault:true});
   f.push({id:"glasses",label:"メガネ",pool:()=>D.glasses});
   f.push({id:"glassesBrand",label:"メガネブランド",pool:()=>D.glassesBrand});
   f.push({id:"watch",label:"腕時計",pool:()=>D.watch});
@@ -2818,7 +3702,9 @@ function buildFieldDefs(){
   f.push({id:"sockShape",label:"靴下形状・丈",pool:()=>D.sockShape});
   f.push({id:"sockRib",label:"リブの太さ",pool:()=>D.sockRib,noneDefault:true});
   f.push({id:"sockMaterial",label:"靴下素材",pool:()=>D.sockMaterial});
-  f.push({id:"sockColor",label:"靴下色・柄",pool:()=>D.sockColor});
+  f.push({id:"sockColor",label:"靴下の色",pool:()=>sockColorPoolCtx()});
+  f.push({id:"sockPattern",label:"柄",pool:()=>sockPatternPoolCtx()});
+  f.push({id:"sockMotif",label:"ワンポイントモチーフ",pool:()=>D.sockMotif,noneDefault:true});
   f.push({id:"sockUse",label:"靴下使用感",pool:()=>D.sockUse});
   f.push({id:"sockDirt",label:"靴下の汚れ",pool:()=>D.sockDirt});
   f.push({id:"sockHeelThin",label:"かかとの生地の薄れ",pool:()=>D.sockHeelThin});
@@ -2846,12 +3732,21 @@ function ctxPoolFor(id){
     case "condition":return conditionPoolCtx();
     case "postureCat":return postureCatPoolCtx();
     case "timeOfDay":return timeOfDayPoolCtx();
+    case "light":return lightPoolCtx();
+    case "camera":return eraFilter(FIELDS.find(f=>f.id==="camera").pool());
+    case "gesture":return eraFilter(gesturePool());
+    case "happening":return eraFilter(happeningPool());
+    case "photographer":return eraFilter(D.photographer);
     case "shoeShow":return shoeShowPoolCtx();
     case "companion":return companionRollPool();
     case "sockShape":return sockShapePoolCtx();
     case "sockMaterial":return sockMaterialPoolCtx();
     case "sockColor":return sockColorPoolCtx();
     case "hatType":return hatPoolCtx();
+    case "bagType":return bagPoolCtx();
+    case "bagBrand":return bagBrandPoolCtx();
+    case "bagCarry":return bagCarryPoolCtx();
+    case "shoeCond":return shoeCondPoolCtx();
     case "moment":return momentPoolCtx();
     case "expression":return expressionPoolCtx();
     case "jacket":case "tops":case "bottoms":return ctxClothesPool(id);
@@ -2860,9 +3755,24 @@ function ctxPoolFor(id){
     default:return null;
   }
 }
+const LOC_SINCE=[[/配信部屋/,2015],[/ゲームセンター/,1980],[/コンビニ/,1978],[/カプセル/,1980],[/コインランドリー/,1975]];
+function eraOkLoc(l){
+  const y=eraYearNum(S.era);
+  for(const [re,yr] of LOC_SINCE)if(re.test(l.jp)&&y<yr)return false;
+  return true;
+}
+const isMinorOcc=()=>/高校生|中学生|学生（未成年）/.test(S.occ);
+function fwTypePoolCtx(){return fwTypeRollGuard(fwTypePoolCtxRaw());}
+function fwTypeRollGuard(pool){
+  const loc=state.location&&state.location.value?state.location.value:null;
+  if(loc&&loc.io==="out"&&!RE_SCHOOL_IN.test(loc.jp))return pool.filter(p=>!/上履き/.test(p.jp));
+  if(S.occ!=="高校生")return pool.filter(p=>!/上履き/.test(p.jp));
+  return pool;
+}
 function locRollPoolCtx(){
-  let base=locRollPool();
-  if(uniformOn())base=base.filter(l=>!l.bath&&!l.lh&&!/歓楽街|ラブホテル|水中|パチンコ|自室|寝室|リビング|居酒屋|配信部屋|外気浴|洗い場/.test(l.jp));
+  let base=locRollPool().filter(eraOkLoc);
+  if(isMinorOcc())base=base.filter(l=>!/歓楽街|ラブホテル|パチンコ|居酒屋|喫煙所/.test(l.jp));
+  if(uniformOn())base=base.filter(l=>!l.bath&&!l.lh&&!/歓楽街|ラブホテル|水中|パチンコ|自室|寝室|リビング|居酒屋|配信部屋|外気浴|洗い場|滝行|神輿|セット部屋|ネットカフェ/.test(l.jp));
   return base.length?base:locRollPool();
 }
 function rollOne(id){
@@ -2870,6 +3780,8 @@ function rollOne(id){
   if(["sockHeelThin","sockBallThin","sockToeThin"].includes(id)){rollThin(id);return;}
   if(id==="sockWearing"){rollSockWearing();return;}
   if(id==="sockColor"){rollSockColor();return;}
+  if(id==="sockPattern"){rollSockPattern();return;}
+  if(id==="sockBrand"){const f0=FIELDS.find(x=>x.id==="sockBrand");state.sockBrand.value=rand(f0.pool());applySockBrandPattern();return;}
   if(id==="focus"){rollFocus();return;}
   const f=FIELDS.find(x=>x.id===id);
   const cp=ctxPoolFor(id);
@@ -2906,13 +3818,16 @@ function generateAll(){
   const has=()=>false;
   if(un("location"))state.location.value=rand(locRollPoolCtx());
   rollProps();
+  rollBag();
+  rollCarry();
   /* 3. 時間帯（場所に整合：祭りは夕方以降・オフィスは深夜なし） */
   if(un("timeOfDay"))state.timeOfDay.value=rand(timeOfDayPoolCtx());
+  if(un("light"))state.light.value=rand(lightPoolCtx());
   /* 4. 被写体（状態→体勢→仕草→瞬間→表情→人の多さ の連鎖で整合） */
   if(un("condition"))state.condition.value=rand(conditionPoolCtx());
   if(un("postureCat"))state.postureCat.value=rand(postureCatPoolCtx());
   if(un("posture"))state.posture.value=rand(posturePool());
-  if(un("gesture"))state.gesture.value=rand(gesturePool());
+  if(un("gesture"))state.gesture.value=rand(eraFilter(gesturePool()));
   if(un("moment"))state.moment.value=rand(momentPoolCtx());
   if(un("expression"))state.expression.value=rand(expressionPoolCtx());
   if(un("crowd"))state.crowd.value=rand(crowdPoolCtx());
@@ -2921,14 +3836,28 @@ function generateAll(){
   ["hairStyle","hairColor"].forEach(id=>{if(!has(id))plain(id);});
   /* 5. 撮り方 */
   ["composition","quality","ratio","timing"].forEach(id=>{if(!has(id))plain(id);});
-  if(!has("camera"))plain("camera");
+  if(un("camera"))state.camera.value=rand(eraFilter(FIELDS.find(f=>f.id==="camera").pool()));
   /* 6. 服装（文脈：場所×季節×勤務） */
   rollOutfitCtx(preset);
   if(!uniformOn()){
     rollHat();
+    if(un("earPos")){
+      if(Math.random()<0.72)state.earPos.value=D.earPos[0];
+      else state.earPos.value=rand(D.earPos.slice(1));
+    }
+    ["earCount","earShape"].forEach(plain);
     ["hatColor","hatDesign","hatWear","hatBrand"].forEach(plain);
   }else{
-    if(un("capState")){
+    if(S.occ==="高校生"){
+      ["uniJacket","uniJacketColor","uniJacketBrand","uniTops","uniTopsColor","uniTopsBrand","uniBtmForm","uniBtmDesign","uniBtmColor"].forEach(id=>{
+        if(!un(id))return;
+        const f0=FIELDS.find(x=>x.id===id);
+        let pool=f0.pool();
+        if(id==="uniJacket")pool=isHotSeason()?pool.filter(p=>/上着なし/.test(p.jp)):pool.filter(p=>!/上着なし/.test(p.jp));
+        if(id==="uniTops")pool=isHotSeason()?pool.filter(p=>/半袖|ポロ|開襟|Tシャツ/.test(p.jp)):pool.filter(p=>/長袖|トレーナー|ラガー/.test(p.jp));
+        state[id].value=rand(pool.length?pool:f0.pool());
+      });
+    }else if(un("capState")){
       const r=Math.random();
       state.capState.value=r<0.55?D.uniformCapState[0]:r<0.85?rand(D.uniformCapState.slice(1,4)):D.uniformCapState[4];
     }
@@ -2938,8 +3867,14 @@ function generateAll(){
    "jacketColor","jacketDesign","jacketFit","jacketBrand",
    "topsColor","topsDesign","topsFit","topsBrand",
    "bottomsColor","bottomsDesign","bottomsFit","bottomsBrand"].forEach(plain);
-  if(un("shoeShow"))state.shoeShow.value=rand(shoeShowPoolCtx());
-  ["shoeWear","shoeFit","shoeCond","clothesState",
+  if(un("shoeShow")){
+    const cNow=ctxNow();
+    const outdoorish=["street","vehicle","formalish","nightlife","festival","nature"].includes(cNow);
+    if(outdoorish&&Math.random()<0.93){
+      state.shoeShow.value=D.shoeShow.find(p=>p.jp==="両足履いて表示する")||D.shoeShow[0];
+    }else state.shoeShow.value=rand(shoeShowPoolCtx());
+  }
+  ["shoeWear","shoeFit","shoeCond",
    "glassesBrand","watch","watchBrand","necklace","bracelet","anklet"].forEach(plain);
   rollGlasses();
   /* 服が確定した後、場面に応じて「履物なし（裸足系）」も選ばれる */
@@ -2961,8 +3896,25 @@ function generateAll(){
   if(un("sockShape"))state.sockShape.value=rand(sockShapePoolCtx());
   if(un("sockMaterial"))state.sockMaterial.value=rand(sockMaterialPoolCtx());
   rollSockColor();
+  rollSockPattern();
+  applySockBrandPattern();
+  if(un("sockMotif")&&Math.random()<0.12)state.sockMotif.value=rand(D.sockMotif.slice(1));
   ["sockUse","sockDirt","sockHole"].forEach(plain);
   ["sockHeelThin","sockBallThin","sockToeThin"].forEach(rollThin);
+  /* 8. 職業ワークウェアと場所強制（靴の抽選後に確定させる） */
+  ["wearSleeve","wearCollar","wearButton","wearHem"].forEach(id=>{
+    if(!state[id]||state[id].locked)return;
+    const pool=FIELDS.find(x=>x.id===id).pool();
+    state[id].value=Math.random()<0.55?pool[0]:rand(pool.slice(1));
+  });
+  if(un("bottomsHem")){const r=Math.random();state.bottomsHem.value=r<0.55?D.bottomsHem[0]:rand(D.bottomsHem.slice(1));}
+  if(un("bottomsWaist")){const r=Math.random();state.bottomsWaist.value=r<0.6?rand(D.bottomsWaist.slice(0,2)):rand(D.bottomsWaist.slice(2));}
+  if(un("belt")&&Math.random()<0.25)state.belt.value=rand(D.belt.slice(1));
+  forcedLocOutfit();
+  harmonizeOutfit();
+  applyOccWorkwear();
+  if(state.quality&&/NETFLIX/.test(state.quality.value.jp)&&typeof document!=="undefined")genDramaTitle();
+  snapAuto();
 }
 function rerollAll(){
   generateAll();
@@ -2970,7 +3922,7 @@ function rerollAll(){
 }
 
 /* ================= 季節×服装の整合 ================= */
-const RE_HEAVY_WINTER=/ダウン|ボア|フリース|キルティング|レザージャケット|M-65|カーコート|チェスターコート|ステンカラーコート|トレンチ|ケーブルニット|ウール混|モッズ|ダッフル|ピーコート|ムートン|半纏|タートルネック/;
+const RE_HEAVY_WINTER=/ダウン|ボア|フリース|キルティング|レザージャケット|M-65|カーコート|チェスターコート|ステンカラーコート|トレンチ|ケーブルニット|ウール混|モッズ|ダッフル|ピーコート|ムートン|半纏|タートルネック|モヘア|フランネル/;
 const RE_LIGHT_WINTER=/ニット|スウェット|パーカー|サーマル|カーディガン|ネルシャツ|コーデュロイ/;
 const RE_SUMMER_ONLY=/半袖|ハーフパンツ|デニムショーツ|タンクトップ|浴衣|甚平|ビーチサンダル|サーフパンツ|スイム|ラッシュガード|水着|アロハ|ステテコ|シアサッカー/;
 const RE_MIDSUMMER_NG=/ロングスリーブ|ラガーシャツ|モックネック|ヘビーウェイト/; /* 真夏に不自然な長袖・厚手 */
@@ -3013,14 +3965,14 @@ function seasonalRoll(id){
 ================================================================ */
 function locCtx(loc){
   const j=loc?loc.jp:"";
-  if(/露天風呂|サウナ|大浴場|銭湯|外気浴|洗い場/.test(j))return "bath";
+  if(/露天風呂|サウナ|大浴場|銭湯|外気浴|洗い場|滝行/.test(j))return "bath";
   if(/ロッカールーム|更衣室/.test(j))return "locker";
   if(/自室|寝室|リビング|配信部屋/.test(j))return "home";
   if(/旅館|ビジネスホテル|カプセル|ラブホテルの室内/.test(j))return "stay";
   if(/電車|バス|新幹線|機内|運転席|助手席|後部座席|荷室/.test(j))return "vehicle";
   if(/砂浜|水中/.test(j))return "beach";
   if(/山の頂上|草むら|河川敷|海辺|公園|神社/.test(j))return "nature";
-  if(/縁日|花火大会/.test(j))return "festival";
+  if(/縁日|花火大会|神社の祭り|神輿/.test(j))return "festival";
   if(/オフィス|学校|図書館|自習室|待合室|銀行/.test(j))return "formalish";
   if(/壁紙の部屋/.test(j))return "studio";
   if(/繁華街|歓楽街|ラブホテル街|屋台|居酒屋/.test(j))return "nightlife";
@@ -3058,11 +4010,11 @@ function conditionPoolCtx(){
   const locJ=state.location?state.location.value.jp:"";
   const wj=state.weather?state.weather.value.jp:"";
   return D.condition.filter(p=>{
-    if(/喫煙|電子タバコ/.test(p.jp))return /喫煙所|屋台|歓楽街|繁華街|ベランダ|屋上|ラブホテル街|居酒屋/.test(locJ);
+    if(/喫煙|電子タバコ/.test(p.jp))return !isMinorOcc()&&/喫煙所|屋台|歓楽街|繁華街|ベランダ|屋上|ラブホテル街|居酒屋/.test(locJ);
     if(/湯上がり/.test(p.jp))return ["bath","home","stay","locker"].includes(c);
     if(/雨に濡れ/.test(p.jp))return /雨/.test(wj);
     if(/日焼け/.test(p.jp))return isHotSeason();
-    if(/酔って|ほろ酔い/.test(p.jp))return !uniformOn()&&!["formalish","bath"].includes(c);
+    if(/酔って|ほろ酔い/.test(p.jp))return !uniformOn()&&!isMinorOcc()&&!["formalish","bath"].includes(c);
     if(/汗だく/.test(p.jp))return isHotSeason()||["locker","nature"].includes(c);
     return true;
   });
@@ -3074,6 +4026,8 @@ function postureCatPoolCtx(){
   return D.postureCat.filter(p=>{
     const cat=p.jp;
     if(cat==="動き")return !["bath","vehicle","locker","stay"].includes(c);
+    if(/立ち食い|立ち飲み/.test(locJ)&&(cat==="座る"||cat==="横になる"))return false;
+    if(/満員電車/.test(locJ)&&cat==="横になる")return false;
     if(cat==="横になる"){
       if(severeWxOut())return false;
       if(["home","stay"].includes(c))return true;
@@ -3087,10 +4041,83 @@ function postureCatPoolCtx(){
 /* 時間帯：場所と整合（祭りは夕方以降、オフィス等は深夜を除く） */
 function timeOfDayPoolCtx(){
   const c=ctxNow();
+  if(S.duty==="on"&&!uniformOn()&&!/コンビニ|飲食|ホスト|客引き|キャッチ|バーテン|夜勤|看護|トラック|配達/.test(S.occ))
+    return D.timeOfDay.filter(p=>!/深夜/.test(p.jp));
   if(c==="festival")return D.timeOfDay.filter(p=>/夕方|ブルーアワー|夜|夕暮れ/.test(p.jp));
   if(c==="formalish")return D.timeOfDay.filter(p=>!/深夜/.test(p.jp));
   if(c==="nightlife")return D.timeOfDay.filter(p=>/夕方|ブルーアワー|夜|深夜|夕暮れ/.test(p.jp));
   return D.timeOfDay;
+}
+/* 年代アナクロニズム：撮影年代に存在しない表現を抽選から除外 */
+function eraFilter(pool){
+  const y=eraYearNum(S.era);
+  return pool.filter(p=>{
+    const j=p.jp;
+    if(/スマホ|自撮り|セルフィー/.test(j))return y>=2010;
+    if(/配信|LIVE|ストーリーズ|インスタ|YouTube|サムネイル|切り抜き/.test(j))return y>=2013;
+    if(/チェキ/.test(j))return y>=1998;
+    if(/ドライブレコーダー/.test(j))return y>=2005;
+    if(/IC(カード)?/.test(j))return y>=2001;
+    if(/タブレット|ワイヤレスイヤホン/.test(j))return y>=2016;
+    return true;
+  });
+}
+/* 光：時間帯×天候×場所のバケット設計（ベース光＋場所のアクセント光） */
+function lightPoolCtx(){
+  const tj=(state.timeOfDay&&state.timeOfDay.value)?state.timeOfDay.value.jp:"";
+  const wj=(state.weather&&state.weather.value)?state.weather.value.jp:"";
+  const loc=state.location?state.location.value:null;
+  const locJ=loc?loc.jp:"";
+  const io=loc?loc.io:"out";
+  const c=ctxNow();
+  const F=re=>D.light.filter(p=>re.test(p.jp));
+  const night=/夜|深夜/.test(tj);
+  const dusk=/夕方|夕暮れ|ブルーアワー/.test(tj);
+  const dawn=/早朝|朝/.test(tj);
+  const clear=/快晴|^晴/.test(wj);
+  const rainy=/雨|梅雨/.test(wj);
+  const snowy=/雪|吹雪|みぞれ/.test(wj);
+  const cloudy=/曇|もや|霧/.test(wj);
+  let pool=[F(/指定なし/)[0]];
+  const add=re=>{pool=pool.concat(F(re));};
+  /* ベース光（時間帯×天候） */
+  if(night){
+    if(io==="out"){
+      add(/街灯/);
+      if(clear)add(/月明かり/);
+      if(snowy)add(/雪明かり/);
+      if(rainy)add(/雨上がりの反射/);
+      if(/雷雨/.test(wj))add(/雷光/);
+      add(/ヘッドライト/);
+    }else add(/蛍光灯|白熱灯|間接照明/);
+  }else if(dusk){
+    if(!rainy&&!snowy)add(/ゴールデンアワー|ブルーアワー/);
+    if(io==="out"&&cloudy)add(/薄曇り|曇天のフラット/);
+    if(io==="in")add(/窓際|白熱灯|間接照明/);
+  }else{ /* 朝〜昼 */
+    if(io==="out"){
+      if(clear)add(/順光|逆光|サイド光/);
+      if(cloudy||rainy)add(/曇天のフラット|薄曇り/);
+      if(rainy)add(/雨上がりの反射/);
+      if(dawn&&clear)add(/ゴールデンアワー/);
+      if(/雷雨/.test(wj))add(/雷光/);
+    }else{
+      add(/窓際|蛍光灯/);
+      if(clear)add(/窓際/);
+    }
+  }
+  /* 場所のアクセント光 */
+  if(io==="out"&&night&&["nightlife","street"].includes(c))add(/ネオン|看板のライトアップ/);
+  if(/縁日|祭り|神輿|花火/.test(locJ)&&(night||dusk))add(/提灯/);
+  if(/花火/.test(locJ)&&(night||dusk))add(/花火の光/);
+  if(/川|海|プール|水中|滝|噴水|水辺/.test(locJ)&&!night)add(/水面の反射/);
+  if(clear&&!night&&io==="out"&&/公園|並木|神社|森|山|庭/.test(locJ))add(/木漏れ日/);
+  if(["home"].includes(c)||/配信|オフィス|自習室|ゲームセンター|ネットカフェ/.test(locJ))add(/モニターの光/);
+  if(/配信/.test(locJ))add(/リングライト/);
+  if(/会見/.test(locJ))add(/フラッシュの明滅/);
+  /* 重複除去 */
+  const seen=new Set();
+  return pool.filter(p=>p&&!seen.has(p.jp)&&seen.add(p.jp));
 }
 /* 瞬間：体勢と整合（横になって「かっこつけ」等を除外） */
 function momentPoolCtx(){
@@ -3136,9 +4163,16 @@ function sockMaterialPoolCtx(){
 }
 function sockColorPoolCtx(){
   const t=(state.sockType&&state.sockType.value)?state.sockType.value.jp:"";
-  if(t==="ビジネスソックス")return D.sockColor.filter(p=>!/蛍光|タイダイ|花柄|レトロライン|ボーダー（2色）/.test(p.jp));
-  if(t==="スポーツソックス")return D.sockColor.filter(p=>!/小紋|アーガイル|千鳥格子|花柄/.test(p.jp));
+  if(t==="ビジネスソックス")return D.sockColor.filter(p=>!/蛍光|ピンク|ミント/.test(p.jp));
   return D.sockColor;
+}
+function sockPatternPoolCtx(){
+  const t=(state.sockType&&state.sockType.value)?state.sockType.value.jp:"";
+  let pool=D.sockPattern;
+  if(t==="ビジネスソックス")pool=pool.filter(p=>!/タイダイ|レトロ|カレッジ|トゥ＆ヒール|ノルディック|フェアアイル|大きめドット|パネル/.test(p.jp));
+  if(t==="スポーツソックス")pool=pool.filter(p=>!/小紋|アーガイル|千鳥|グレン|タータン|ハウスチェック|ヘリンボーン|フェアアイル|ノルディック|ジャカード/.test(p.jp));
+  if(isHotSeason())pool=pool.filter(p=>!/ノルディック|フェアアイル|ケーブル編み/.test(p.jp));
+  return pool;
 }
 function sockRibOk(){
   const t=(state.sockType&&state.sockType.value)?state.sockType.value.jp:"";
@@ -3173,6 +4207,148 @@ function shoeShowPoolCtx(){
   if(["bath","beach","home","stay","locker"].includes(c))return D.shoeShow;
   return D.shoeShow.filter(p=>!/履物なし/.test(p.jp));
 }
+/* 履物の経年・色褪せ・汚れ：カテゴリ別プール */
+const SHOE_COND_CAT={
+  uwabaki:[
+    P("つま先ラバーの黒ずみ","the rubber toe cap gone gray-black with grime"),
+    P("甲キャンバスの落ちない汚れ","set-in gray stains on the canvas upper"),
+    P("うっすら黄ばみ","a faint overall yellowing"),
+    P("ゴムバンドが伸びてゆるい","the instep band stretched loose"),
+    P("かかとの踏み癖","the heels creased from being stepped on"),
+    P("週末に洗いたての白さ","freshly washed weekend whiteness"),
+    P("ソール縁の黒スジ","black scuff lines along the sole edge"),
+    P("名前欄のにじみ（判読不能でよい）","the name panel ink blurred — illegible is fine"),
+    P("PVCのくすみ（サンダル）","the PVC dulled and cloudy"),
+    P("足形の跡（サンダル）","a darkened footprint worn into the footbed")
+  ],
+  leather:[
+    P("全体が飴色に経年変化","aged to a warm amber patina overall"),
+    P("つま先だけ色褪せ","color faded only at the toe"),
+    P("かかとの色剥げ","color worn off at the heel counter"),
+    P("履きジワが深い","deep flex creases across the vamp"),
+    P("艶が抜けてマットに","the shine gone, surface turned matte"),
+    P("磨き直した強い艶","freshly polished to a strong shine"),
+    P("雨染みの跡","water-spot stains from rain"),
+    P("コバ（ソール縁）の汚れ","grime along the welt edge"),
+    P("日焼けによる色ヤケ","sun-faded discoloration"),
+    P("雨で色が抜けた斑","blotchy color loss from rain"),
+    P("履きジワ部分だけ色落ち","color worn away along the flex creases")
+  ],
+  sneaker:[
+    P("ソールが黄ばんでいる","the midsole yellowed with age"),
+    P("ミッドソールに細かなひび","fine cracks in the midsole"),
+    P("アッパーがくすんで汚れている","the upper dulled and dirty"),
+    P("靴ひもだけ黒ずんでいる","only the laces gone gray with dirt"),
+    P("かかとが片減りしている","the heel worn down unevenly"),
+    P("つま先のゴムが摩耗","the toe rubber worn smooth"),
+    P("洗いたてで白さが戻っている","freshly washed, whiteness restored"),
+    P("泥はねの跡が残る","dried mud speckles remaining"),
+    P("洗いすぎの色落ち","color faded from repeated washing"),
+    P("日焼けの退色","sun-bleached fading"),
+    P("デニムの色移り","blue denim dye transferred onto the upper"),
+    P("ロゴ・プリントのかすれ","the logo print worn and cracked")
+  ],
+  sandal:[
+    P("ソールに足形の跡","a darkened footprint worn into the footbed"),
+    P("ストラップが伸びてくたっと","the straps stretched and slack"),
+    P("鼻緒がゆるんでいる","the thong loosened from wear"),
+    P("日焼けの色むら","sun-faded uneven color")
+  ],
+  boots:[
+    P("オイルが抜けて乾いた表情","the leather dry, its oils faded"),
+    P("傷とスクラッチが多い","scuffed and scratched all over"),
+    P("ソールがすり減っている","the sole visibly worn down"),
+    P("日焼けの退色","sun-faded discoloration"),
+    P("オイル抜けの色ムラ","uneven color where the oils have faded")
+  ],
+  slipper:[
+    P("ぺたんこに潰れている","flattened from long use"),
+    P("かかとを踏んだ癖がつく","the heel permanently creased from being stepped on"),
+    P("毛玉・毛羽立ち","pilled and fuzzy with wear"),
+    P("色あせ","faded coloring")
+  ],
+  rubber:[
+    P("泥はねの跡","dried mud splatter"),
+    P("白い粉ふき（ブルーム）","a whitish rubber bloom on the surface"),
+    P("退色して白っぽい","faded toward a chalky tone")
+  ],
+  pumps:[
+    P("ヒール先端の削れ","the heel tips worn down"),
+    P("つま先の擦れ","scuffing at the toe"),
+    P("擦れによる色落ち","color rubbed away from scuffing")
+  ]
+};
+function shoeCondPoolCtx(){return shoeCondPool();}
+/* カバン：職業・場面・勤務に整合 */
+function bagPoolCtx(){
+  const c=ctxNow();
+  const lj=state.location&&state.location.value?state.location.value.jp:"";
+  if(["bath","locker"].includes(c)||/滝行|神輿|水中|党大会/.test(lj))return [D.bagType[0]];
+  let pool=D.bagType;
+  if(uniformOn()&&S.occ!=="高校生")return [D.bagType[0]];
+  if(S.occ==="高校生")pool=pool.filter(p=>/なし|スクールバッグ|エナメル|リュック|トート|ボディ|サコッシュ/.test(p.jp));
+  else if(S.duty==="on"&&/営業|セールス|銀行|会社|コンサル|事務|アナウンサー/.test(S.occ))
+    pool=pool.filter(p=>/なし|ブリーフ|3WAY|トート|ショルダー/.test(p.jp));
+  else if(S.duty==="on"&&OCC_WORKWEAR[S.occ])pool=pool.filter(p=>/なし|ボディ|サコッシュ|リュック/.test(p.jp));
+  return pool;
+}
+function bagBrandPoolCtx(){
+  let pool=D.bagBrand;
+  const t=state.bagType&&state.bagType.value?state.bagType.value.jp:"";
+  if(/ブリーフ|3WAY/.test(t))pool=pool.filter(p=>/指定しない|PORTER|master|TUMI|Samsonite|ACE|ノーブランド/.test(p.jp));
+  if(/エナメル|スクールバッグ/.test(t))pool=pool.filter(p=>/指定しない|ノーブランド|MIZUNO|ASICS/.test(p.jp)||/指定しない|ノーブランド/.test(p.jp));
+  return pool;
+}
+function bagCarryPoolCtx(){
+  const t=state.bagType&&state.bagType.value?state.bagType.value.jp:"";
+  if(/リュック/.test(t))return D.bagCarryStyle.filter(p=>/背負う|片肩掛け|手に提げる/.test(p.jp));
+  if(/ボディ|サコッシュ|メッセンジャー|ショルダー/.test(t))return D.bagCarryStyle.filter(p=>/斜め掛け|肩に掛ける/.test(p.jp));
+  if(/ブリーフ|クラッチ|手提げ/.test(t))return D.bagCarryStyle.filter(p=>/手に提げる|小脇|肘/.test(p.jp));
+  if(/スクールバッグ/.test(t))return D.bagCarryStyle.filter(p=>/手に提げる|肩に掛ける|手首/.test(p.jp));
+  return D.bagCarryStyle;
+}
+function rollBag(){
+  if(!state.bagType||state.bagType.locked)return;
+  const pool=bagPoolCtx();
+  const c=ctxNow();
+  const pr=["home","stay"].includes(c)?0.08:(S.occ==="高校生"?0.65:0.45);
+  if(Math.random()<pr&&pool.length>1)state.bagType.value=rand(pool.slice(1));
+  else state.bagType.value=pool[0];
+  ["bagColor","bagBrand","bagCarry"].forEach(id=>{
+    if(state[id]&&!state[id].locked){
+      const f0=FIELDS.find(x=>x.id===id);
+      if(f0)state[id].value=rand(f0.pool());
+    }
+  });
+}
+/* 持ち物：季節・年代・場所と整合 */
+function carryPoolCtx(){
+  const c=ctxNow();
+  const y=eraYearNum(S.era);
+  const wj=(state.weather&&state.weather.value)?state.weather.value.jp:"";
+  if(c==="bath"||c==="locker")return D.carry.filter(p=>!p.jp||p.bathOK||p.jp==="なし");
+  const locJ2=state.location&&state.location.value?state.location.value.jp:"";
+  const bagOn=state.bagType&&state.bagType.value&&state.bagType.value.jp!=="なし";
+  return D.carry.filter(p=>{
+    if(p.bathOnly)return false;
+    if(p.locRe&&!p.locRe.test(locJ2))return false;
+    if(bagOn&&/バッグ|リュック|鞄|ショッパー|エコバッグ/.test(p.jp))return false;
+    if(p.since&&y<p.since)return false;
+    if(p.hot&&!isHotSeason())return false;
+    if(p.cold&&!isColdSeason())return false;
+    if(/傘/.test(p.jp)&&!/雨|曇/.test(wj)&&p.jp==="ビニール傘")return /雨/.test(wj);
+    return true;
+  });
+}
+function rollCarry(){
+  ["carry1","carry2"].forEach((id,i)=>{
+    if(!state[id]||state[id].locked)return;
+    const pool=carryPoolCtx();
+    const pr=i===0?0.35:0.10;
+    if(Math.random()<pr&&pool.length>1)state[id].value=rand(pool.slice(1));
+    else state[id].value=pool[0];
+  });
+}
 /* 帽子：季節・場所に合う候補（入浴系・室内私的空間では基本なし） */
 function hatPoolCtx(){
   const c=ctxNow();
@@ -3194,14 +4370,32 @@ function rollHat(){
   else state.hatType.value=pool[0];
 }
 /* 靴下の色柄：無地を70%で優先 */
-const RE_SOCK_PATTERN=/ボーダー|ライン|ドット|チェック|アーガイル|小紋|千鳥|花柄|タイダイ|蛍光|レトロ|ロゴ|刺繍|ワンポイント|リブ切替|カラーブロック/;
 function rollSockColor(){
-  if(!state.sockColor||state.sockColor.locked)return;
-  const pool=sockColorPoolCtx();
-  const solid=pool.filter(p=>!RE_SOCK_PATTERN.test(p.jp));
-  const pattern=pool.filter(p=>RE_SOCK_PATTERN.test(p.jp));
-  if(Math.random()<0.7&&solid.length)state.sockColor.value=rand(solid);
-  else state.sockColor.value=rand(pattern.length?pattern:pool);
+  if(state.sockColor&&!state.sockColor.locked)state.sockColor.value=rand(sockColorPoolCtx());
+}
+function rollSockPattern(){
+  if(!state.sockPattern||state.sockPattern.locked)return;
+  const pool=sockPatternPoolCtx();
+  if(Math.random()<0.6)state.sockPattern.value=pool[0];
+  else state.sockPattern.value=rand(pool.slice(1).length?pool.slice(1):pool);
+}
+/* ブランドの代表柄（選択後に変更可能） */
+const SOCK_BRAND_PATTERN={
+  "HALISON":["無地","ヘリンボーン"],
+  "Aquascutum":["ハウスチェック（クラブチェック）"],
+  "Brooks Brothers":["アーガイル","ピンドット","細ボーダー"],
+  "CHICSTOCKS":["センター1本ライン","バイカラー（切替）"],
+  "BURBERRY":["ハウスチェック（クラブチェック）"],
+  "POLO RALPH LAUREN":["無地","アーガイル"],
+  "Tabio":["無地","小紋柄"],
+  "靴下屋":["無地","マルチボーダー"]
+};
+function applySockBrandPattern(){
+  const b=(state.sockBrand&&state.sockBrand.value)?state.sockBrand.value.jp:"";
+  const cands=SOCK_BRAND_PATTERN[b];
+  if(!cands||!state.sockPattern||state.sockPattern.locked)return;
+  const pool=sockPatternPoolCtx().filter(p=>cands.includes(p.jp));
+  if(pool.length)state.sockPattern.value=rand(pool);
 }
 /* 靴下の薄れ：低確率の重み付き抽選（なし≈55%／軽度≈30%／重度≈15%） */
 function rollThin(id){
@@ -3261,7 +4455,7 @@ function ctxClothesPool(id){
   return null;
 }
 /* 履物の種類：文脈＋季節＋天候で決定 */
-function fwTypePoolCtx(){
+function fwTypePoolCtxRaw(){
   const c=ctxNow();
   const locJ=state.location?state.location.value.jp:"";
   const wj=state.weather?state.weather.value.jp:"";
@@ -3430,7 +4624,6 @@ function fillSetup(){
   const sSel=document.getElementById("s-season");
   D.season.forEach((p,i)=>sSel.insertAdjacentHTML("beforeend",`<option value="${i}">${p.jp}</option>`));
   document.getElementById("intent-sel").innerHTML=INTENTS.map(i=>`<option value="${i.key}">${i.jp}</option>`).join("");
-  document.getElementById("outfit-preset-sel").innerHTML=OUTFIT_PRESETS.map(i=>`<option value="${i.key}">${i.jp}</option>`).join("");
   const kDate=document.getElementById("s-kdate");
   const today=new Date();
   kDate.value=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
@@ -3459,6 +4652,8 @@ function createProfile(){
   S.gender=document.getElementById("s-gender").value;
   S.era=document.getElementById("s-era").value;
   S.occ=document.getElementById("s-occ").value;
+  if(S.occ==="ニート"||S.occ==="悠々自適（定年後）")S.duty="off";
+
   S.duty=document.getElementById("s-duty").value;
   S.place=document.getElementById("s-place").value;
   S.charText=(document.getElementById("s-char").value||"").trim();
@@ -3512,16 +4707,101 @@ function renderHead(){
   ];
   dl.innerHTML=pairs.map(([t,d])=>`<div class="pair"><dt>${t}</dt><dd>${d}</dd></div>`).join("");
 }
+/* ================= ドラマタイトル生成 ================= */
+let DRAMA_TITLE="";let DRAMA_FONT="mincho";
+const DRAMA_T={
+  pre:["深夜の","放課後、","真夏の","それでも","いつかの","雨上がりの","となりの","最後の","僕らの","無敵の"],
+  noun:{
+    "配信":"配信者","銭湯|風呂|サウナ|湯":"湯けむり","学校|教室|廊下|校門|通学":"制服",
+    "駅|ホーム|電車":"終電","コンビニ":"コンビニ","居酒屋|屋台":"酔いどれ","党大会":"同志",
+    "滝":"修行","神輿|祭り|縁日":"祭りばやし","パチンコ":"確変","ネットカフェ":"ブース",
+    "海|砂浜":"波打ち際","公園":"ベンチ","事故|事件":"目撃者","会見":"沈黙"
+  },
+  suf:["は眠らない","の憂鬱","、ふたたび","クロニクル","日和","のち晴れ","にて","戦記","のしっぽ","、始めました"]
+};
+function genDramaTitle(){
+  const lj=state.location&&state.location.value?state.location.value.jp:"";
+  let noun="彼";
+  for(const k in DRAMA_T.noun){if(new RegExp(k).test(lj)){noun=DRAMA_T.noun[k];break;}}
+  if(S.theme)noun=S.theme;
+  DRAMA_TITLE=(Math.random()<0.6?rand(DRAMA_T.pre):"")+noun+rand(DRAMA_T.suf);
+  const inp=document.getElementById("drama-title-inp");
+  if(inp)inp.value=DRAMA_TITLE;
+  return DRAMA_TITLE;
+}
+function injectDramaBox(){
+  const sec=document.getElementById("sec-shot");
+  if(!sec||sec.querySelector("#drama-title-inp"))return;
+  const div=document.createElement("div");
+  div.className="tip";div.style.margin="6px 0";
+  div.innerHTML=`NETFLIX風サムネのタイトル：<input id="drama-title-inp" type="text" placeholder="2〜8文字推奨" style="width:34%;padding:5px 6px;border:1px solid var(--line-strong);border-radius:4px">
+  <button class="btn sub small" id="drama-gen" type="button">自動生成</button>
+  <select id="drama-font"><option value="mincho">明朝体</option><option value="gothic">ゴシック体</option><option value="none">文字なし</option></select>`;
+  (sec.querySelector(".sec-body")||sec).appendChild(div);
+  div.querySelector("#drama-gen").addEventListener("click",()=>{genDramaTitle();renderOutput();});
+  div.querySelector("#drama-title-inp").addEventListener("input",e=>{DRAMA_TITLE=e.target.value.trim();renderOutput();});
+  div.querySelector("#drama-font").addEventListener("change",e=>{DRAMA_FONT=e.target.value;renderOutput();});
+}
+let UWA_DOODLE_FREE="";
+function injectDoodleInput(){
+  const sec=document.getElementById("sec-shoes")||document.getElementById("sec-footwear");
+  if(!sec||sec.querySelector("#uwa-doodle-free"))return;
+  const div=document.createElement("div");
+  div.className="tip";
+  div.style.margin="6px 0";
+  div.innerHTML=`落書き自由入力（上の落書きで「自由入力」選択時に使用）：<input id="uwa-doodle-free" type="text" placeholder="例：恐竜の絵、好きなバンドのロゴ風" style="width:60%;padding:5px 6px;border:1px solid var(--line-strong);border-radius:4px">`;
+  const body=sec.querySelector(".sec-body")||sec;
+  body.appendChild(div);
+  div.querySelector("#uwa-doodle-free").addEventListener("input",e=>{UWA_DOODLE_FREE=e.target.value.trim();renderOutput();});
+}
+function injectOutfitPresetBar(){
+  const sec=document.getElementById("sec-outfit");
+  if(!sec)return;
+  const bar=document.createElement("div");
+  bar.className="intent-bar";
+  bar.style.margin="8px 0 12px";
+  bar.innerHTML=`<label>服装プリセット <select id="outfit-preset-sel"></select></label>
+    <button class="btn sub small" id="outfit-preset-apply" type="button">この系統で服装を整える</button>
+    <label style="margin-left:6px">着こなし <select id="kikonashi-sel"></select></label>
+    <button class="btn sub small" id="kikonashi-apply" type="button">適用</button>
+    <span class="tip">季節・年代・勤務に合うプリセットだけが表示されます（🔒固定は保持）</span>`;
+  const firstRow=sec.querySelector(".sec-body")||sec;
+  firstRow.insertBefore(bar,firstRow.firstChild);
+  const sel=bar.querySelector("#outfit-preset-sel");
+  sel.innerHTML=outfitPresetChoices().map(i=>`<option value="${i.key}">${i.jp}</option>`).join("");
+  bar.querySelector("#outfit-preset-apply").addEventListener("click",()=>applyOutfitPreset(sel.value));
+  const ksel=bar.querySelector("#kikonashi-sel");
+  ksel.innerHTML=KIKONASHI_PRESETS.map(i=>`<option value="${i.key}">${i.jp}</option>`).join("");
+  bar.querySelector("#kikonashi-apply").addEventListener("click",()=>applyKikonashi(ksel.value));
+}
+const AUTO={};
+function snapAuto(){FIELDS.forEach(f=>{if(f.id&&state[f.id])AUTO[f.id]=state[f.id].value;});}
+function renderTopSummary(){
+  const el0=document.getElementById("topsum");
+  if(!el0)return;
+  const g=id=>state[id]&&state[id].value?state[id].value.jp:"—";
+  const items=[["場所",g("location"),"sec-scene"],["季節",g("season"),"sec-scene"],["時間帯",g("timeOfDay"),"sec-scene"],
+    ["光",g("light"),"sec-scene"],["注目",g("focus"),"sec-subject"],
+    ["トップス",state.uniform||state.uniJacket?(state.uniJacket?g("uniTops"):g("uniform")):g("tops"),"sec-outfit"],
+    ["靴",g("shoes"),"sec-outfit"],["靴下",g("sockColor")+"・"+g("sockPattern"),"sec-socks"]];
+  el0.innerHTML=items.map(([k,v,sec])=>`<span class="ts" data-sec="${sec}"><b>${k}</b>：${v.length>12?v.slice(0,12)+"…":v}</span>`).join("");
+  el0.querySelectorAll(".ts").forEach(e=>e.addEventListener("click",()=>{
+    const t=document.getElementById(e.dataset.sec);
+    if(t){t.open=true;t.scrollIntoView({behavior:"smooth",block:"start"});}
+  }));
+}
 function renderRows(){
   const wrap=document.getElementById("rows");
   wrap.innerHTML="";
+  const WARN_IDS=new Set();
+  try{getWarnings().forEach(w=>{if(w.fix&&w.fix.id)WARN_IDS.add(w.fix.id);});}catch(e){}
   let curBody=null;
   FIELDS.forEach(f=>{
     if(f.section){
       const det=document.createElement("details");
       det.className="sec";det.open=true;det.id=f.secId;
       const cnt=FIELDS.filter(x=>x.id&&FIELDS.indexOf(x)>FIELDS.indexOf(f)&&(FIELDS.slice(FIELDS.indexOf(f)+1,FIELDS.indexOf(x)+1).every(y=>!y.section))).length;
-      det.innerHTML=`<summary>${f.section}<span class="cnt">${cnt}項目</span></summary><div class="sec-body"></div>`;
+      det.innerHTML=`<summary>${f.section}<span class="cnt">${cnt}項目</span></summary><div class="sec-body"></div><span class="sec-badge" data-badge="${f.secId}"></span>`;
       wrap.appendChild(det);
       curBody=det.querySelector(".sec-body");
       return;
@@ -3537,6 +4817,51 @@ function renderRows(){
         <button class="mini roll-btn" title="引き直す">🎲</button>
         <button class="mini lock-btn" title="固定切替">🔒</button>
       </div>`;
+    const applyRowBg=()=>{
+      if(!f.id)return;
+      row.classList.remove("warn-bg","none-bg","chg-bg");
+      const NONE_RE=/^(なし|指定なし|指定しない)/;
+      let warnHit=false;
+      try{getWarnings().forEach(w0=>{if(w0.fix&&w0.fix.id===f.id)warnHit=true;});}catch(e){}
+      const val=state[f.id]&&state[f.id].value?state[f.id].value.jp:"";
+      const PARENT_OFF={hatColor:"hatType",hatDesign:"hatType",hatWear:"hatType",hatBrand:"hatType",
+        earCount:"earPos",earShape:"earPos",bagColor:"bagType",bagBrand:"bagType",bagCarry:"bagType",
+        capOff:"capState"};
+      let parentOff=false;
+      const par=PARENT_OFF[f.id];
+      if(par&&state[par]&&state[par].value){
+        const pv=state[par].value.jp;
+        parentOff=par==="capState"?pv!=="脱帽":NONE_RE.test(pv);
+      }
+      if(/^uwa/.test(f.id)){
+        const t=state.shoeType&&state.shoeType.value?state.shoeType.value.jp:"";
+        const sj=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
+        if(!(/上履き|校内/.test(t)||RE_UWA_MODEL.test(sj)))parentOff=true;
+      }
+      if(warnHit)row.classList.add("warn-bg");
+      else if(parentOff||NONE_RE.test(val))row.classList.add("none-bg");
+      else if(state[f.id]&&(state[f.id].locked||(AUTO[f.id]&&state[f.id].value!==AUTO[f.id])))row.classList.add("chg-bg");
+    };
+    row._applyBg=applyRowBg;
+    if(f.id){
+      const NONE_RE=/^(なし|指定なし|指定しない)/;
+      const val=state[f.id]&&state[f.id].value?state[f.id].value.jp:"";
+      const PARENT_OFF={hatColor:"hatType",hatDesign:"hatType",hatWear:"hatType",hatBrand:"hatType",
+        earCount:"earPos",earShape:"earPos",bagColor:"bagType",bagBrand:"bagType",bagCarry:"bagType",
+        capOff:"capState"};
+      let parentOff=false;
+      const par=PARENT_OFF[f.id];
+      if(par&&state[par]&&state[par].value){
+        const pv=state[par].value.jp;
+        parentOff=par==="capState"?pv!=="脱帽":NONE_RE.test(pv);
+      }
+      if(/^uwa/.test(f.id)){
+        const t=state.shoeType&&state.shoeType.value?state.shoeType.value.jp:"";
+        const sj=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
+        if(!(/上履き|校内/.test(t)||RE_UWA_MODEL.test(sj)))parentOff=true;
+      }
+      applyRowBg();
+    }
     curBody.appendChild(row);
     const jpEl=row.querySelector(".r-jp"),enEl=row.querySelector(".r-en"),sel=row.querySelector("select");
     const refresh=()=>{
@@ -3547,21 +4872,35 @@ function renderRows(){
       }
       jpEl.textContent=st.value.jp;
       enEl.textContent=st.value.en;
-      sel.innerHTML=pool.map((p,i)=>`<option value="${i}">${p.jp}</option>`).join("");
+      if(f.id==="location"){
+        const groups={};
+        pool.forEach((p,i)=>{const c=locCatName(p);(groups[c]=groups[c]||[]).push([i,p.jp]);});
+        sel.innerHTML=Object.keys(groups).map(g=>
+          `<optgroup label="${g}">`+groups[g].map(([i,jp])=>`<option value="${i}">${jp}</option>`).join("")+`</optgroup>`).join("");
+      }else{
+        sel.innerHTML=pool.map((p,i)=>`<option value="${i}">${p.jp}</option>`).join("");
+      }
       sel.value=pool.indexOf(st.value);
       row.classList.toggle("locked",st.locked);
+      if(row._applyBg)row._applyBg();
     };
     refresh();f._refresh=refresh;
     sel.addEventListener("change",e=>{
       st.value=f.pool()[+e.target.value];
       if(f.id==="location"){rollProps();refreshIds(["prop1","prop2","prop3","gesture","happening"]);}
       if(f.id==="uniform"){if(state.shoes&&!state.shoes.locked)state.shoes.value=uniformShoePool()[0];refreshIds(["shoes"]);}
+      if(f.id==="uniJacket"){if(state.uniJacketColor&&!state.uniJacketColor.locked)state.uniJacketColor.value=uniJacketColorPool()[0];if(state.uniJacketBrand&&!state.uniJacketBrand.locked)state.uniJacketBrand.value=uniJacketBrandPool()[0];refreshIds(["uniJacketColor","uniJacketBrand"]);}
+      if(f.id==="uniTops"){if(state.uniTopsColor&&!state.uniTopsColor.locked)state.uniTopsColor.value=uniTopsColorPool()[0];if(state.uniTopsBrand&&!state.uniTopsBrand.locked)state.uniTopsBrand.value=uniTopsBrandPool()[0];refreshIds(["uniTopsColor","uniTopsBrand"]);}
+      if(f.id==="shoes"){refreshIds(["uwaDirt"]);}
+      if(f.id==="shoes"&&uniformOn()){if(state.shoeWear&&!state.shoeWear.locked)state.shoeWear.value=uniShoeWearPool()[0];refreshIds(["shoeWear"]);}
       if(f.id==="tops"){
         if(isWafuku()&&state.bottoms&&!state.bottoms.locked)state.bottoms.value=WAFUKU_NONE;
-        refreshIds(["clothesState","bottoms"]);
+        refreshIds(["wearSleeve","wearCollar","wearButton","wearHem","bottoms"]);
       }
-      if(f.id==="fashion")refreshIds(["clothesState"]);
-      if(f.id==="sockType")refreshIds(["sockShape","sockMaterial","sockColor"]);
+      if(f.id==="fashion")refreshIds(["wearSleeve","wearCollar","wearButton","wearHem"]);
+      if(f.id==="sockType")refreshIds(["sockShape","sockMaterial","sockColor","sockPattern"]);
+      if(f.id==="sockBrand"){applySockBrandPattern();refreshIds(["sockPattern"]);}
+      if(f.id==="bagType")refreshIds(["bagBrand","bagCarry"]);
       if(f.id==="shoeType"){
         if(state.shoeBrand&&!state.shoeBrand.locked)state.shoeBrand.value=rand(footwearBrandPool());
         if(state.shoes&&!state.shoes.locked)state.shoes.value=rand(footwearModelPool());
@@ -3582,6 +4921,7 @@ function renderRows(){
       if(f.id==="footScene"){applyFootPreset();renderRows();renderOutput();return;}
       if(f.id==="posture")refreshIds(["gesture"]);
       refresh();renderOutput();
+      document.querySelectorAll("#rows .row").forEach(r=>{if(r._applyBg)r._applyBg();});
     });
     row.querySelector(".roll-btn").addEventListener("click",()=>{
       rollOne(f.id);
@@ -3589,7 +4929,7 @@ function renderRows(){
       if(f.id==="uniform")refreshIds(["shoes"]);
       if(f.id==="tops"){
         if(isWafuku()&&state.bottoms&&!state.bottoms.locked)state.bottoms.value=WAFUKU_NONE;
-        refreshIds(["clothesState","bottoms"]);
+        refreshIds(["wearSleeve","wearCollar","wearButton","wearHem","bottoms"]);
       }
       if(f.id==="shoeType")refreshIds(["shoeBrand","shoes","shoeCond","shoeWear","shoeFit"]);
       if(f.id==="shoeBrand")refreshIds(["shoes"]);
@@ -3607,6 +4947,45 @@ function refreshIds(ids){FIELDS.forEach(f=>{if(f.id&&ids.includes(f.id)&&f._refr
 
 /* ================= 履物カタログ（種類→ブランド→モデル） ================= */
 const FW={
+  "上履き・校内履き":{
+    "ムーンスター":[
+      Object.assign(P("ハイスクール4型S（センターゴア型上履き）",
+        "Moonstar 'High School 4 S' uwabaki — the definitive Japanese school indoor shoe. White woven-cotton canvas upper with a wide 2E rounded last; at the instep sits ONE TRIANGULAR elastic center gore (apex pointing toward the toe), stitched flat into the throat — no laces, no strap, the gore itself in white/gray elastic. The flat sole is WHITE synthetic rubber when new; the school-year accent color appears on the RUBBER parts only — the rounded toe guard and the foxing tape running around the sole edge. A small white name panel sits on the heel tab."),
+        {jpd:"白い綿布キャンバスのアッパー、幅2Eのゆったりした丸い足型。甲の中央に頂点をつま先へ向けた三角形のゴム（センターゴア）が1枚だけ平らに縫い込まれ、ひもやバンドはない（ゴア自体は白〜グレーのゴム）。ソールは新品時は白の合成ゴムで、学年カラーが入るのはゴム部分——丸いつま先のトゥガードと、ソールの縁をぐるりと巡るフォクシングテープ——だけ。かかとのタブに白い名前欄"}),
+      Object.assign(P("月星体育1型A（体育館シューズ）",
+        "Moonstar 'Taiiku 1 A' gym shoes — white cotton-canvas lace-up gym shoes. Low-cut canvas upper with a mesh-vented quarter, 5 pairs of small metal eyelets with flat white cotton laces; an AMBER (translucent gum) non-marking rubber sole with a fine herringbone tread, its foxing tape rolling up over the toe as a rubber toe bumper. A colored accent line runs along the foxing; padded collar, name space inside the tongue."),
+        {jpd:"白い綿キャンバスのローカットひも靴。サイドにメッシュの通気部、小さな金属ハトメ5対に白の平ひも。飴色（半透明の生ゴム）のノンマーキングソールは細かなヘリンボーン柄で、フォクシングテープがつま先まで巻き上がってゴムのトゥバンパーになる。フォクシング沿いに学校カラーのライン、履き口はパッド入り、ベロの裏に名前欄"}),
+      Object.assign(P("スクールサンダル02（甲ベルクロ型）",
+        "Moonstar 'School Sandal 02' — an indoor school sandal built with sports-sandal engineering. Synthetic-leather upper in navy with white stitching; the instep closes with ONE WIDE hook-and-loop (velcro) strap, its rounded end tab lifting slightly when worn loose. Open heel. The footbed is compression-molded EVA with a contoured arch, and a wet-grip rubber outsole layer is bonded underneath for slippery floors; a name space inside the strap."),
+        {jpd:"スポーツサンダルの設計を持つ校内用サンダル。紺の合皮アッパーに白いステッチ、甲は幅広の面ファスナー（ベルクロ）1本で閉じ、緩めに履くと丸いストラップ端が少し浮く。かかとは開放。フットベッドは土踏まずの立体成型が入った圧縮EVAで、その下に水場用グリップの合成ゴムのアウトソールを貼った二層底。ストラップ内側に名前欄"})
+    ],
+    "アサヒシューズ":[
+      Object.assign(P("ハイスクールフロアーVK（甲ゴムバンド・カラートゥ＆ソール）",
+        "Asahi 'High School Floor VK' uwabaki — the classic white ballet-type school shoe where the COLORED rubber forms BOTH the toe cap AND the entire sole in the same material and color (navy, red, green etc.). Off-white cotton canvas upper; ONE wide flat elastic band crosses the instep, its ends stitched under the throat edges; the smooth colored-rubber toe cap flows into the matching colored rubber outsole and its low foxing rim in one continuous color; a clean seam line where the rubber meets the canvas; white fabric insole; a woven binding tape around the collar; name space at the heel pull tab."),
+        {jpd:"生成りがかった白の綿キャンバスに、色ゴムが「つま先キャップ」と「ソール全体」の両方を同素材・同色（紺・赤・緑など）で構成する定番バレー型。甲を横断する1本の平ゴムバンドの両端は履き口の縁の下に縫い込まれる。滑らかな色ゴムのトゥキャップはそのまま同色のアウトソールと低いフォクシングの縁へ一続きにつながり、キャンバスとの境にきれいな縫い合わせライン。中は白い布のインソール、履き口に織りテープの縁取り、かかとの吊りタブに名前欄"})
+    ],
+    "教育シューズ":[
+      Object.assign(P("教育バレーDX（白×ライン・甲ゴムバンド）",
+        "Kyoiku 'Balley DX' uwabaki — a sturdy white ballet-type school shoe. Dense white canvas upper, ONE wide instep elastic band, a thick rubber toe guard with a raised rim, firm flat rubber sole with a pronounced foxing tape; the school-color line runs along the foxing and around the collar; reinforced heel counter, name space at the heel."),
+        {jpd:"丈夫な白のバレー型上履き。目の詰まった白キャンバスに甲の幅広ゴムバンド1本。厚みのあるゴムのトゥガードは縁がわずかに盛り上がり、硬めのフラットソールにははっきりしたフォクシングテープ。学年カラーのラインはフォクシング沿いと履き口をぐるりと走る。かかと芯は補強され、かかとに名前欄"})
+    ],
+    "ナイガイ":[
+      Object.assign(P("ニューモード（スリッパ型校内履き）",
+        "Naigai 'New Mode' — a slipper-type indoor school shoe. A closed vinyl-leather vamp covers the toes (toe box closed, low and rounded), while the ENTIRE heel is open like a slipper; white or navy body with a simple piping along the vamp edge, flat wear-resistant sole with a shallow tread. It slaps softly at the heel with each step."),
+        {jpd:"スリッパ型の校内履き。ビニールレザーの甲がつま先を低く丸く覆い（トゥは閉じている）、かかと側はスリッパのように全開放。白または紺のボディで、甲の縁にシンプルなパイピング。耐摩耗の浅い溝のフラットソール。歩くたびにかかとで軽くパタパタと鳴る"})
+    ],
+    "ジャストモード":[
+      Object.assign(P("No.700（一体成型・校内サンダル）",
+        "Justmode 'No.700' school sandals — one-piece molded school sandals in green, navy or wine. A WIDE molded front band covers the forefoot (molding seam visible along its edge), NO heel strap, a flat sole with molded-in tread and a slightly upturned rounded toe; the matte surface shows fine molding texture."),
+        {jpd:"緑・紺・ワインの一体成型校内サンダル。幅広の成型前バンドが前足部を覆い（縁に成型の継ぎ目ラインが見える）、かかとバンドはない。成型で刻まれたトレッドのフラットソール、つま先はわずかに反り上がる。マットな表面には細かな成型の質感"})
+    ],
+    "ノーブランド":[
+      Object.assign(P("PVC前つっかけサンダル",
+        "generic school PVC sandals — one-piece molded matte navy PVC. ONE wide molded toe band with a thick rounded edge, NO heel strap, a flat sole with molded-in tread, a slightly upturned rounded toe; the PVC shows a soft dull sheen and faint mold lines."),
+        {jpd:"マットな紺のPVC一体成型。厚く丸い縁の幅広前バンド1本、かかとバンドなし。成型トレッドのフラットソール、わずかに反ったつま先。PVC特有の鈍い光沢と、うっすら残る成型ライン"})
+    ]
+  },
+
   "スニーカー":{
     "NIKE":[
       P("エアフォース1（白）","white NIKE Air Force 1 sneakers"),
@@ -3618,7 +4997,10 @@ const FW={
       P("コルテッツ","NIKE Cortez sneakers"),
       P("ペガサス（ランニング）","NIKE Air Zoom Pegasus running shoes"),
       P("エアマックス97（シルバー）","NIKE Air Max 97 in silver"),
-      P("エアモアアップテンポ","NIKE Air More Uptempo sneakers")
+      P("エアモアアップテンポ","NIKE Air More Uptempo sneakers"),
+      P("エアマックス1","NIKE Air Max 1 sneakers"),
+      P("ブレーザー MID","NIKE Blazer Mid sneakers"),
+      P("ダンク HIGH","NIKE Dunk High sneakers")
     ],
     "adidas":[
       P("サンバ","adidas Samba sneakers"),
@@ -3627,7 +5009,8 @@ const FW={
       P("スーパースター","adidas Superstar sneakers"),
       P("キャンパス","adidas Campus sneakers"),
       P("フォーラム LOW","adidas Forum Low sneakers"),
-      P("ウルトラブースト","adidas Ultraboost running shoes")
+      P("ウルトラブースト","adidas Ultraboost running shoes"),
+      P("ハンドボール スペツィアル","adidas Handball Spezial sneakers")
     ],
     "New Balance":[
       P("574","New Balance 574 sneakers"),
@@ -3635,13 +5018,16 @@ const FW={
       P("2002R","New Balance 2002R sneakers"),
       P("990v6","New Balance 990v6 sneakers"),
       P("327","New Balance 327 sneakers"),
-      P("550","New Balance 550 sneakers")
+      P("550","New Balance 550 sneakers"),
+      P("993","New Balance 993 sneakers"),
+      P("1906R","New Balance 1906R sneakers")
     ],
     "CONVERSE":[
       P("オールスター（黒ハイカット）","black high-top Converse All Star sneakers"),
       P("オールスター（白ローカット）","white low-top Converse All Star sneakers"),
       P("ジャックパーセル","Converse Jack Purcell sneakers"),
-      P("ワンスター","Converse One Star sneakers")
+      P("ワンスター","Converse One Star sneakers"),
+      P("CT70風ハイカット","Chuck 70-style high-top Converse")
     ],
     "VANS":[
       P("オールドスクール","Vans Old Skool sneakers"),
@@ -3671,6 +5057,17 @@ const FW={
     "MIZUNO":[
       P("ウエーブライダー","Mizuno Wave Rider running shoes"),
       P("コートセレクト","Mizuno court-style sneakers")
+    ],
+    "HOKA":[
+      P("ボンダイ","HOKA Bondi max-cushion sneakers"),
+      P("クリフトン","HOKA Clifton running shoes")
+    ],
+    "On":[P("クラウド","On Cloud sneakers")],
+    "Salomon":[P("XT-6","Salomon XT-6 trail sneakers")],
+    "MERRELL":[P("ジャングルモック","Merrell Jungle Moc slip-ons")],
+    "ムーンスター":[
+      P("810s","Moonstar 810s work-derived sneakers"),
+      P("ジムクラシック","Moonstar gym classic sneakers")
     ],
     "ノーブランド":[
       P("無地スニーカー（白）","plain white unbranded sneakers"),
@@ -3705,6 +5102,15 @@ const FW={
       P("コインローファー","Haruta coin loafers"),
       P("タッセルローファー","Haruta tassel loafers")
     ],
+    "HAWKINS":[
+      P("プレーントゥ","Hawkins plain-toe leather shoes"),
+      P("ストレートチップ","Hawkins cap-toe shoes")
+    ],
+    "KENFORD":[
+      P("ストレートチップ","Kenford cap-toe shoes"),
+      P("Uチップ","Kenford U-tip shoes")
+    ],
+    "madras":[P("ビットローファー","Madras bit loafers")],
     "G.H.BASS":[
       P("ローガン（ビットなし）","G.H. Bass Logan loafers"),
       P("ラーソン","G.H. Bass Larson penny loafers")
@@ -3730,6 +5136,9 @@ const FW={
     ],
     "Timberland":[P("6インチプレミアム","Timberland 6-inch premium boots")],
     "Danner":[P("ダナーライト","Danner Light hiking boots")],
+    "CHIPPEWA":[P("エンジニアブーツ","Chippewa engineer boots")],
+    "SOREL":[P("カリブー","Sorel Caribou winter boots")],
+    "UGG":[P("クラシックショート","UGG Classic Short boots")],
     "ノーブランド":[
       P("サイドゴアブーツ","unbranded side-gore chelsea boots"),
       P("編み上げワークブーツ","unbranded lace-up work boots"),
@@ -3737,6 +5146,7 @@ const FW={
     ]
   },
   "サンダル":{
+    "NIKE":[P("ベナッシ","NIKE Benassi slide sandals")],
     "NIKE":[
       P("ベナッシ（シャワーサンダル）","NIKE Benassi slide sandals"),
       P("オフコート スライド","NIKE Offcourt slide sandals")
@@ -3756,6 +5166,8 @@ const FW={
     ],
     "KEEN":[P("ニューポート","KEEN Newport hybrid sandals")],
     "クロックス":[P("クラシック クロッグ","Crocs Classic clogs")],
+    "SUBU":[P("冬用ダウンサンダル","SUBU insulated winter sandals")],
+    "OOFOS":[P("ウーアー（リカバリー）","OOFOS OOahh recovery slides")],
     "ノーブランド":[
       P("便所サンダル（ビニール・昭和風）","classic Showa-era vinyl restroom sandals (benjo sandals)"),
       P("健康サンダル（イボイボ付き）","acupressure health sandals with nubbed insoles"),
@@ -3805,6 +5217,7 @@ const FW={
     "FootJoy":[P("ゴルフシューズ","FootJoy golf shoes")]
   },
   "作業靴・安全靴":{
+    "セーフティスニーカー":[P("ハイカット安全スニーカー","high-top sneaker-type safety shoes"),P("ローカット安全スニーカー","low-cut sneaker-type safety shoes")],
     "ミドリ安全":[P("安全靴","Midori Anzen safety shoes")],
     "ASICS":[P("ウィンジョブ（安全スニーカー）","ASICS Winjob safety sneakers")],
     "ノーブランド":[P("黒のベルクロ留め作業靴","black velcro-fastened work shoes")]
@@ -3827,9 +5240,13 @@ const FW={
   }
 };
 function fwType(){return (state.shoeType&&state.shoeType.value)?state.shoeType.value.jp:"スニーカー";}
+const FW_BRAND_SINCE={"HOKA":2012,"On":2014,"Salomon":2015,"SUBU":2016,"OOFOS":2012,"UGG":1995,"ムーンスター":2019,"CHICSTOCKS":2016};
 function footwearBrandPool(){
   const t=FW[fwType()]||FW["スニーカー"];
-  return Object.keys(t).map(b=>P(b,b==="ノーブランド"?"unbranded":b));
+  const y=eraYearNum(S.era);
+  return Object.keys(t)
+    .filter(b=>!(FW_BRAND_SINCE[b]&&y<FW_BRAND_SINCE[b]))
+    .map(b=>P(b,b==="ノーブランド"?"unbranded":b));
 }
 function footwearModelPool(){
   const t=FW[fwType()]||FW["スニーカー"];
@@ -3848,15 +5265,48 @@ function isLacedShoes(){
   return ["スニーカー","革靴・ローファー","ブーツ","スパイク・競技用シューズ","作業靴・安全靴"].includes(t);
 }
 function fwCat(){
-  if(uniformOn())return "laced";
+  if(uniformOn()&&S.occ!=="高校生")return "laced";
   const t=state.shoeType?state.shoeType.value.jp:"";
-  if(["サンダル","スリッパ","和装履物"].includes(t))return "sandal";
+  if(t==="上履き・校内履き")return "uwabaki";
+  if(t==="スリッパ")return "slipper";
+  if(["サンダル","和装履物"].includes(t))return "sandal";
   if(t==="長靴")return "rubber";
   if(t==="パンプス")return "pumps";
+  if(t==="ブーツ")return "boots";
+  if(/革靴|ローファー/.test(t)&&state.shoes&&state.shoes.value&&/ローファー/.test(state.shoes.value.jp))return "loafer";
   return "laced";
 }
-function shoeCondPool(){return D.shoeCond[fwCat()];}
-function shoeWearPool(){return D.shoeWear[fwCat()];}
+function shoeFitPoolCtx(){
+  const t=fwType();
+  if(/上履き|校内/.test(t))return [
+    P("ジャストサイズ","a proper just-right fit"),
+    P("ワンサイズ大きく甲のバンドが浮く","one size too big — the instep band lifts away from the foot"),
+    P("かかとを踏める余裕がある","loose enough to step on the heels"),
+    P("小さくてつま先が当たる（買い替え時期）","outgrown and tight — the toes pressing the toe cap"),
+    P("かかとに指一本の余り","a finger's width of room at the heel"),
+    P("大きめでパタパタ鳴る（サンダル）","oversized so they slap with each step (sandals)"),
+    P("小さくてかかとがはみ出す（サンダル）","too small, the heel hanging off the back (sandals)")
+  ];
+  return D.shoeFit;
+}
+function shoeCondPool(){
+  const c=fwCat();
+  const base=D.shoeCond[c]
+    ||(c==="boots"||c==="loafer"?D.shoeCond.laced:null)
+    ||(c==="slipper"?D.shoeCond.sandal:null)
+    ||D.shoeCond.laced;
+  const t=fwType();
+  let extra=[];
+  if(/革靴|ローファー/.test(t))extra=SHOE_COND_CAT.leather;
+  else if(/スニーカー|スパイク|作業靴/.test(t))extra=SHOE_COND_CAT.sneaker;
+  else if(/サンダル|和装/.test(t))extra=SHOE_COND_CAT.sandal;
+  else if(/ブーツ/.test(t))extra=SHOE_COND_CAT.boots;
+  else if(/スリッパ/.test(t))extra=SHOE_COND_CAT.slipper;
+  else if(/長靴/.test(t))extra=SHOE_COND_CAT.rubber;
+  else if(/パンプス/.test(t))extra=SHOE_COND_CAT.pumps;
+  return base.concat(extra);
+}
+function shoeWearPool(){if(uniformOn()&&S.occ==="高校生")return uniShoeWearPool();return D.shoeWear[fwCat()];}
 function getWarnings(){
   const w=[];
   const v=id=>state[id]?state[id].value.jp:"";
@@ -3879,8 +5329,12 @@ function getWarnings(){
     w.push({msg:"ビジネスソックスに厚手スポーツ形状は不自然です。",fix:fixTo("sockShape","薄手ビジネス形状"),fixLabel:"薄手ビジネス形状に"});
   if(v("sockType")==="スポーツソックス"&&/シルク/.test(v("sockMaterial")))
     w.push({msg:"スポーツソックスにシルク混は不自然です。",fix:fixTo("sockMaterial","吸汗速乾素材"),fixLabel:"吸汗速乾素材に"});
-  if(v("sockType")==="ビジネスソックス"&&/蛍光|タイダイ/.test(v("sockColor")))
-    w.push({msg:"ビジネスソックスに蛍光・タイダイ柄は不自然です。",fix:fixTo("sockColor","黒"),fixLabel:"色を黒に"});
+  if(v("sockType")==="ビジネスソックス"&&/蛍光/.test(v("sockColor")))
+    w.push({msg:"ビジネスソックスに蛍光色は不自然です。",fix:fixTo("sockColor","黒"),fixLabel:"色を黒に"});
+  if(v("sockType")==="ビジネスソックス"&&/タイダイ|レトロ|カレッジ|大きめドット/.test(v("sockPattern")))
+    w.push({msg:"ビジネスソックスに派手な柄は不自然です。",fix:fixTo("sockPattern","無地"),fixLabel:"柄を無地に"});
+  if(isHotSeason()&&/ノルディック|フェアアイル|ケーブル編み/.test(v("sockPattern")))
+    w.push({msg:"夏に冬向けの編み柄（ノルディック等）が指定されています。",fix:fixTo("sockPattern","無地"),fixLabel:"柄を無地に"});
   if(!sockRibOk())
     w.push({msg:"足袋型ソックスに極太リブは不自然です。",fix:fixTo("sockRib","細リブ（1×1）"),fixLabel:"細リブに"});
   /* リブ編み形状×リブ太さ未指定 */
@@ -3957,6 +5411,27 @@ function getWarnings(){
     w.push({msg:"「目をつむった」事故と表情の指定が重なっています（表情は口元中心に解釈されます）。",fix:null});
   if(v("reflection")!=="なし"&&v("backStory")!=="なし"&&v("trace")!=="なし")
     w.push({msg:"隠し要素を3つとも入れると情報過多になりがちです（1〜2つ推奨）。",fix:fixTo("trace","なし"),fixLabel:"時間の痕跡をなしに"});
+  {
+    const y=eraYearNum(S.era);
+    if(loc&&!eraOkLoc(loc))
+      w.push({msg:`撮影年代（${y}年）にはまだ存在しない場所が指定されています。`,fixFn:()=>{if(state.location&&!state.location.locked){state.location.value=rand(locRollPoolCtx());rollProps();}},fixLabel:"場所を引き直す"});
+    if(/スマホ|自撮り/.test(v("camera")+v("gesture"))&&y<2010)
+      w.push({msg:`撮影年代（${y}年）にスマホ関連の表現が指定されています。`,fix:null});
+    if(/配信|LIVE|ストーリーズ|サムネイル/.test(v("quality"))&&y<2013)
+      w.push({msg:`撮影年代（${y}年）に配信系の仕上がりが指定されています。`,fix:null});
+  }
+  if(isMinorOcc()&&loc&&/歓楽街|ラブホテル|パチンコ|居酒屋/.test(loc.jp))
+    w.push({msg:"未成年の職業設定で成人向けの場所が指定されています。",fixFn:()=>{if(state.location&&!state.location.locked){state.location.value=rand(locRollPoolCtx());rollProps();}},fixLabel:"場所を引き直す"});
+  if(isMinorOcc()&&/酔って|ほろ酔い|喫煙|電子タバコ/.test(v("condition")))
+    w.push({msg:"未成年の職業設定に飲酒・喫煙の状態が指定されています。",fix:fixTo("condition","指定なし（自然体）"),fixLabel:"状態を自然体に"});
+  if(state.posture&&!postureLocOk(state.posture.value))
+    w.push({msg:"体勢の詳細（階段・つり革・カウンター等）がこの場所に存在しません。",fixFn:()=>{if(state.posture&&!state.posture.locked)state.posture.value=rand(posturePool());},fixLabel:"体勢を引き直す"});
+  if(loc&&/立ち食い|立ち飲み/.test(loc.jp)&&/^(座る|横になる)$/.test(v("postureCat")))
+    w.push({msg:"立ち食い・立ち飲みの店で座る/横になる体勢が指定されています。",fixFn:()=>{if(state.postureCat&&!state.postureCat.locked){state.postureCat.value=D.postureCat.find(p=>p.jp==="立つ");rollPostureDetail&&rollPostureDetail();}},fixLabel:"立つ体勢に"});
+  if(loc&&/党大会/.test(loc.jp)&&!uniformOn()&&!/人民服|Yシャツ|ジャケット|スーツ/.test(v("tops")+v("jacket")))
+    w.push({msg:"党大会の場面ですが服装がフォーマル系（人民服・スーツ）ではありません。",fix:null});
+  if(loc&&/会見/.test(loc.jp)&&!uniformOn()&&!/スーツ|ジャケット|Yシャツ/.test(v("jacket")+v("tops")))
+    w.push({msg:"会見場の場面ですが服装がスーツ・ジャケット系ではありません。",fix:null});
   /* 初期設定の屋内外×場所 */
   if(S.place!=="any"&&loc&&loc.io!==S.place)
     w.push({msg:`初期設定は「${S.place==="in"?"室内":"屋外"}」ですが、場所が${loc.io==="in"?"室内":"屋外"}になっています。`,fixFn:()=>{if(state.location&&!state.location.locked){state.location.value=rand(locRollPoolCtx());rollProps();}},fixLabel:"場所を引き直す"});
@@ -3973,6 +5448,8 @@ function getWarnings(){
     w.push({msg:"勤務中の設定でパチンコ店が指定されています。",fix:null});
   if(v("uiOverlay")&&v("uiOverlay")!=="描かない（クリーンな画面）"&&!(/配信|LIVE|ストーリーズ|サムネイル/.test(v("quality"))||/配信/.test(v("camera"))||/配信/.test(v("photographer"))))
     w.push({msg:"配信UIの描画が指定されていますが、仕上がり・カメラ・撮影者が配信系ではありません。",fix:fixTo("uiOverlay","描かない（クリーンな画面）"),fixLabel:"UIを描かないに"});
+  if(uniformOn()&&state.earPos&&v("earPos")!=="なし")
+    w.push({msg:"制服勤務中にピアスが指定されています。",fix:fixTo("earPos","なし"),fixLabel:"ピアスをなしに"});
   if(state.hatType&&/ニット帽/.test(v("hatType"))&&isHotSeason())
     w.push({msg:"真夏・初夏にニット帽が指定されています。",fix:fixTo("hatType","なし"),fixLabel:"帽子をなしに"});
   if(state.hatType&&/ストローハット|サンバイザー/.test(v("hatType"))&&isColdSeason())
@@ -4092,7 +5569,7 @@ const COUNTS=[
 ];
 
 function renderOutput(){
-  const s=id=>state[id]?state[id].value:null;
+  const s=id=>(state[id]&&state[id].value)?state[id].value:{jp:"",en:""};
   const target=document.getElementById("target-sel").value;
   const count=COUNTS[+document.getElementById("count-sel").value];
   const dutyJP=S.duty==="on"?"仕事中":"オフ（休日）";
@@ -4169,20 +5646,95 @@ function renderOutput(){
   const shoesOff=/脱いでいる/.test(s("shoeShow").jp);
   const fwName=state.shoeType?`${s("shoeType").jp}：${s("shoeBrand").jp==="ノーブランド"?"":s("shoeBrand").jp+" "}${s("shoes").jp}`:s("shoes").jp;
   const fwNameEN=s("shoes").en;
+  const cw=state.shoeColorway?s("shoeColorway").jp:"おまかせ";
   const partEN=[];
-  if(!noFootwear&&s("shoeColorUpper").en)partEN.push(`upper ${s("shoeColorUpper").en}`);
-  if(s("shoeColorSole").en)partEN.push(`sole ${s("shoeColorSole").en}`);
+  if(cw==="モデル標準（定番カラー）"&&!noFootwear)partEN.push("in the model's standard, most iconic colorway");
+  if(cw==="部分カラーを指定する"&&!noFootwear&&s("shoeColorUpper").en)partEN.push(`upper ${s("shoeColorUpper").en}`);
+  if(cw==="部分カラーを指定する"&&s("shoeColorSole").en)partEN.push(`sole ${s("shoeColorSole").en}`);
   if(!isSandalShoes()&&s("shoeColorLace").en)partEN.push(`laces ${s("shoeColorLace").en}`);
   const shoeColEN=partEN.length?` Custom part colors: ${partEN.join(", ")}.`:"";
   const partJP=[];
-  if(s("shoeColorUpper").en)partJP.push(`アッパー：${s("shoeColorUpper").jp}`);
-  if(s("shoeColorSole").en)partJP.push(`ソール：${s("shoeColorSole").jp}`);
+  if(cw==="モデル標準（定番カラー）")partJP.push("モデル標準の定番カラー");
+  if(cw==="部分カラーを指定する"&&s("shoeColorUpper").en)partJP.push(`アッパー：${s("shoeColorUpper").jp}`);
+  if(cw==="部分カラーを指定する"&&s("shoeColorSole").en)partJP.push(`ソール：${s("shoeColorSole").jp}`);
   if(!isSandalShoes()&&s("shoeColorLace").en)partJP.push(`靴ひも：${s("shoeColorLace").jp}`);
   const shoeColJP=partJP.length?`\n　 部分カラー：${partJP.join(" ／ ")}`:"";
   const fashionOn=state.fashion&&s("fashion").jp!=="指定なし";
   const band=trendBand();
   const fashionEN=fashionOn?(s("fashion").jp==="年代の流行に忠実"&&band?`\nFashion direction: ${band.en}`:`\nFashion direction: ${s("fashion").en}.`):"";
   const fashionJP=fashionOn?(s("fashion").jp==="年代の流行に忠実"&&band?`\n　 ファッション方針：${band.jp}`:`\n　 ファッション方針：${s("fashion").jp}`):"";
+  const shoesJp=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
+  const isUwabaki=/上履き|校内/.test(fwType())||RE_UWA_MODEL.test(shoesJp);
+  const uwaModel=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
+  const uwaSandal=/サンダル|スリッパ型|ニューモード|前つっかけ|No\.700/.test(uwaModel);
+  const uwaLineEN=(isUwabaki&&!uwaSandal&&state.uwaLine)?` Trim line color: ${s("uwaLine").en}.`:"";
+  const uwaLineJP=(isUwabaki&&!uwaSandal&&state.uwaLine)?`／ライン色：${s("uwaLine").jp}`:"";
+  const uwaTearOn=isUwabaki&&state.uwaTear&&s("uwaTear").jp!=="なし";
+  const uwaRepairOn=isUwabaki&&state.uwaRepair&&s("uwaRepair").jp!=="なし";
+  const uwaDoodleOn=isUwabaki&&state.uwaDoodle&&s("uwaDoodle").jp!=="なし";
+  const doodleFree=(typeof UWA_DOODLE_FREE!=="undefined"&&UWA_DOODLE_FREE)?UWA_DOODLE_FREE:"";
+  const uwaExtraEN=[
+    uwaTearOn?`Damage: ${s("uwaTear").en}.`:"",
+    uwaRepairOn?`Repair: ${s("uwaRepair").en}.`:"",
+    uwaDoodleOn?`Doodles: ${s("uwaDoodle").jp==="自由入力"?`hand-drawn "${doodleFree}"`:s("uwaDoodle").en} — drawn in ballpoint / permanent marker on the rubber toe cap and canvas side, with the slightly uneven line quality of real hand drawing.`:""
+  ].filter(Boolean).join(" ");
+  const uwaExtraJP=[
+    uwaTearOn?`破れ：${s("uwaTear").jp}`:"",
+    uwaRepairOn?`補修：${s("uwaRepair").jp}`:"",
+    uwaDoodleOn?`落書き：${s("uwaDoodle").jp==="自由入力"?doodleFree:s("uwaDoodle").jp}（ボールペン・油性マジックの手描き線でつま先ラバーと甲に）`:""
+  ].filter(Boolean).join("／");
+  const uwaBlockEN=isUwabaki?`
+School indoor footwear — render with product-level fidelity:
+- Model & construction: ${s("shoes").en}.${!uwaSandal&&state.uwaLine?` Accent color (${s("uwaLine").en}): ${/ハイスクール4/.test(s("shoes").jp)?"on the rubber toe guard and the foxing tape around the sole edge":/体育|ジムスター/.test(s("shoes").jp)?"as the line along the amber-sole foxing":/フロアーVK/.test(s("shoes").jp)?"as the color of the rubber toe cap AND the matching rubber sole":"as the trim line around the toe cap and heel tab"}.`:""}
+- Fit: ${s("shoeFit").en}.
+- Condition: ${s("shoeCond").en}.${state.uwaDirt?`\n- Soiling stage: ${s("uwaDirt").en}.`:""}${state.uwaTear&&s("uwaTear").jp!=="なし"?`
+- Damage: ${s("uwaTear").en}.`:""}${state.uwaRepair&&s("uwaRepair").jp!=="なし"?`
+- Repair: ${s("uwaRepair").en}.`:""}${state.uwaDoodle&&s("uwaDoodle").jp!=="なし"?`
+- Doodles: ${s("uwaDoodle").jp==="自由入力"?`hand-drawn "${(typeof UWA_DOODLE_FREE!=="undefined"&&UWA_DOODLE_FREE)||""}"`:s("uwaDoodle").en} — ballpoint / permanent-marker linework on the rubber toe cap and canvas side, slightly uneven like real hand drawing.`:""}
+- Fabric & texture: the true material of real school shoes — canvas weave or PVC sheen, the matte gum-rubber sole, grime settling into seams; never a smooth plastic-toy rendering.`:"";
+  const uwaBlockJP=isUwabaki?`
+■ 上履き・校内履きの詳細（実物の製品として忠実に描く）：
+　 モデルと構造：${s("shoes").jp}${s("shoes").jpd?`\n　 　 ${s("shoes").jpd}`:""}${!uwaSandal&&state.uwaLine?` ／ アクセント色：${s("uwaLine").jp}（${/ハイスクール4/.test(s("shoes").jp)?"つま先のトゥガードとソール縁のフォクシングテープに":/体育|ジムスター/.test(s("shoes").jp)?"飴色ソールのフォクシング沿いのラインに":/フロアーVK/.test(s("shoes").jp)?"ゴム製つま先キャップと同素材のソール全体の色として":"つま先キャップとかかとのラインに"}）`:""}
+　 サイズ感：${s("shoeFit").jp} ／ 状態：${s("shoeCond").jp}${state.uwaDirt?`\n　 汚れ段階：${s("uwaDirt").jp}`:""}${state.uwaTear&&s("uwaTear").jp!=="なし"?`\n　 破れ：${s("uwaTear").jp}`:""}${state.uwaRepair&&s("uwaRepair").jp!=="なし"?`\n　 補修：${s("uwaRepair").jp}`:""}${state.uwaDoodle&&s("uwaDoodle").jp!=="なし"?`\n　 落書き：${s("uwaDoodle").jp==="自由入力"?((typeof UWA_DOODLE_FREE!=="undefined"&&UWA_DOODLE_FREE)||""):s("uwaDoodle").jp}（ボールペン・油性マジックの手描き線でつま先ラバーと甲に）`:""}
+　 質感：実物の校内履きの素材感（キャンバスの織り目やPVCの光沢、生ゴム色のマットなソール、縫い目にたまる汚れ）まで再現。おもちゃのような滑らかな塗り表現にしない`:"";
+  const uwaType=(function(){
+    const mj=uwaModel;
+    if(/ハイスクール4|センターゴア/.test(mj))return "gore";
+    if(/フロアーVK|バレーDX|ゴムバンド/.test(mj))return "band";
+    if(/体育|ジムスター/.test(mj))return "gym";
+    if(/スクールサンダル02|ベルクロ/.test(mj))return "velcro";
+    if(/ニューモード|スリッパ型/.test(mj))return "slipper";
+    if(/No\.700|前つっかけ|成型/.test(mj))return "molded";
+    return "";
+  })();
+  const UWA_GUARDS={
+    gore:[" Keep the exact center-gore construction: the single TRIANGULAR elastic gore at the instep must stay visible and triangular; never redraw as a strap-type ballet shoe, a laced shoe, or a sneaker; keep the one-piece rubber toe guard and the flat cupsole.",
+      "※センターゴア構造の厳守（甲の三角ゴムは必ず三角形のまま見せる。バンド型・ひも靴・スニーカーに描き換えない。一体成型トゥガードとフラットなカップソールを保つ）"],
+    band:[" Keep the exact band construction: ONE wide flat elastic band across the instep — never a triangular gore, never laces, never a mary-jane buckle strap; keep the rubber toe cap seam visible.",
+      "※バンド構造の厳守（甲の平ゴムバンドは1本のみ。三角ゴア化・ひも化・ストラップシューズ（バックル）化しない。つま先キャップの縫い合わせラインを保つ）"],
+    gym:[" Keep the exact gym-shoe construction: canvas lace-up with the AMBER translucent gum sole and rolled-up toe bumper — never a modern running shoe, never thick cushioned midsoles, never white rubber soles.",
+      "※体育館シューズ構造の厳守（キャンバスのひも靴＋飴色の半透明ゴム底＋巻き上げトゥバンパー。ランニングシューズ化・厚底化・白ソール化しない）"],
+    velcro:[" Keep the exact construction: ONE wide velcro strap over the instep with an open heel — never two thin sport-slide straps, never logo-print straps, never a closed heel.",
+      "※構造の厳守（甲は幅広ベルクロ1本・かかと開放。細い2本ストラップのスポーツサンダル化・ロゴ入りストラップ化・かかと付き化しない）"],
+    slipper:[" Keep the exact slipper construction: a CLOSED low toe box with a fully open heel — never an open-toe sandal, never a clog with a heel strap, never a shower slide.",
+      "※スリッパ構造の厳守（つま先は閉じ・かかとは全開放。つま先の開いたサンダル化・かかとストラップ付きクロッグ化・シャワーサンダル化しない）"],
+    molded:[" Keep the exact molded construction: one-piece molding with a single wide front band and NO heel strap — never a thong flip-flop, never a Crocs-style clog with holes, never logo sport slides.",
+      "※一体成型構造の厳守（幅広前バンド1本・かかとバンドなしの一体成型。鼻緒のビーサン化・穴あきクロックス化・ロゴ入りスポーツサンダル化しない）"]
+  };
+  const uwaGuardSel=UWA_GUARDS[uwaType]||null;
+  const uwaGuardEN0=uwaGuardSel?uwaGuardSel[0]:"";
+  const uwaGuardJP0=uwaGuardSel?uwaGuardSel[1]:"";
+  const uwaGuardEN_legacy=isUwabaki?(uwaSandal
+    ?" Keep the exact school-sandal construction: never redraw them as sports slides with logo straps, shower sandals, clogs, or thong flip-flops; the wide front band and open heel stay correctly shaped even when dangling from the toes or stepped on."
+    :" Keep the exact uwabaki construction: never redraw them as sneakers, laced shoes, or ballet flats; the instep closure (whether a triangular center gore, a single elastic band, or a V-gore) and the rubber toe guard must stay visible and correctly shaped even in close-up or worn loose at the heel."):"";
+  const uwaGuardJP_legacy=isUwabaki?(uwaSandal
+    ?"※学校サンダルの成型フォルム厳守（スポーツサンダル化・シャワーサンダル化・クロックス化・鼻緒化の禁止。つま先でぶら下げても形を保つ）"
+    :"※上履きの構造厳守（スニーカー化・ひも靴化・バレエシューズ化の禁止。甲のゴムバンドとつま先ラバーキャップを常に正しい形で）"):"";
+  const shoeGuardEN=" The footwear keeps its true product shape at all times — it must never melt, warp, fuse with the foot or other objects, or become unrecognizable, even when a foot rests on it, it is stepped on, crushed at the heel, or used as a prop.";
+  const shoeGuardJP="※履物は常に実物の形状を保つ（足を上に置く・かかとを踏む・小道具的に扱う場合でも、溶けたり歪んだり足と融合したりして形が分からなくなることは絶対にない）";
+  const shoesOffish=/脱いで|傍ら/.test(s("shoeShow").jp);
+  const shoeOffGuardEN=shoesOffish?" The removed shoes beside them remain fully intact, correctly shaped, recognizable products.":"";
+  const shoeOffGuardJP=shoesOffish?"／脱いで置かれた靴も完全な形の実物として描く":"";
   let shoeLineEN,shoeLineJP;
   if(noFootwear){
     shoeLineEN="Footwear: none — the person wears no shoes at all; no footwear appears anywhere in the frame (socks or bare feet per the socks section).";
@@ -4194,6 +5746,8 @@ function renderOutput(){
     const wearEN=shoesOff?s("shoeShow").en:`${s("shoeShow").en}, ${s("shoeWear").en}`;
     shoeLineEN=`Footwear: ${fwNameEN} — ${wearEN}; ${s("shoeFit").en}; condition: ${s("shoeCond").en}.${shoeColEN}`;
     shoeLineJP=`■ 履物：${fwName}\n　 表示・着脱：${s("shoeShow").jp}${shoesOff?"":` ／ 履き方：${s("shoeWear").jp}`}\n　 サイズ感：${s("shoeFit").jp} ／ 状態：${s("shoeCond").jp}${shoeColJP}`;
+    shoeLineEN+=`${uwaBlockEN}${isUwabaki?(uwaGuardEN0||uwaGuardEN_legacy):""}${shoeGuardEN}${shoeOffGuardEN}`;
+    shoeLineJP+=`${uwaBlockJP}${isUwabaki?`\n　 ${uwaGuardJP0||uwaGuardJP_legacy}`:""}\n　 ${shoeGuardJP}${shoeOffGuardJP}`;
   }
 
   const br=p=>p.en?p.en:null;
@@ -4213,6 +5767,19 @@ function renderOutput(){
   const capJP=(uniformOn()&&state.capState)?(s("capState").jp==="脱帽"
     ?`\n　 制帽：脱帽（${s("capOff").jp}）`
     :`\n　 制帽：${s("capState").jp}`):"";
+  const occW=(S.duty==="on"&&!uniformOn())?OCC_WORKWEAR[S.occ]:null;
+  const occExtraEN=(occW&&occW.extra)?`\nJob gear: ${occW.extra}.`:(occW&&occW.note?`\nStyling note: ${occW.note}.`:"");
+  const occExtraJP=(occW&&occW.extraJP)?`\n　 職業装備：${occW.extraJP}`:"";
+  const carryOn=state.carry1&&(s("carry1").jp!=="なし"||s("carry2").jp!=="なし");
+  const carryList=[s("carry1"),s("carry2")].filter(p=>p&&p.jp!=="なし");
+  const carryEN=carryOn?`\nCarrying: ${carryList.map(p=>p.en).join(" and ")}.`:"";
+  const carryJP=carryOn?`\n■ 持ち物：${carryList.map(p=>p.jp).join("、")}`:"";
+  const bagOn=state.bagType&&s("bagType").jp!=="なし";
+  const bagEN=bagOn?`\nBag: ${s("bagType").en}${s("bagColor").jp.startsWith("おまかせ")?"":`, ${s("bagColor").en}`}${s("bagBrand").en?`, brand direction: ${s("bagBrand").en}`:""} — ${s("bagCarry").en}.`:"";
+  const bagJP=bagOn?`\n　 カバン：${s("bagType").jp}（色：${s("bagColor").jp} ／ ブランド：${s("bagBrand").jp} ／ 持ち方：${s("bagCarry").jp}）`:"";
+  const earOn=state.earPos&&s("earPos").jp!=="なし";
+  const earEN=earOn?`\nEarrings: ${s("earShape").en}, ${s("earCount").en}, ${s("earPos").en}.`:"";
+  const earJP=earOn?`\n　 ピアス：${s("earShape").jp}（${s("earCount").jp}／${s("earPos").jp}）`:"";
   const accEN=accListEN.length?`Accessories: ${accListEN.join("; ")}.`:"Accessories: none.";
   const accJP=
 `■ メガネ：${s("glasses").jp}（ブランド：${s("glassesBrand").jp}） ／ 腕時計：${s("watch").jp}（ブランド：${s("watchBrand").jp}）
@@ -4220,21 +5787,41 @@ function renderOutput(){
 
   let outfitEN,outfitJP;
   if(uniformOn()){
-    const u=s("uniform");
-    outfitEN=
-`Uniform (render faithfully, in detail): ${u.en}.
-Uniform top: as specified. Uniform bottom: as specified. Headwear: ${u.capEN}.${u.extraEN?` ${u.extraEN}.`:""}
-Worn state: ${s("clothesState").en}.${capEN}
-${shoeLineEN}
+    const uniShoeEN=`Shoes: ${s("shoes").en}${state.shoeWear?` — ${s("shoeWear").en}`:""}.${uwaBlockEN}${isUwabaki?(uwaGuardEN0||uwaGuardEN_legacy):""}${shoeGuardEN}`;
+    const uniShoeJP=`　 靴：${s("shoes").jp}${state.shoeWear?`（履き方：${s("shoeWear").jp}）`:""}${uwaBlockJP}${isUwabaki?`\n　 ${uwaGuardJP0||uwaGuardJP_legacy}`:""}\n　 ${shoeGuardJP}`;
+    const wornEN=`Worn state: ${s("wearSleeve").en}; ${s("wearCollar").en}; ${s("wearButton").en}; ${s("wearHem").en}.
+Bottoms styling: ${s("bottomsHem").en}; ${s("bottomsWaist").en}${s("belt").en?`; belt: ${s("belt").en}`:""}.`;
+    const wornJP=`　 着こなし：袖＝${s("wearSleeve").jp} ／ 襟＝${s("wearCollar").jp} ／ ボタン＝${s("wearButton").jp} ／ トップス裾＝${s("wearHem").jp}
+　 ボトムスの着こなし：裾＝${s("bottomsHem").jp} ／ 腰＝${s("bottomsWaist").jp}${s("belt").jp!=="指定なし"?` ／ ベルト＝${s("belt").jp}`:""}`;
+    if(S.occ==="高校生"){
+      const uj=s("uniJacket"),ut=s("uniTops"),uc=s("uniTopsColor");
+      const noJk=uj.jp.startsWith("上着なし");
+      outfitEN=
+`School uniform (render faithfully): a ${uc.en} ${ut.en}${s("uniTopsBrand").en?` (${s("uniTopsBrand").en})`:""}${noJk?"":` under a ${s("uniJacketColor").en} ${uj.en}${s("uniJacketBrand").en?` (${s("uniJacketBrand").en})`:""}`}, with ${s("uniBtmColor").en} ${s("uniBtmDesign").jp!=="無地"?`${s("uniBtmDesign").en} `:""}school slacks (${s("uniBtmForm").en}).
+${wornEN}
+${uniShoeEN}
+${accEN}${earEN}${bagEN}`;
+      outfitJP=
+`■ 制服（高校生・忠実に再現）：
+　 上着：${uj.jp}${noJk?"":`（${s("uniJacketColor").jp}${s("uniJacketBrand").jp!=="指定なし"?`・${s("uniJacketBrand").jp}`:""}）`} ／ トップス：${ut.jp}（${uc.jp}${s("uniTopsBrand").jp!=="指定なし"?`・${s("uniTopsBrand").jp}`:""}）
+　 スラックス：${s("uniBtmForm").jp}・${s("uniBtmDesign").jp}・${s("uniBtmColor").jp}
+${wornJP}
+${uniShoeJP}
+${accJP}${earJP}${bagJP}`;
+    }else{
+      const u=s("uniform");
+      outfitEN=
+`Uniform (render faithfully, in detail): ${u.en}.${u.extraEN?` ${u.extraEN}.`:""}
+${wornEN}${capEN}
+${uniShoeEN}
 ${accEN}`;
-    outfitJP=
+      outfitJP=
 `■ 制服（詳細を忠実に再現する）：${u.jp}
-　 上衣：${u.top}
-　 下衣：${u.bottom}
-　 制帽：${u.cap}${u.extra?`\n　 ${u.extra}`:""}
-　 着こなし：${s("clothesState").jp}${capJP}
-${shoeLineJP}
+　 上衣：${u.top||u.jp} ／ 下衣：${u.bottom||"制式の下衣"}${u.cap?`\n　 制帽：${u.cap}`:""}${u.extra?`\n　 ${u.extra}`:""}
+${wornJP}${capJP}
+${uniShoeJP}
 ${accJP}`;
+    }
   }else{
     const dl=state.dressLevel?s("dressLevel").jp:"通常（下着は見えない）";
     const uwSpecEN=`${s("uwType").en}${s("uwColor").jp.startsWith("おまかせ")?"":`, color: ${s("uwColor").en}`}${s("uwDesign").jp!=="無地"?`, ${s("uwDesign").en}`:""}${s("uwBrand").en?`, brand direction: ${s("uwBrand").en}`:""}, ${s("uwFit").en}`;
@@ -4259,21 +5846,22 @@ ${accJP}`;
       outfitEN=
 `Outfit: underwear only — ${uwSpecEN}.
 A relaxed, completely ordinary private-room moment (fresh out of the bath, changing, or lounging). Keep it strictly tasteful and non-sexualized: natural posture, domestic mood, no suggestive posing, no explicit exposure.
-Worn state: ${s("clothesState").en}.
+Worn state: ${s("wearSleeve").en}; ${s("wearCollar").en}; ${s("wearButton").en}; ${s("wearHem").en}.
 ${shoeLineEN}
-${accEN}`;
+${accEN}${earEN}${bagEN}`;
     }else if(dl==="Tシャツ＋アンダーウェア（部屋くつろぎ）"){
       const tp0=/Tシャツ/.test(s("tops").jp)?s("tops").en:"a plain T-shirt";
       outfitEN=
 `Outfit: just ${tp0} worn with ${uwSpecEN} — no pants.
 A relaxed private-room moment (fresh out of the bath or lounging at home). Keep it strictly tasteful and non-sexualized: natural posture, domestic mood, no suggestive posing, no explicit exposure.
-Worn state: ${s("clothesState").en}.
+Worn state: ${s("wearSleeve").en}; ${s("wearCollar").en}; ${s("wearButton").en}; ${s("wearHem").en}.
 ${shoeLineEN}
 ${accEN}`;
     }else outfitEN=
 `Outfit (${S.duty==="on"?"work clothes":"casual clothes"}):
 Top: ${tpEN}.${btEN?`\nBottoms: ${btEN}.`:""}${jkOn?`\nOuter layer: ${jkEN}.`:""}
-Worn state: ${s("clothesState").en}.${fashionEN}${hatEN}
+Worn state: ${s("wearSleeve").en}; ${s("wearCollar").en}; ${s("wearButton").en}; ${s("wearHem").en}.
+Bottoms styling: ${s("bottomsHem").en}; ${s("bottomsWaist").en}${s("belt").en?`; belt: ${s("belt").en}`:""}.${fashionEN}${hatEN}
 Underwear: ${uwSpecEN} — ${dl==="アンダーウェアがちら見え"?"the waistband IS visible above the pants / at the hem, worn deliberately fashion-style; still modest, no explicit exposure":"strictly modest: visible only as far as the outfit naturally reveals; no explicit exposure whatsoever"}.
 ${shoeLineEN}
 ${accEN}`;
@@ -4282,7 +5870,7 @@ ${accEN}`;
 `■ 服装：アンダーウェアのみ
 　 ${uwSpecJP}
 　 ※風呂上がり・着替え中・部屋でくつろぐ等の、ごく日常的なプライベートの一場面として描く。自然な姿勢・生活感を重視し、性的な演出・扇情的なポーズ・過度な露出は一切しない
-　 着こなし：${s("clothesState").jp}
+　 着こなし：袖＝${s("wearSleeve").jp} ／ 襟＝${s("wearCollar").jp} ／ ボタン＝${s("wearButton").jp} ／ トップス裾＝${s("wearHem").jp}
 ${shoeLineJP}
 ${accJP}`;
     }else if(dl==="Tシャツ＋アンダーウェア（部屋くつろぎ）"){
@@ -4291,7 +5879,7 @@ ${accJP}`;
 　 トップス：${/Tシャツ/.test(s("tops").jp)?s("tops").jp:"無地Tシャツ"}
 　 ${uwSpecJP}
 　 ※風呂上がり・部屋でくつろぐ等の日常的な一場面として、非性的・自然に描く
-　 着こなし：${s("clothesState").jp}
+　 着こなし：袖＝${s("wearSleeve").jp} ／ 襟＝${s("wearCollar").jp} ／ ボタン＝${s("wearButton").jp} ／ トップス裾＝${s("wearHem").jp}
 ${shoeLineJP}
 ${accJP}`;
     }else outfitJP=
@@ -4299,10 +5887,11 @@ ${accJP}`;
 　 上着：${jkOn?segJP(s("jacket"),s("jacketColor"),s("jacketDesign"),s("jacketFit"),s("jacketBrand")):"上着なし"}
 　 トップス：${waf?s("tops").jp:segJP(s("tops"),s("topsColor"),s("topsDesign"),s("topsFit"),s("topsBrand"))}
 　 パンツ：${waf?"―（和装のため不要）":segJP(s("bottoms"),s("bottomsColor"),s("bottomsDesign"),s("bottomsFit"),s("bottomsBrand"))}
-　 着こなし・はだけ具合：${s("clothesState").jp}${fashionJP}${hatJP}
+　 着こなし：袖＝${s("wearSleeve").jp} ／ 襟＝${s("wearCollar").jp} ／ ボタン＝${s("wearButton").jp} ／ トップス裾＝${s("wearHem").jp}
+　 ボトムスの着こなし：裾＝${s("bottomsHem").jp} ／ 腰＝${s("bottomsWaist").jp}${s("belt").jp!=="指定なし"?` ／ ベルト＝${s("belt").jp}`:""}${fashionJP}${hatJP}
 　 アンダーウェア：${uwSpecJP}${dl==="アンダーウェアがちら見え"?"※ウエストバンドが腰パン・裾からはっきり見えるファッションとして描く（露出はウエストバンドまで）":"※着こなしから自然に覗く範囲のみ。露出は一切なし"}
 ${shoeLineJP}
-${accJP}`;
+${accJP}${earJP}${bagJP}${occExtraJP}`;
   }
 
   const sockBrandEN=s("sockBrand").en?`, brand direction: ${s("sockBrand").en}`:"";
@@ -4344,6 +5933,15 @@ ${accJP}`;
   const uiOn=s("uiOverlay").jp!=="描かない（クリーンな画面）";
   let qualityEN=s("quality").en;
   if(streamStyle&&uiOn)qualityEN=qualityEN.replace(/ \(no [^)]*\)/,"");
+  const netflixOn=/NETFLIX/.test(s("quality").jp);
+  const dTitle=DRAMA_TITLE||"";
+  const dFontEN=DRAMA_FONT==="mincho"?"an elegant Japanese Mincho (serif) typeface":"a bold Japanese Gothic (sans-serif) typeface";
+  const netflixEN=netflixOn?(DRAMA_FONT==="none"||!dTitle
+    ?`\nThumbnail composition only — no title text, no logos.`
+    :`\nTitle treatment: lay out the fictional drama title 「${dTitle}」 large, as a key-art title logo in ${dFontEN}; stylized lettering is fine, keep it short and readable-ish; no other text, no platform logos.`):"";
+  const netflixJP=netflixOn?(DRAMA_FONT==="none"||!dTitle
+    ?`\n■ サムネ構図のみ（タイトル文字なし・ロゴなし）`
+    :`\n■ タイトル表記：架空のドラマタイトル「${dTitle}」を${DRAMA_FONT==="mincho"?"明朝体":"ゴシック体"}の大きなタイトルロゴ風に配置（他の文字・プラットフォームのロゴは入れない）`):"";
   const uiEN=streamStyle?`\nInterface overlay: ${uiOn?s("uiOverlay").en:"none — no interface text, overlays or stickers"}.`:"";
   const uiJP=streamStyle?`\n■ 配信UI・オーバーレイ：${s("uiOverlay").jp}`:"";
 
@@ -4401,7 +5999,7 @@ Occupation: ${OCC_EN[S.occ]||S.occ} (${dutyEN}).${kinenbiEN}${themeEN}
 [Scene]
 ${s("season").en}; weather: ${s("weather").en}${indoorWeatherEN}; ${s("timeOfDay").en}; ${loc.en}.
 Crowd level: ${s("crowd").en}${crowdNoteEN}.
-${propsEN}${coincEN}${specialEN}${bathNoteEN}${lhNoteEN}
+${propsEN}${carryEN}${coincEN}${specialEN}${bathNoteEN}${lhNoteEN}
 
 [Subject]
 Posture: ${s("postureCat").en} — ${s("posture").en}. Gesture: ${s("gesture").en}.
@@ -4413,14 +6011,14 @@ ${hairEN}
 
 [Shot]
 Composition: ${s("composition").en}. Camera: ${s("camera").en}.
-Finish: ${qualityEN}, lighting consistent with the time of day and weather.
-${s("ratio").en}.${uiEN}${candidEN}${detailEN}
+Finish: ${qualityEN}.\nLighting: ${s("light").en} — consistent with the time of day and weather.
+${s("ratio").en}.${netflixEN}${uiEN}${candidEN}${detailEN}
 
 [Outfit]
 ${outfitEN}
 
 [Socks]
-${sockLeadEN}${s("sockColor").en} ${s("sockType").en}, ${s("sockShape").en}${s("sockRib").en?`, ${s("sockRib").en}`:""}, ${s("sockMaterial").en}, condition: ${s("sockUse").en}${sockBrandEN}.
+${sockLeadEN}${s("sockColor").en}${s("sockPattern").jp!=="無地"?`, ${s("sockPattern").en}`:""}${s("sockMotif").en?`, with ${s("sockMotif").en}`:""} ${s("sockType").en}, ${s("sockShape").en}${s("sockRib").en?`, ${s("sockRib").en}`:""}, ${s("sockMaterial").en}, condition: ${s("sockUse").en}${sockBrandEN}.
 Toe construction: ${toeEN}.
 Render the sock shape exactly as specified, yet naturally as worn on a real human foot — no warped, fused or anatomically impossible shapes.
 Fabric realism: render the actual knit structure of real socks — visible fine loops or rib lines at close range, the true matte or slight sheen of the specified fiber, natural elasticity creases at the ankle and instep; never a smooth plastic-like or painted-on surface.
@@ -4442,7 +6040,7 @@ ${eraLine(S.era).jp}
 ■ ${s("season").jp} ／ 天候：${s("weather").jp}${indoorWeatherJP} ／ ${s("timeOfDay").jp}
 ■ 場所：${loc.jp}
 ■ 人の多さ：${s("crowd").jp}${crowdNoteJP}
-${propsJP}${coincJP}${specialJP}${bathNoteJP}${lhNoteJP}
+${propsJP}${carryJP}${coincJP}${specialJP}${bathNoteJP}${lhNoteJP}
 
 《被写体》
 ■ 体勢：${s("postureCat").jp}・${s("posture").jp} ／ 仕草：${s("gesture").jp}
@@ -4453,7 +6051,7 @@ ${propsJP}${coincJP}${specialJP}${bathNoteJP}${lhNoteJP}
 
 《撮り方》
 ■ 構図：${s("composition").jp} ／ カメラ：${s("camera").jp}
-■ 仕上がり：${s("quality").jp} ／ 画像比率：${s("ratio").jp}${uiJP}${candidJP}${detailJP}
+■ 光：${s("light").jp}\n■ 仕上がり：${s("quality").jp} ／ 画像比率：${s("ratio").jp}${netflixJP}${uiJP}${candidJP}${detailJP}
 
 《服装》
 ${outfitJP}
@@ -4538,7 +6136,6 @@ document.getElementById("flavor-go").addEventListener("click",()=>{
   else rollFoot();
 });
 document.getElementById("intent-apply").addEventListener("click",()=>applyIntent(document.getElementById("intent-sel").value));
-document.getElementById("outfit-preset-apply").addEventListener("click",()=>applyOutfitPreset(document.getElementById("outfit-preset-sel").value));
 document.getElementById("seq-toggle").addEventListener("change",renderOutput);
 document.getElementById("fix-all-btn").addEventListener("click",fixAll);
 document.getElementById("toggle-all").addEventListener("click",e=>{
