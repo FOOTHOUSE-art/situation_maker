@@ -2340,7 +2340,8 @@ const D={
       P("うっすらくすみ","lightly clouded — the PVC sheen fading, faint scuffs"),
       P("ソール側面が黄ばむ","the sole sidewall yellowed to cream, the body scratched matte"),
       P("側面が茶色く汚れる・突起に垢","the sole edge stained brown, dark grime packed between the massage-dot bumps of the footbed"),
-      P("土の固着・底が剥がれかけ（極限）","caked dirt hardened into the tread and around every footbed bump, the sole layer starting to split and peel at the edge")
+      P("土の固着・底が剥がれかけ（極限）","caked dirt hardened into the tread and around every footbed bump, the sole layer starting to split and peel at the edge"),
+      P("履き潰し（色あせ・かかと縁の裂け）","worn to death — the glossy PVC faded to a dusty grayish tone with pale scuff clouds, the heel edge split and torn ragged, the hollow heel windows packed with grime, the whole sandal flattened by years of shuffling")
     ],
     gym:[
       P("洗いたて","freshly washed white"),
@@ -2383,6 +2384,17 @@ const D={
       P("履き口から甲がふくらんで見える","the instep bulging visibly at the throat opening")
     ]
   },
+  bensanColor:[
+    P("茶（チョコ）","a deep chocolate brown with a warm gloss — the classic bensan color"),
+    P("赤茶（レンガ）","a reddish brick brown with an orange cast"),
+    P("飴色（キャラメル）","a light caramel tan, slightly translucent like hard candy"),
+    P("焦げ茶（ダークブラウン）","a dark burnt brown, almost espresso"),
+    P("オレンジブラウン","a bright orange-leaning brown"),
+    P("黒","jet black with a dull worn sheen"),
+    P("白","off-white with a faint ivory cast"),
+    P("紺","dark navy"),
+    P("モスグリーン","muted moss green")
+  ],
   getaForm:[
     P("二枚歯","classic two-tooth geta — two separate wooden teeth under the base"),
     P("右近（低めの一体底）","ukon geta — a low one-piece curved sole"),
@@ -3663,7 +3675,7 @@ function uwaModels(){
   Object.keys(t).forEach(b=>{out=out.concat(t[b]);});
   return out;
 }
-const RE_UWA_MODEL=/上履き|校内|バレー|フロアー|センターゴア|ゴムバンド|体育|ジムスター|スクールサンダル|ニューモード|No\.700|前つっかけ/;
+const RE_UWA_MODEL=/上履き|校内|バレー|フロアー|センターゴア|ゴムバンド|体育|ジムスター|スクールサンダル|ニューモード|No\.700|前つっかけ|ダンヒル|便所サンダル|No\.180|ベンサン/;
 function uniJacketBrandPool(){
   const j=state.uniJacket&&state.uniJacket.value?state.uniJacket.value.jp:"";
   if(/セーター|ベスト|カーディガン/.test(j))return [
@@ -3688,7 +3700,7 @@ function fitDeformPool(){
 function uwaDirtPool(){
   const mj=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
   if(/体育|ジムスター/.test(mj))return D.uwaDirt.gym;
-  if(/サンダル|ニューモード|前つっかけ|No\.700/.test(mj))return D.uwaDirt.pvc;
+  if(/サンダル|ニューモード|前つっかけ|No\.700|ダンヒル|便所|No\.180|ベンサン/.test(mj))return D.uwaDirt.pvc;
   return D.uwaDirt.cloth;
 }
 function uniJacketColorPool(){
@@ -3944,6 +3956,7 @@ function buildFieldDefs(){
   f.push({id:"tabi",label:"足袋",pool:()=>D.tabi,noneDefault:true});
   f.push({id:"uwaLine",label:"上履きラインカラー",pool:()=>D.uwaLine});
   f.push({id:"uwaDirt",label:"上履きの汚れ具合（段階）",pool:()=>uwaDirtPool()});
+  f.push({id:"bensanColor",label:"便所サンダルのカラー",pool:()=>D.bensanColor});
   f.push({id:"uwaTear",label:"上履きの破れ・傷み",pool:()=>D.uwaTear,noneDefault:true});
   f.push({id:"uwaRepair",label:"上履きの補修（テープ等）",pool:()=>D.uwaRepair,noneDefault:true});
   f.push({id:"uwaDoodle",label:"上履きの落書き",pool:()=>D.uwaDoodle,noneDefault:true});
@@ -4196,6 +4209,8 @@ function generateAll(){
   forcedLocOutfit();
   harmonizeOutfit();
   applyOccWorkwear();
+  if(state.bensanColor&&!state.bensanColor.locked&&state.shoes&&state.shoes.value&&/ダンヒル|No\.180|ベンサン|便所/.test(state.shoes.value.jp))
+    state.bensanColor.value=Math.random()<0.6?D.bensanColor[0]:rand(D.bensanColor);
   if(state.quality&&/NETFLIX/.test(state.quality.value.jp)&&typeof document!=="undefined")genDramaTitle();
   snapAuto();
 }
@@ -5177,6 +5192,10 @@ function renderRows(){
         const pv=state[par].value.jp;
         parentOff=par==="capState"?pv!=="脱帽":NONE_RE.test(pv);
       }
+      if(f.id==="bensanColor"){
+        const sj2=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
+        if(!/ダンヒル|No\.180|ベンサン|便所/.test(sj2))parentOff=true;
+      }
       if(/^geta|^hanao|^tabi/.test(f.id)){
         const t2=state.shoeType&&state.shoeType.value?state.shoeType.value.jp:"";
         if(!/和装履物/.test(t2))parentOff=true;
@@ -5279,7 +5298,7 @@ function renderRows(){
       if(f.id==="uniform"){if(state.shoes&&!state.shoes.locked)state.shoes.value=uniformShoePool()[0];refreshIds(["shoes"]);}
       if(f.id==="uniJacket"){if(state.uniJacketColor&&!state.uniJacketColor.locked)state.uniJacketColor.value=uniJacketColorPool()[0];if(state.uniJacketBrand&&!state.uniJacketBrand.locked)state.uniJacketBrand.value=uniJacketBrandPool()[0];refreshIds(["uniJacketColor","uniJacketBrand"]);}
       if(f.id==="uniTops"){if(state.uniTopsColor&&!state.uniTopsColor.locked)state.uniTopsColor.value=uniTopsColorPool()[0];if(state.uniTopsBrand&&!state.uniTopsBrand.locked)state.uniTopsBrand.value=uniTopsBrandPool()[0];refreshIds(["uniTopsColor","uniTopsBrand"]);}
-      if(f.id==="shoes"){refreshIds(["uwaDirt"]);}
+      if(f.id==="shoes"){refreshIds(["uwaDirt","bensanColor"]);}
       if(f.id==="shoes"&&uniformOn()){if(state.shoeWear&&!state.shoeWear.locked)state.shoeWear.value=uniShoeWearPool()[0];refreshIds(["shoeWear"]);}
       if(f.id==="tops"){
         if(isWafuku()&&state.bottoms&&!state.bottoms.locked)state.bottoms.value=WAFUKU_NONE;
@@ -5388,6 +5407,12 @@ const FW={
       Object.assign(P("ニューモード（スリッパ型校内履き）",
         "Naigai 'New Mode' — a slipper-type indoor school shoe. A closed vinyl-leather vamp covers the toes (toe box closed, low and rounded), while the ENTIRE heel is open like a slipper; white or navy body with a simple piping along the vamp edge, flat wear-resistant sole with a shallow tread. It slaps softly at the heel with each step."),
         {jpd:"スリッパ型の校内履き。ビニールレザーの甲がつま先を低く丸く覆い（トゥは閉じている）、かかと側はスリッパのように全開放。白または紺のボディで、甲の縁にシンプルなパイピング。耐摩耗の浅い溝のフラットソール。歩くたびにかかとで軽くパタパタと鳴る"})
+    ],
+    "丸中工業所（PEARL）":[
+      Object.assign(P("No.180（便所サンダル・ベンサン）","Marunaka Kogyosho (PEARL) No.180 'bensan' — the traditional Japanese toilet/utility sandal. Sturdy wide open-toe slide molded in ONE piece of semi-gloss PVC (colorway specified below) with no stitching anywhere. The broad instep band carries THREE large rectangular vent windows in a row, a fine leather-like pebbled texture (shibo), embossed rope-braid trim lines along the strap edges, and a purely decorative molded buckle-and-belt motif on each side. Thick cushioned one-piece sole; the insole is embossed with a fine check-lattice grip pattern plus a patch of round massage dots near the heel; the outsole is a deep chevron / honeycomb wave tread for wet floors. Rounded yet chunky, retro-industrial Showa design"),{jpd:"丸中工業所（PEARL）の伝統的な便所サンダル。半光沢PVCを縫い目なしの一体成型（射出成形）した（色は下記カラー指定）、幅広で厚みのある頑丈なオープントゥのスライド。甲の幅広バンドには横長の長方形の通気窓が3つ並び、表面はシボ加工（レザー調の細かな凹凸）、縁にはロープ編み目のエンボスライン、左右には飾りのバックルとベルトの型押し。厚手でクッション性のあるソールのインソールには細かな格子（チェック柄）の滑り止め型押しと、かかと寄りの丸いマッサージ突起。アウトソールは濡れた床用の深いヘリンボーン／ハニカム調の波型ギザギザ。丸みを帯びつつゴツゴツした昭和レトロ・インダストリアルなデザイン"})
+    ],
+    "ニシベケミカル":[
+      Object.assign(P("V.I.C No.510 ダンヒル（便所サンダル）","Nishibe Chemical V.I.C No.510 'Dunhill' — the classic Japanese one-piece molded PVC toilet/utility sandal. Molded seamlessly in glossy PVC (colorway specified below); the crossed open-toe upper carries a retro embossed lattice-weave texture with rows of punched ventilation holes; square vent slits open along the side; the footbed shows a fine oval-bump massage pattern; the heel side wall reveals its signature HOLLOW cushion structure — geometric cutout windows clearly visible; the outsole has a deep zigzag wave tread"),{jpd:"ニシベケミカルの一体成型PVC便所サンダルの定番。継ぎ目のない光沢PVCの一体成型（色は下記カラー指定）。甲にはレトロな格子状の編み込みエンボスと丸い通気穴が並び、つま先は前あき。サイドに四角い通気スリット。フットベッドには細かな楕円形の凹凸（マッサージ模様）。最大の特徴はかかと側面で、肉抜きされた幾何学的な空洞の窓（中空クッション構造）がはっきり見える。靴底は深い波状ジグザグの滑り止め"})
     ],
     "ジャストモード":[
       Object.assign(P("No.700（一体成型・校内サンダル）",
@@ -5561,6 +5586,12 @@ const FW={
     ]
   },
   "サンダル":{
+    "丸中工業所（PEARL）":[
+      Object.assign(P("No.180（便所サンダル・ベンサン）","Marunaka Kogyosho (PEARL) No.180 'bensan' — the traditional Japanese toilet/utility sandal. Sturdy wide open-toe slide molded in ONE piece of semi-gloss PVC (colorway specified below) with no stitching anywhere. The broad instep band carries THREE large rectangular vent windows in a row, a fine leather-like pebbled texture (shibo), embossed rope-braid trim lines along the strap edges, and a purely decorative molded buckle-and-belt motif on each side. Thick cushioned one-piece sole; the insole is embossed with a fine check-lattice grip pattern plus a patch of round massage dots near the heel; the outsole is a deep chevron / honeycomb wave tread for wet floors. Rounded yet chunky, retro-industrial Showa design"),{jpd:"丸中工業所（PEARL）の伝統的な便所サンダル。半光沢PVCを縫い目なしの一体成型（射出成形）した（色は下記カラー指定）、幅広で厚みのある頑丈なオープントゥのスライド。甲の幅広バンドには横長の長方形の通気窓が3つ並び、表面はシボ加工（レザー調の細かな凹凸）、縁にはロープ編み目のエンボスライン、左右には飾りのバックルとベルトの型押し。厚手でクッション性のあるソールのインソールには細かな格子（チェック柄）の滑り止め型押しと、かかと寄りの丸いマッサージ突起。アウトソールは濡れた床用の深いヘリンボーン／ハニカム調の波型ギザギザ。丸みを帯びつつゴツゴツした昭和レトロ・インダストリアルなデザイン"})
+    ],
+    "ニシベケミカル":[
+      Object.assign(P("V.I.C No.510 ダンヒル（便所サンダル）","Nishibe Chemical V.I.C No.510 'Dunhill' — the classic Japanese one-piece molded PVC toilet/utility sandal. Molded seamlessly in glossy PVC (colorway specified below); the crossed open-toe upper carries a retro embossed lattice-weave texture with rows of punched ventilation holes; square vent slits open along the side; the footbed shows a fine oval-bump massage pattern; the heel side wall reveals its signature HOLLOW cushion structure — geometric cutout windows clearly visible; the outsole has a deep zigzag wave tread"),{jpd:"ニシベケミカルの一体成型PVC便所サンダルの定番。継ぎ目のない光沢PVCの一体成型（色は下記カラー指定）。甲にはレトロな格子状の編み込みエンボスと丸い通気穴が並び、つま先は前あき。サイドに四角い通気スリット。フットベッドには細かな楕円形の凹凸（マッサージ模様）。最大の特徴はかかと側面で、肉抜きされた幾何学的な空洞の窓（中空クッション構造）がはっきり見える。靴底は深い波状ジグザグの滑り止め"})
+    ],
     "NIKE":[P("ベナッシ","NIKE Benassi slide sandals")],
     "NIKE":[
       P("ベナッシ（シャワーサンダル）","NIKE Benassi slide sandals"),
@@ -6086,7 +6117,7 @@ function renderOutput(){
   const shoesJp=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
   const isUwabaki=/上履き|校内/.test(fwType())||RE_UWA_MODEL.test(shoesJp);
   const uwaModel=state.shoes&&state.shoes.value?state.shoes.value.jp:"";
-  const uwaSandal=/サンダル|スリッパ型|ニューモード|前つっかけ|No\.700/.test(uwaModel);
+  const uwaSandal=/サンダル|スリッパ型|ニューモード|前つっかけ|No\.700|ダンヒル|No\.180|ベンサン/.test(uwaModel);
   const uwaLineEN=(isUwabaki&&!uwaSandal&&state.uwaLine)?` Trim line color: ${s("uwaLine").en}.`:"";
   const uwaLineJP=(isUwabaki&&!uwaSandal&&state.uwaLine)?`／ライン色：${s("uwaLine").jp}`:"";
   const uwaTearOn=isUwabaki&&state.uwaTear&&s("uwaTear").jp!=="なし";
@@ -6105,7 +6136,8 @@ function renderOutput(){
   ].filter(Boolean).join("／");
   const uwaBlockEN=isUwabaki?`
 School indoor footwear — render with product-level fidelity:
-- Model & construction: ${s("shoes").en}.${!uwaSandal&&state.uwaLine?` Accent color (${s("uwaLine").en}): ${/ハイスクール4/.test(s("shoes").jp)?"on the rubber toe guard and the foxing tape around the sole edge":/体育|ジムスター/.test(s("shoes").jp)?"as the line along the amber-sole foxing":/フロアーVK/.test(s("shoes").jp)?"as the color of the rubber toe cap AND the matching rubber sole":"as the trim line around the toe cap and heel tab"}.`:""}
+- Model & construction: ${s("shoes").en}.${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)&&state.bensanColor?`
+- Colorway: the entire one-piece PVC in ${s("bensanColor").en}.`:""}${!uwaSandal&&state.uwaLine?` Accent color (${s("uwaLine").en}): ${/ハイスクール4/.test(s("shoes").jp)?"on the rubber toe guard and the foxing tape around the sole edge":/体育|ジムスター/.test(s("shoes").jp)?"as the line along the amber-sole foxing":/フロアーVK/.test(s("shoes").jp)?"as the color of the rubber toe cap AND the matching rubber sole":"as the trim line around the toe cap and heel tab"}.`:""}
 - Fit: ${s("shoeFit").en}.
 - Condition: ${s("shoeCond").en}.${state.uwaDirt?`\n- Soiling stage: ${s("uwaDirt").en}.`:""}${state.uwaTear&&s("uwaTear").jp!=="なし"?`
 - Damage: ${s("uwaTear").en}.`:""}${state.uwaRepair&&s("uwaRepair").jp!=="なし"?`
@@ -6114,7 +6146,7 @@ School indoor footwear — render with product-level fidelity:
 - Fabric & texture: the true material of real school shoes — canvas weave or PVC sheen, the matte gum-rubber sole, grime settling into seams; never a smooth plastic-toy rendering.`:"";
   const uwaBlockJP=isUwabaki?`
 ■ 上履き・校内履きの詳細（実物の製品として忠実に描く）：
-　 モデルと構造：${s("shoes").jp}${s("shoes").jpd?`\n　 　 ${s("shoes").jpd}`:""}${!uwaSandal&&state.uwaLine?` ／ アクセント色：${s("uwaLine").jp}（${/ハイスクール4/.test(s("shoes").jp)?"つま先のトゥガードとソール縁のフォクシングテープに":/体育|ジムスター/.test(s("shoes").jp)?"飴色ソールのフォクシング沿いのラインに":/フロアーVK/.test(s("shoes").jp)?"ゴム製つま先キャップと同素材のソール全体の色として":"つま先キャップとかかとのラインに"}）`:""}
+　 モデルと構造：${s("shoes").jp}${s("shoes").jpd?`\n　 　 ${s("shoes").jpd}`:""}${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)&&state.bensanColor?`\n　 カラー：一体成型PVC全体が${s("bensanColor").jp}`:""}${!uwaSandal&&state.uwaLine?` ／ アクセント色：${s("uwaLine").jp}（${/ハイスクール4/.test(s("shoes").jp)?"つま先のトゥガードとソール縁のフォクシングテープに":/体育|ジムスター/.test(s("shoes").jp)?"飴色ソールのフォクシング沿いのラインに":/フロアーVK/.test(s("shoes").jp)?"ゴム製つま先キャップと同素材のソール全体の色として":"つま先キャップとかかとのラインに"}）`:""}
 　 サイズ感：${s("shoeFit").jp} ／ 状態：${s("shoeCond").jp}${state.uwaDirt?`\n　 汚れ段階：${s("uwaDirt").jp}`:""}${state.uwaTear&&s("uwaTear").jp!=="なし"?`\n　 破れ：${s("uwaTear").jp}`:""}${state.uwaRepair&&s("uwaRepair").jp!=="なし"?`\n　 補修：${s("uwaRepair").jp}`:""}${state.uwaDoodle&&s("uwaDoodle").jp!=="なし"?`\n　 落書き：${s("uwaDoodle").jp==="自由入力"?((typeof UWA_DOODLE_FREE!=="undefined"&&UWA_DOODLE_FREE)||""):s("uwaDoodle").jp}（ボールペン・油性マジックの手描き線でつま先ラバーと甲に）`:""}
 　 質感：実物の校内履きの素材感（キャンバスの織り目やPVCの光沢、生ゴム色のマットなソール、縫い目にたまる汚れ）まで再現。おもちゃのような滑らかな塗り表現にしない`:"";
   const isWafuku=/和装履物/.test(fwType());
@@ -6141,7 +6173,7 @@ Japanese traditional footwear — render with product-level fidelity:
     if(/体育|ジムスター/.test(mj))return "gym";
     if(/スクールサンダル02|ベルクロ/.test(mj))return "velcro";
     if(/ニューモード|スリッパ型/.test(mj))return "slipper";
-    if(/No\.700|前つっかけ|成型/.test(mj))return "molded";
+    if(/No\.700|前つっかけ|成型|ダンヒル|便所サンダル|No\.180|ベンサン/.test(mj))return "molded";
     return "";
   })();
   const UWA_GUARDS={
