@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>偶然シチュエーションメーカー V43</title>
+<title>偶然シチュエーションメーカー V44</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -125,7 +125,7 @@ details.sec .sec-body{padding:4px 14px 10px}
 
   <!-- ============ 初期設定 ============ -->
   <section id="setup">
-    <h1>偶然シチュエーションメーカー V43<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
+    <h1>偶然シチュエーションメーカー V44<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
     <div class="form">
       <label>性別
         <select id="s-gender">
@@ -305,6 +305,16 @@ const OCC=[
     ["自衛官（陸上）","JGSDF member"],["自衛官（海上）","JMSDF member"],["自衛官（航空）","JASDF member"],
     ["防衛大学校学生","National Defense Academy cadet"]
   ]},
+  {group:"鉄道・運輸",items:[
+    ["駅員","Station attendant"],["車掌","Train conductor"],["電車運転士","Train driver"],
+    ["タクシー運転手","Taxi driver"],["郵便配達員","Postal carrier"]
+  ]},
+  {group:"街の仕事",items:[
+    ["医師","Doctor"],["介護士","Care worker"],["警備員","Security guard"],["清掃員","Building cleaner"],
+    ["シェフ（洋食）","Chef"],["花屋","Florist"],["鮮魚店主","Fishmonger"],["スーパー店員","Supermarket clerk"],
+    ["不動産営業","Real-estate agent"],["銭湯の番台","Bathhouse attendant"],["僧侶","Buddhist monk"],["神主","Shinto priest"],
+    ["動画クリエーター","Video creator"],["プロサッカー選手","Pro soccer player"],["プロ野球選手","Pro baseball player"]
+  ]},
   {group:"航空業界",items:[
     ["パイロット","Airline pilot"],["客室乗務員","Cabin attendant"],["グランドスタッフ","Airline ground staff"],
     ["航空整備士","Aircraft mechanic"],["グランドハンドリング","Ramp agent"]
@@ -377,6 +387,28 @@ const REF_PREFIX_EN =
 
 /* ================= 制服詳細（UNIFORM_VARIANTSを忠実に移植） ================= */
 const UNIFORMS={
+  "駅員":[Object.assign(P("駅員の制服","a Japanese station attendant uniform — navy jacket with tie, name badge"),{top:"紺の制服上衣＋ネクタイ＋名札",bottom:"紺の制服スラックス",cap:"赤帯の制帽",shoe:"黒の革靴",shoeEN:"black duty shoes"})],
+  "車掌":[Object.assign(P("車掌の制服","a train conductor's uniform with white gloves and a pouch"),{top:"制服上衣＋白手袋＋携行かばん",bottom:"制服スラックス",cap:"制帽",shoe:"黒の革靴",shoeEN:"black duty shoes"})],
+  "電車運転士":[Object.assign(P("運転士の制服","a train driver's uniform with white gloves"),{top:"制服上衣＋白手袋",bottom:"制服スラックス",cap:"制帽",shoe:"黒の革靴",shoeEN:"black duty shoes"})],
+  "タクシー運転手":[Object.assign(P("タクシー運転手の制服","a taxi driver's uniform — white shirt, vest, white gloves"),{top:"白シャツ＋ベスト＋白手袋",bottom:"黒スラックス",cap:"運転手の制帽",shoe:"黒の革靴",shoeEN:"black leather shoes"})],
+  "郵便配達員":[Object.assign(P("郵便配達の制服","a postal carrier's uniform with a mail shoulder bag"),{top:"配達制服シャツ＋郵便かばん",bottom:"配達制服パンツ",cap:"配達キャップ",shoe:"配達用スニーカー",shoeEN:"delivery sneakers"})],
+  "医師":[Object.assign(P("白衣（聴診器）","a doctor's white coat over scrubs, stethoscope around the neck"),{top:"白衣＋スクラブ＋聴診器",bottom:"スクラブパンツ",shoe:"白のナースシューズ",shoeEN:"white medical shoes"})],
+  "介護士":[Object.assign(P("介護士のポロシャツ","a care worker's polo shirt and chinos with a name badge"),{top:"介護ポロシャツ＋名札",bottom:"動きやすいチノパン",shoe:"滑りにくいスニーカー",shoeEN:"non-slip sneakers"})],
+  "警備員":[Object.assign(P("警備員の制服","a security guard's gray-blue uniform with reflective bands and an epaulette radio"),{top:"警備制服上衣＋反射帯＋肩の無線機",bottom:"警備制服スラックス",cap:"警備帽",shoe:"黒の編上げ靴",shoeEN:"black duty boots"})],
+  "清掃員":[Object.assign(P("清掃作業服","a building cleaner's work uniform with rubber gloves"),{top:"清掃作業服上衣＋ゴム手袋",bottom:"作業ズボン",cap:"作業帽",shoe:"滑りにくい作業靴",shoeEN:"non-slip work shoes"})],
+  "シェフ（洋食）":[Object.assign(P("コックコート","a chef's double-breasted white coat with a toque"),{top:"白のコックコート＋スカーフ",bottom:"千鳥格子のコックパンツ",cap:"コック帽（トック）",shoe:"厨房用の黒シューズ",shoeEN:"black kitchen shoes"})],
+  "花屋":[Object.assign(P("花屋のエプロン","a florist's canvas apron over casual wear, garden snips in the pocket"),{top:"帆布エプロン＋カットソー",bottom:"デニム",shoe:"防水スニーカー",shoeEN:"waterproof sneakers"})],
+  "鮮魚店主":[Object.assign(P("鮮魚店のゴム前掛け","a fishmonger's long rubber apron and arm covers"),{top:"ゴム前掛け＋腕カバー＋タオル鉢巻",bottom:"作業ズボン",shoe:"白長靴",shoeEN:"white rubber boots"})],
+  "スーパー店員":[Object.assign(P("スーパーのエプロン","a supermarket clerk's apron and cap with a name badge"),{top:"店のエプロン＋名札",bottom:"チノパン",cap:"店の制帽",shoe:"黒スニーカー",shoeEN:"black sneakers"})],
+  "不動産営業":[Object.assign(P("不動産営業のスーツ","a real-estate agent's neat suit with a company badge, folder in hand"),{top:"スーツ＋社章＋物件ファイル",bottom:"スーツスラックス",shoe:"黒の革靴",shoeEN:"black leather shoes"})],
+  "銭湯の番台":[Object.assign(P("番台の作務衣","a bathhouse attendant's samue work clothes"),{top:"作務衣の上",bottom:"作務衣の下",shoe:"雪駄",shoeEN:"setta sandals"})],
+  "僧侶":[Object.assign(P("僧侶の法衣","a Buddhist monk's robes (samue or koromo)"),{top:"法衣・作務衣",bottom:"法衣の裾",shoe:"雪駄",shoeEN:"setta sandals"})],
+  "神主":[Object.assign(P("神主の白衣と袴","a Shinto priest's white kimono and hakama"),{top:"白衣",bottom:"浅葱色の袴",shoe:"白足袋に浅沓",shoeEN:"white tabi with asagutsu"})],
+  "動画クリエーター":[Object.assign(P("ロケ撮影スタイル","a video creator's shoot kit — gimbal camera, pin mic, gear backpack over casual wear"),{top:"カットソー＋ピンマイク＋首掛けミラーレス",bottom:"動きやすいパンツ",shoe:"スニーカー",shoeEN:"sneakers"})],
+  "プロサッカー選手":[Object.assign(P("サッカーユニフォーム","a pro soccer kit with a squad number"),{top:"背番号入りゲームシャツ",bottom:"サッカーパンツ＋ソックス",shoe:"サッカースパイク",shoeEN:"soccer cleats"})],
+  "プロ野球選手":[Object.assign(P("野球ユニフォーム","a pro baseball uniform with a cap"),{top:"背番号入りユニフォームシャツ",bottom:"ユニフォームパンツ＋ストッキング",cap:"チームキャップ",shoe:"野球スパイク",shoeEN:"baseball cleats"})],
+  "漁師":[Object.assign(P("漁師の合羽（サロペット）","a fisherman's heavy orange bib overalls (kappa) over a sweatshirt, rubber gloves"),{top:"スウェット＋ゴム手袋",bottom:"オレンジの胸当て付き合羽",cap:"漁協キャップ",shoe:"白長靴",shoeEN:"white deck rubber boots"}),
+    Object.assign(P("胴付き長靴（ウェーダー）","chest waders over a thermal top"),{top:"サーマルシャツ",bottom:"胴付き長靴（胸まで）",shoe:"一体の長靴部",shoeEN:"built-in wader boots"})],
   "パイロット":[
     Object.assign(P("エアラインパイロットの制服","an airline pilot's uniform — a black double-breasted-style jacket with four gold sleeve stripes, white shirt, black tie, black slacks"),
       {top:"黒の制服上衣（袖に4本の金線）＋白シャツ＋黒ネクタイ",bottom:"黒の制服スラックス",cap:"金の帽章付き制帽",shoe:"黒のストレートチップ革靴",shoeEN:"black cap-toe leather shoes"}),
@@ -1520,7 +1552,9 @@ const D={
     P("靴ひもがほどけているのに気づく","noticing an untied shoelace"),
     P("袖口がどこかに引っかかる","a cuff snagged on something"),
     P("小銭を落として跳ねる","dropped coins bouncing away"),
-    P("名前を呼ばれて振り返る","turning around at their name being called")
+    P("名前を呼ばれて振り返る","turning around at their name being called"),
+    P("地震の揺れに身構える","bracing mid-motion as an earthquake tremor shakes everything — hanging signs swaying, liquid trembling in cups, one hand instinctively reaching for something stable"),
+    P("緊急地震速報が一斉に鳴る","every phone around blaring the earthquake early-warning alarm at once, faces snapping down to screens")
   ],
   /* 背景との空間的な偶然（気づくと笑える一致） */
   coincidence:[
@@ -3181,6 +3215,45 @@ const OCC_WORKWEAR={
   "バス運転手":{jacket:["上着なし","カーディガン"],tops:["Yシャツ（レギュラーカラー）","半袖Yシャツ"],bottoms:["スラックス（センタープレス）"],shoeType:["革靴・ローファー"],extra:"a driver's cap and white gloves",extraJP:"運転士の制帽と白手袋"},
   "アイドル歌手":{jacket:["上着なし","トラックジャケット"],tops:["ビッグシルエットTシャツ","ジップパーカー"],bottoms:["ジョガーパンツ","ワイドデニム"],shoeType:["スニーカー"],extra:"stage-lesson wear with an ID lanyard",extraJP:"レッスン着とスタッフパス"}
 };
+/* ===== 年代別服装エンジン ===== */
+const CLOTH_SINCE=[[/テックフリース|ドライフィット|コンプレッション|ハーフジップスウェット/,2015],[/スキニー/,2006],[/ジョガー|トラックパンツ/,2010],[/ビッグシルエット|オーバーサイズ/,2016],[/カーゴショーツ/,1998],[/パーカー（羽織り）|フルジップフーディ/,1996],[/MA-1/,1985],[/マウンテンパーカ|アノラック/,1990],[/ダウンジャケット|ダウンベスト/,1985],[/サコッシュ|ボディバッグ/,2015],[/リュック/,1985]];
+const ERA_FASHION=[
+ {to:1979,sil:/開襟|スラックス|細身|ポロ/,col:/白|ベージュ|茶|紺|グレー/,jp:"60-70年代：細身・開襟・落ち着いた色"},
+ {to:1989,sil:/太め|ストレート|ブルゾン|スタジャン|ポロ/,col:/原色|赤|青|黄|白|紺/,jp:"80年代：太めシルエット・原色"},
+ {to:1999,sil:/ワイド|ネルシャツ|デニム|スウェット|バギー/,col:/インディゴ|チェック|杢グレー|緑|茶/,jp:"90年代：ワイドデニム・ネル・裏原"},
+ {to:2009,sil:/ダメージ|重ね着|セットアップ|ドカン|ボンタン/,col:/黒|白|茶|カーキ/,jp:"00年代：腰パン・ダメージ・重ね着"},
+ {to:2019,sil:/スキニー|細身|ノーカラー|シンプル/,col:/黒|白|グレー|紺/,jp:"10年代：スキニー・ノームコア・無彩色"},
+ {to:9999,sil:/ワイド|オーバーサイズ|ビッグ/,col:/くすみ|ベージュ|グレージュ|オリーブ|白/,jp:"20年代：ワイド回帰・くすみカラー"}
+];
+function eraBand(){const y=eraYearNum(S.era);return ERA_FASHION.find(b=>y<=b.to);}
+function eraClothOk(p){const y=eraYearNum(S.era);for(const [re,yr] of CLOTH_SINCE)if(re.test(p.jp)&&y<yr)return false;return true;}
+function applyEraFashion(){
+  if(uniformOn())return;
+  if(/真夏|初夏/.test(seasonName()))var noJk=true;
+  const ctx=ctxNow();
+  if(["bath","locker"].includes(ctx))return;
+  const b=eraBand();
+  ["tops","bottoms","jacket"].forEach(id=>{
+    if(!state[id]||state[id].locked||!state[id].value)return;
+    if(id==="jacket"&&(noJk||/上着なし/.test(state[id].value.jp)))return;
+    if(id==="tops"&&/浴衣|甚平|白装束/.test(state[id].value.jp))return;
+    const f0=FIELDS.find(x=>x.id===id);if(!f0)return;
+    let pool=f0.pool().filter(p=>!p.noRoll&&eraClothOk(p));
+    if(!eraClothOk(state[id].value)||(Math.random()<0.55&&!b.sil.test(state[id].value.jp))){
+      const pref=pool.filter(p=>b.sil.test(p.jp));
+      if(pref.length&&Math.random()<0.7)state[id].value=rand(pref);
+      else if(pool.length)state[id].value=rand(pool);
+    }
+  });
+  ["topsColor","bottomsColor","jacketColor"].forEach(id=>{
+    if(!state[id]||state[id].locked||!state[id].value)return;
+    if(!b.col.test(state[id].value.jp)&&Math.random()<0.5){
+      const f0=FIELDS.find(x=>x.id===id);if(!f0)return;
+      const pref=f0.pool().filter(p=>b.col.test(p.jp));
+      if(pref.length)state[id].value=rand(pref);
+    }
+  });
+}
 function applyOccWorkwear(){
   if(S.duty!=="on"||uniformOn())return;
   const w=OCC_WORKWEAR[S.occ];
@@ -4207,6 +4280,7 @@ function generateAll(){
     }
   });
   forcedLocOutfit();
+  applyEraFashion();
   harmonizeOutfit();
   applyOccWorkwear();
   if(state.bensanColor&&!state.bensanColor.locked&&state.shoes&&state.shoes.value&&/ダンヒル|No\.180|ベンサン|便所/.test(state.shoes.value.jp))
@@ -5902,6 +5976,8 @@ function getWarnings(){
     w.push({msg:"冬に夏物の帽子が指定されています。",fix:fixTo("hatType","なし"),fixLabel:"帽子をなしに"});
   if(state.tabi&&/和装履物/.test(v("shoeType"))&&v("tabi")!=="なし（素足で履く）"&&v("sockWearing")==="両足に履いている")
     w.push({msg:"足袋と洋靴下が同時に指定されています。",fix:fixTo("sockWearing","履いていない（素足）"),fixLabel:"靴下を素足に"});
+  if(state.shoes&&/ダンヒル|No\.180|ベンサン/.test(v("shoes"))&&state.focus&&!/足元/.test(v("focus")))
+    w.push({msg:"便所サンダルの細部再現にはクローズアップ推奨。注目を足元にすると精度が上がります。",fix:fixTo("focus","足元（靴と靴下）"),fixLabel:"注目を足元に"});
   /* 着衣レベル×場所 */
   if(state.dressLevel&&/のみ|Tシャツ＋アンダーウェア/.test(v("dressLevel"))&&loc&&!["home","stay","bath","locker"].includes(locCtx(loc)))
     w.push({msg:"アンダーウェア姿は自宅・宿・脱衣所などのプライベートな場所でのみ自然です。",fix:fixTo("dressLevel","通常（下着は見えない）"),fixLabel:"着衣レベルを通常に"});
@@ -6136,17 +6212,18 @@ function renderOutput(){
   ].filter(Boolean).join("／");
   const uwaBlockEN=isUwabaki?`
 School indoor footwear — render with product-level fidelity:
-- Model & construction: ${s("shoes").en}.${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)&&state.bensanColor?`
+${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)?`- Silhouette FIRST: a wide Japanese one-piece molded PVC slide — open toe, fully open heel, wide molded bands covering the instep (the ONLY thing on top of the foot), thick flat cushioned sole. Get this overall shape right before any detail.
+`:""}- Model & construction: ${s("shoes").en}.${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)&&state.bensanColor?`
 - Colorway: the entire one-piece PVC in ${s("bensanColor").en}.`:""}${!uwaSandal&&state.uwaLine?` Accent color (${s("uwaLine").en}): ${/ハイスクール4/.test(s("shoes").jp)?"on the rubber toe guard and the foxing tape around the sole edge":/体育|ジムスター/.test(s("shoes").jp)?"as the line along the amber-sole foxing":/フロアーVK/.test(s("shoes").jp)?"as the color of the rubber toe cap AND the matching rubber sole":"as the trim line around the toe cap and heel tab"}.`:""}
 - Fit: ${s("shoeFit").en}.
 - Condition: ${s("shoeCond").en}.${state.uwaDirt?`\n- Soiling stage: ${s("uwaDirt").en}.`:""}${state.uwaTear&&s("uwaTear").jp!=="なし"?`
 - Damage: ${s("uwaTear").en}.`:""}${state.uwaRepair&&s("uwaRepair").jp!=="なし"?`
 - Repair: ${s("uwaRepair").en}.`:""}${state.uwaDoodle&&s("uwaDoodle").jp!=="なし"?`
 - Doodles: ${s("uwaDoodle").jp==="自由入力"?`hand-drawn "${(typeof UWA_DOODLE_FREE!=="undefined"&&UWA_DOODLE_FREE)||""}"`:s("uwaDoodle").en} — ballpoint / permanent-marker linework on the rubber toe cap and canvas side, slightly uneven like real hand drawing.`:""}
-- Fabric & texture: the true material of real school shoes — canvas weave or PVC sheen, the matte gum-rubber sole, grime settling into seams; never a smooth plastic-toy rendering.`:"";
+- Fabric & texture: the true material of real school shoes — canvas weave or PVC sheen, the matte gum-rubber sole, grime settling into seams; never a smooth plastic-toy rendering.${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)?`\n- Note: this is a niche Japanese product — if your image model accepts reference images, attaching a real photo of this sandal gives the best fidelity.`:""}`:"";
   const uwaBlockJP=isUwabaki?`
 ■ 上履き・校内履きの詳細（実物の製品として忠実に描く）：
-　 モデルと構造：${s("shoes").jp}${s("shoes").jpd?`\n　 　 ${s("shoes").jpd}`:""}${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)&&state.bensanColor?`\n　 カラー：一体成型PVC全体が${s("bensanColor").jp}`:""}${!uwaSandal&&state.uwaLine?` ／ アクセント色：${s("uwaLine").jp}（${/ハイスクール4/.test(s("shoes").jp)?"つま先のトゥガードとソール縁のフォクシングテープに":/体育|ジムスター/.test(s("shoes").jp)?"飴色ソールのフォクシング沿いのラインに":/フロアーVK/.test(s("shoes").jp)?"ゴム製つま先キャップと同素材のソール全体の色として":"つま先キャップとかかとのラインに"}）`:""}
+${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)?`　 まずシルエット：幅広のPVC一体成型スライド。つま先開放・かかと全開放・甲は幅広の成型バンドのみ・厚いフラットソール。細部より先にこの全体形を正確に\n`:""}　 モデルと構造：${s("shoes").jp}${s("shoes").jpd?`\n　 　 ${s("shoes").jpd}`:""}${/ダンヒル|No\.180|ベンサン|便所/.test(s("shoes").jp)&&state.bensanColor?`\n　 カラー：一体成型PVC全体が${s("bensanColor").jp}`:""}${!uwaSandal&&state.uwaLine?` ／ アクセント色：${s("uwaLine").jp}（${/ハイスクール4/.test(s("shoes").jp)?"つま先のトゥガードとソール縁のフォクシングテープに":/体育|ジムスター/.test(s("shoes").jp)?"飴色ソールのフォクシング沿いのラインに":/フロアーVK/.test(s("shoes").jp)?"ゴム製つま先キャップと同素材のソール全体の色として":"つま先キャップとかかとのラインに"}）`:""}
 　 サイズ感：${s("shoeFit").jp} ／ 状態：${s("shoeCond").jp}${state.uwaDirt?`\n　 汚れ段階：${s("uwaDirt").jp}`:""}${state.uwaTear&&s("uwaTear").jp!=="なし"?`\n　 破れ：${s("uwaTear").jp}`:""}${state.uwaRepair&&s("uwaRepair").jp!=="なし"?`\n　 補修：${s("uwaRepair").jp}`:""}${state.uwaDoodle&&s("uwaDoodle").jp!=="なし"?`\n　 落書き：${s("uwaDoodle").jp==="自由入力"?((typeof UWA_DOODLE_FREE!=="undefined"&&UWA_DOODLE_FREE)||""):s("uwaDoodle").jp}（ボールペン・油性マジックの手描き線でつま先ラバーと甲に）`:""}
 　 質感：実物の校内履きの素材感（キャンバスの織り目やPVCの光沢、生ゴム色のマットなソール、縫い目にたまる汚れ）まで再現。おもちゃのような滑らかな塗り表現にしない`:"";
   const isWafuku=/和装履物/.test(fwType());
@@ -6185,10 +6262,11 @@ Japanese traditional footwear — render with product-level fidelity:
       "※体育館シューズ構造の厳守（キャンバスのひも靴＋飴色の半透明ゴム底＋巻き上げトゥバンパー。ランニングシューズ化・厚底化・白ソール化しない）"],
     velcro:[" Keep the exact construction: ONE wide velcro strap over the instep with an open heel — never two thin sport-slide straps, never logo-print straps, never a closed heel.",
       "※構造の厳守（甲は幅広ベルクロ1本・かかと開放。細い2本ストラップのスポーツサンダル化・ロゴ入りストラップ化・かかと付き化しない）"],
+    molded_pos:["",""],
     slipper:[" Keep the exact slipper construction: a CLOSED low toe box with a fully open heel — never an open-toe sandal, never a clog with a heel strap, never a shower slide.",
       "※スリッパ構造の厳守（つま先は閉じ・かかとは全開放。つま先の開いたサンダル化・かかとストラップ付きクロッグ化・シャワーサンダル化しない）"],
-    molded:[" Keep the exact molded construction: one-piece molding with a single wide front band and NO heel strap — never a thong flip-flop, never a Crocs-style clog with holes, never logo sport slides.",
-      "※一体成型構造の厳守（幅広前バンド1本・かかとバンドなしの一体成型。鼻緒のビーサン化・穴あきクロックス化・ロゴ入りスポーツサンダル化しない）"]
+    molded:[" Keep the exact molded construction: one-piece molding with a single wide front band and NO heel strap — the instep is covered ONLY by the wide molded bands (nothing passes between the toes, nothing wraps the heel, no perforated clog dome, no printed logos).",
+      "※一体成型構造の厳守（幅広前バンド1本・かかとバンドなしの一体成型。甲を覆うのは幅広の成型バンドだけ（指の間を通る緒はなく、かかとに回るベルトもなく、ドーム状の甲でもなく、ロゴも入らない））"]
   };
   const uwaGuardSel=UWA_GUARDS[uwaType]||null;
   const uwaGuardEN0=uwaGuardSel?uwaGuardSel[0]:"";
