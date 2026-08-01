@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>偶然シチュエーションメーカー V44</title>
+<title>偶然シチュエーションメーカー V45</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -125,7 +125,7 @@ details.sec .sec-body{padding:4px 14px 10px}
 
   <!-- ============ 初期設定 ============ -->
   <section id="setup">
-    <h1>偶然シチュエーションメーカー V44<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
+    <h1>偶然シチュエーションメーカー V45<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
     <div class="form">
       <label>性別
         <select id="s-gender">
@@ -145,6 +145,10 @@ details.sec .sec-body{padding:4px 14px 10px}
           <option value="on">仕事中</option>
           <option value="off" selected>オフ（休日）</option>
         </select>
+        <label style="margin-left:10px">出力モード
+        <select id="s-refmode"><option value="normal">通常（偶然スナップ）</option><option value="ref">服装リファレンス</option></select></label>
+        <label style="margin-left:6px">ビュー
+        <select id="s-refviews"><option value="fs">前面＋側面</option><option value="f">前面のみ</option><option value="fsb">前面＋側面＋背面</option><option value="turn">4面ターンアラウンド</option></select></label>
       </label>
       <label>室内か屋外か（ランダム抽選の優先条件）
         <select id="s-place">
@@ -5027,6 +5031,8 @@ function createProfile(){
   if(S.occ==="ニート"||S.occ==="悠々自適（定年後）")S.duty="off";
 
   S.duty=document.getElementById("s-duty").value;
+  S.refMode=(document.getElementById("s-refmode")||{}).value||"normal";
+  S.refViews=(document.getElementById("s-refviews")||{}).value||"fs";
   S.place=document.getElementById("s-place").value;
   S.charText=(document.getElementById("s-char").value||"").trim();
   S.kinenbi=document.getElementById("s-kinenbi").value||"";
@@ -6627,6 +6633,27 @@ ${barefootLike?"":`■ 汚れ：${s("sockDirt").jp} ／ かかとの薄れ：${s
 ${anatomyJP}■ ${TARGET_GUIDE[target].jp}
 ■ 出力枚数：${count.jp}`;
 
+  let enF=en,jpF=jp;
+  if(S.refMode==="ref"){
+    const V={f:["a single FRONT view","前面1ビュー"],fs:["FRONT view and SIDE view side by side","前面と側面の2ビューを横並びで"],fsb:["FRONT, SIDE and BACK views side by side","前面・側面・背面の3ビューを横並びで"],turn:["a 4-view turnaround (front / side / back / opposite side)","4面ターンアラウンド（前・横・後・逆横）"]}[S.refViews||"fs"];
+    enF=`FULL-BODY OUTFIT REFERENCE SHEET — ${V[0]}, every view showing the EXACT same person and the EXACT same outfit.
+Standing straight and relaxed, arms naturally at the sides, feet shoulder-width, looking straight ahead.
+Expression: completely neutral — mouth closed, no acting.
+Background: seamless plain gray studio backdrop, no props, no scenery; only a soft contact shadow at the feet.
+Lighting: soft, even studio light with no dramatic shadows.
+
+`+enF+`
+
+[REFERENCE MODE OVERRIDE] Ignore any location, weather, time-of-day, lighting mood, action, gesture, happening, crowd or camera direction that may appear above — this is a neutral studio reference sheet. Keep ONLY the person and the complete outfit details (clothes, bag, hat, accessories, socks, footwear and all their conditions), rendered faithfully.`;
+    jpF=`■■ 服装リファレンスシート ■■　${V[1]}（全ビューで同一人物・同一服装）
+　 直立の素立ち（腕は体側・視線は正面）／表情は無表情（口を閉じ、演技なし）
+　 背景：継ぎ目のないグレーバックのスタジオ。小道具・景色なし。影は足元の接地影のみ
+　 照明：柔らかく均一なスタジオ光
+
+`+jpF+`
+
+■ リファレンスモードの上書き：上記に場所・天候・時間帯・光の演出・動作・仕草・ハプニング・人の多さ・カメラ指示が含まれていても無視する。人物と服装の全ディテール（服・カバン・帽子・装飾品・靴下・履物とその状態）だけを忠実に描く`;
+  }
   const tidy=t=>t
     .replace(/（(?:ブランド：)?(?:指定しない|指定なし)）/g,"")
     .replace(/\s*／\s*[^／：\n]{1,14}：(?:指定なし|指定しない)(?=\s*(?:／|）|$))/gm,"")
@@ -6636,9 +6663,9 @@ ${anatomyJP}■ ${TARGET_GUIDE[target].jp}
     .replace(/\n{3,}/g,"\n\n")
     .replace(/, brand direction: \.?/g,".")
     .trim();
-  document.getElementById("out-en").textContent=tidy(en);
-  document.getElementById("out-jp").textContent=tidy(jp);
-  renderSequence(tidy(en));
+  document.getElementById("out-en").textContent=tidy(enF);
+  document.getElementById("out-jp").textContent=tidy(jpF);
+  renderSequence(tidy(enF));
   renderWarnings();
 }
 
