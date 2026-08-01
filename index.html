@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>偶然シチュエーションメーカー V45</title>
+<title>偶然シチュエーションメーカー V46</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -125,7 +125,7 @@ details.sec .sec-body{padding:4px 14px 10px}
 
   <!-- ============ 初期設定 ============ -->
   <section id="setup">
-    <h1>偶然シチュエーションメーカー V45<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
+    <h1>偶然シチュエーションメーカー V46<small>GUUZEN SITUATION MAKER — 初期設定</small></h1>
     <div class="form">
       <label>性別
         <select id="s-gender">
@@ -148,7 +148,7 @@ details.sec .sec-body{padding:4px 14px 10px}
         <label style="margin-left:10px">出力モード
         <select id="s-refmode"><option value="normal">通常（偶然スナップ）</option><option value="ref">服装リファレンス</option></select></label>
         <label style="margin-left:6px">ビュー
-        <select id="s-refviews"><option value="fs">前面＋側面</option><option value="f">前面のみ</option><option value="fsb">前面＋側面＋背面</option><option value="turn">4面ターンアラウンド</option></select></label>
+        <select id="s-refviews"><option value="full">完全版（靴あり2面＋靴下2面＋足裏拡大）</option><option value="fs">前面＋側面</option><option value="f">前面のみ</option><option value="fsb">前面＋側面＋背面</option><option value="turn">4面ターンアラウンド</option></select></label>
       </label>
       <label>室内か屋外か（ランダム抽選の優先条件）
         <select id="s-place">
@@ -2788,7 +2788,7 @@ const D={
     P("Paul Smith","Paul Smith"),P("A.P.C.","A.P.C."),P("BROOKS BROTHERS","Brooks Brothers"),
     P("J.PRESS","J.PRESS"),P("NEWYORKER","NEWYORKER"),P("VAN","VAN"),P("NAUTICA","NAUTICA"),
     /* ストリート・裏原 */
-    P("A BATHING APE","A BATHING APE"),P("Stüssy","Stussy"),P("Supreme","Supreme"),
+    P("A BATHING APE","A BATHING APE"),P("Stüssy","Stussy"),P("Supreme","Supreme"),P("STUSSY","Stussy"),P("Dickies","Dickies"),P("Champion","Champion"),P("WORKMAN","Workman"),P("GU","GU"),
     P("UNDERCOVER","UNDERCOVER"),P("NEIGHBORHOOD","NEIGHBORHOOD"),P("WTAPS","WTAPS"),
     P("X-LARGE","X-LARGE"),P("HYSTERIC GLAMOUR","HYSTERIC GLAMOUR"),P("KAPITAL","KAPITAL"),
     P("COMME des GARÇONS","COMME des GARCONS"),P("Y-3","Y-3"),
@@ -3383,6 +3383,63 @@ function forcedLocOutfit(){
   }
 }
 /* ================= 服装プリセット ================= */
+const OUTFIT_P30=[
+["フルスーツ",{tops:"シャツ",topsColor:"白",bottoms:"スラックス",jacket:"テーラード",shoeType:"革靴",shoeBrand:"REGAL",bagType:"ブリーフ",kk:"seito"}],
+["ジャケパン",{tops:"シャツ",bottoms:"チノ",jacket:"ネイビージャケット",shoeType:"革靴",shoeBrand:"REGAL",bagType:"トート",kk:"seito"}],
+["クールビズ",{tops:"シャツ",topsColor:"サックス",bottoms:"スラックス",jacket:"上着なし",shoeType:"革靴",kk:"coolbiz"}],
+["オフィスカジュアル",{tops:"ポロ",bottoms:"チノ",jacket:"カーディガン",shoeType:"革靴",shoeBrand:"HARUTA",kk:"coolbiz"}],
+["ミニマル黒モード",{tops:"モックネック",topsColor:"黒",bottoms:"ワイドタック",bottomsColor:"黒",jacket:"ロングコート",shoeType:"革靴",shoeBrand:"Dr.Martens",kk:"seito"}],
+["アメカジ",{tops:"ネルシャツ",bottoms:"デニム",bottomsBrand:"Levi",jacket:"デニムジャケット",shoeType:"スニーカー",shoeBrand:"CONVERSE",shoeModel:"オールスター",bagBrand:"OUTDOOR",kk:"darashina"}],
+["古着ミックス",{tops:"ボーダー",bottoms:"ワイド",jacket:"カバーオール",shoeType:"スニーカー",shoeBrand:"New Balance",kk:"darashina"}],
+["ノームコア",{tops:"無地Tシャツ",topsColor:"白",topsBrand:"無印",bottoms:"ストレートチノ",jacket:"上着なし",shoeType:"スニーカー",shoeBrand:"New Balance",shoeModel:"574",kk:"coolbiz"}],
+["ストリート",{tops:"スウェット",topsBrand:"STUSSY",bottoms:"ワーク",bottomsBrand:"Dickies",jacket:"コーチ",shoeType:"スニーカー",shoeBrand:"NIKE",shoeModel:"ダンク",hatType:"キャップ",kk:"yancha"}],
+["Y2K",{tops:"Tシャツ",bottoms:"ダメージ",jacket:"パーカー（羽織り）",shoeType:"スニーカー",shoeBrand:"NIKE",shoeModel:"エアフォース",kk:"darashina"}],
+["キレイめカジュアル",{tops:"バンドカラー",bottoms:"スラックス",jacket:"ステンカラー",shoeType:"革靴",kk:"seito"}],
+["韓国風シンプル",{tops:"無地Tシャツ",topsColor:"白",bottoms:"ワイドタック",jacket:"オーバーサイズ",shoeType:"スニーカー",shoeBrand:"adidas",shoeModel:"サンバ",kk:"coolbiz"}],
+["裏原90s",{tops:"Tシャツ",topsBrand:"Champion",bottoms:"ワイド",jacket:"ナイロン",shoeType:"スニーカー",shoeBrand:"NIKE",shoeModel:"エアマックス95",kk:"darashina"}],
+["ジム帰り",{tops:"ドライフィット",bottoms:"トレーニングショーツ",jacket:"ウォームアップ",shoeType:"スニーカー",shoeBrand:"NIKE",shoeModel:"メトコン",bagType:"ドラム",kk:"bukatsu"}],
+["ランニング",{tops:"ドライフィット",bottoms:"ジョガー",jacket:"ウィンド",shoeType:"スニーカー",shoeBrand:"HOKA",kk:"bukatsu"}],
+["サッカー練習後",{tops:"ゲームシャツ",bottoms:"サッカーパンツ",jacket:"ベンチコート",shoeType:"スパイク",kk:"bukatsu"}],
+["野球ユニフォーム",{tops:"ベースボールユニフォーム",bottoms:"野球のユニフォームパンツ",shoeType:"スパイク",hatType:"キャップ",kk:"bukatsu"}],
+["部活帰り",{tops:"トレーナー",bottoms:"ジャージ",jacket:"上着なし",shoeType:"スニーカー",shoeBrand:"ASICS",bagType:"エナメル",kk:"bukatsu"}],
+["現場作業",{tops:"作業",bottoms:"ワーク",bottomsBrand:"WORKMAN",jacket:"上着なし",shoeType:"作業靴",kk:"bukatsu"}],
+["倉庫作業",{tops:"Tシャツ",bottoms:"カーゴ",jacket:"上着なし",shoeType:"作業靴",kk:"bukatsu"}],
+["デリバリー",{tops:"Tシャツ",bottoms:"ジョガー",jacket:"ウィンド",shoeType:"スニーカー",bagType:"リュック",kk:"bukatsu"}],
+["職人（ペンキ汚れ）",{tops:"スウェット",bottoms:"ペインター",jacket:"上着なし",shoeType:"作業靴",kk:"darashina"}],
+["真夏の海帰り",{tops:"開襟",bottoms:"ハーフ",jacket:"上着なし",shoeType:"サンダル",shoeBrand:"BIRKENSTOCK",kk:"coolbiz"}],
+["真冬の完全防備",{tops:"タートル",bottoms:"ウールスラックス",jacket:"ダウンジャケット",shoeType:"ブーツ",kk:"seito"}],
+["梅雨のレイン",{tops:"Tシャツ",bottoms:"ナイロン",jacket:"マウンテン",shoeType:"長靴",kk:"coolbiz"}],
+["浴衣",{tops:"浴衣",shoeType:"和装",kk:"coolbiz"}],
+["甚平＋便所サンダル",{tops:"甚平",shoeType:"サンダル",shoeBrand:"ニシベケミカル",kk:"darashina"}],
+["銭湯上がり",{tops:"Tシャツ",bottoms:"イージー",jacket:"上着なし",shoeType:"サンダル",shoeBrand:"丸中",kk:"darashina"}],
+["キャンプ帰り",{tops:"ネルシャツ",bottoms:"カーゴ",jacket:"フリース",jacketBrand:"THE NORTH FACE",shoeType:"スニーカー",shoeBrand:"Salomon",kk:"darashina"}],
+["寝起きのコンビニ",{tops:"スウェット",bottoms:"スウェットショーツ",jacket:"上着なし",shoeType:"サンダル",shoeBrand:"クロックス",kk:"darashina"}]
+];
+function applyPreset30(idx){
+  const pr=OUTFIT_P30[idx];if(!pr)return;
+  const set=pr[1];
+  const put=(id,sub)=>{
+    if(!state[id]||state[id].locked)return;
+    const f0=FIELDS.find(x=>x.id===id);if(!f0)return;
+    const pool=f0.pool();
+    const hit=sub?pool.find(p=>p.jp.includes(sub)):null;
+    if(hit){state[id].value=hit;return;}
+    const reset=pool.find(p=>/^(指定しない|指定なし|なし|ノーブランド)/.test(p.jp));
+    if(reset)state[id].value=reset;
+  };
+  put("tops",set.tops);put("topsColor",set.topsColor);put("topsBrand",set.topsBrand);
+  put("bottoms",set.bottoms);put("bottomsColor",set.bottomsColor);put("bottomsBrand",set.bottomsBrand);
+  put("jacket",set.jacket);put("jacketColor",set.jacketColor);put("jacketBrand",set.jacketBrand);
+  put("shoeType",set.shoeType);
+  if(set.shoeBrand){put("shoeBrand",set.shoeBrand);if(state.shoes&&!state.shoes.locked)state.shoes.value=footwearModelPool()[0];}
+  if(set.shoeModel&&state.shoes&&!state.shoes.locked){
+    const hit=footwearModelPool().find(p=>p.jp.includes(set.shoeModel));
+    if(hit)state.shoes.value=hit;
+  }
+  put("bagType",set.bagType);put("bagBrand",set.bagBrand);put("hatType",set.hatType);
+  if(set.kk)applyKikonashi(set.kk);
+  renderRows();renderOutput();
+}
 const OUTFIT_PRESETS=[
  {key:"none",jp:"（服装プリセット）",set:null},
  {key:"clean",jp:"きれいめカジュアル",set:{jacket:["カーディガン","テーラードジャケット（カジュアル）","上着なし"],tops:["オックスフォードシャツ","バンドカラーシャツ","ニットポロ","無地Tシャツ（クルーネック）"],bottoms:["スラックス（細身）","ワイドスラックス","テーパードチノ"],shoeType:["革靴・ローファー","スニーカー"],clothesState:["きちんと着ている"]}},
@@ -3889,7 +3946,7 @@ function buildFieldDefs(){
   f.push({id:"backStory",label:"背景の小さな物語",pool:()=>D.backStory,noneDefault:true});
   f.push({id:"trace",label:"時間の痕跡",pool:()=>D.trace,noneDefault:true});
 
-  f.push({section:"服装",secId:"sec-outfit"});
+  f.push({section:"服装・足元",secId:"sec-outfit"});
   if(uniformOn()){
     if(S.occ==="高校生"){
       f.push({id:"uniJacket",label:"制服の上着",pool:()=>[
@@ -4006,7 +4063,8 @@ function buildFieldDefs(){
     f.push({id:"bagColor",label:"カバンの色",pool:()=>D.clothesColor});
     f.push({id:"bagBrand",label:"カバンブランド",pool:()=>bagBrandPoolCtx()});
     f.push({id:"bagCarry",label:"カバンの持ち方",pool:()=>bagCarryPoolCtx()});
-    f.push({id:"shoeType",label:"履物の種類",pool:()=>fwTypeRollGuard(byGender(D.footwearType))});
+    f.push({sub:"👟 履物"});
+  f.push({id:"shoeType",label:"履物の種類",pool:()=>fwTypeRollGuard(byGender(D.footwearType))});
     f.push({id:"shoeBrand",label:"履物ブランド",pool:()=>footwearBrandPool()});
     f.push({id:"shoes",label:"履物モデル",pool:()=>footwearModelPool()});
   }
@@ -4045,7 +4103,7 @@ function buildFieldDefs(){
   f.push({id:"bracelet",label:"ブレスレット",pool:()=>D.bracelet});
   f.push({id:"anklet",label:"アンクレット",pool:()=>D.anklet});
 
-  f.push({section:"靴下",secId:"sec-socks"});
+  f.push({sub:"🧦 靴下"});
   f.push({id:"sockWearing",label:"靴下の着用状態",pool:()=>D.sockWearing});
   f.push({id:"sockBrand",label:"靴下ブランド",pool:()=>D.sockBrand});
   f.push({id:"sockType",label:"靴下種類（用途）",pool:()=>D.sockType});
@@ -5032,7 +5090,7 @@ function createProfile(){
 
   S.duty=document.getElementById("s-duty").value;
   S.refMode=(document.getElementById("s-refmode")||{}).value||"normal";
-  S.refViews=(document.getElementById("s-refviews")||{}).value||"fs";
+  S.refViews=(document.getElementById("s-refviews")||{}).value||"full";
   S.place=document.getElementById("s-place").value;
   S.charText=(document.getElementById("s-char").value||"").trim();
   S.kinenbi=document.getElementById("s-kinenbi").value||"";
@@ -5202,12 +5260,12 @@ function injectOutfitPresetBar(){
     <button class="btn sub small" id="outfit-preset-apply" type="button">この系統で服装を整える</button>
     <label style="margin-left:6px">着こなし <select id="kikonashi-sel"></select></label>
     <button class="btn sub small" id="kikonashi-apply" type="button">適用</button>
-    <span class="tip">季節・年代・勤務に合うプリセットだけが表示されます（🔒固定は保持）</span>`;
+    <span class="tip">私服・仕事着の区別なく30種から選べます（🔒固定は保持・着こなしも連動）</span>`;
   const firstRow=sec.querySelector(".sec-body")||sec;
   firstRow.insertBefore(bar,firstRow.firstChild);
   const sel=bar.querySelector("#outfit-preset-sel");
-  sel.innerHTML=outfitPresetChoices().map(i=>`<option value="${i.key}">${i.jp}</option>`).join("");
-  bar.querySelector("#outfit-preset-apply").addEventListener("click",()=>applyOutfitPreset(sel.value));
+  sel.innerHTML=OUTFIT_P30.map((p,i)=>`<option value="${i}">${p[0]}</option>`).join("");
+  bar.querySelector("#outfit-preset-apply").addEventListener("click",()=>applyPreset30(+sel.value));
   const ksel=bar.querySelector("#kikonashi-sel");
   ksel.innerHTML=KIKONASHI_PRESETS.map(i=>`<option value="${i.key}">${i.jp}</option>`).join("");
   bar.querySelector("#kikonashi-apply").addEventListener("click",()=>applyKikonashi(ksel.value));
@@ -5222,7 +5280,7 @@ function renderTopSummary(){
   const items=[["場所",g("location"),"sec-scene"],["季節",g("season"),"sec-scene"],["時間帯",g("timeOfDay"),"sec-scene"],
     ["光",g("light"),"sec-scene"],["注目",g("focus"),"sec-subject"],
     ["トップス",state.uniform||state.uniJacket?(state.uniJacket?g("uniTops"):g("uniform")):g("tops"),"sec-outfit"],
-    ["靴",g("shoes"),"sec-outfit"],["靴下",g("sockColor")+"・"+g("sockPattern"),"sec-socks"]];
+    ["靴",g("shoes"),"sec-outfit"],["靴下",g("sockColor")+"・"+g("sockPattern"),"sec-outfit"]];
   el0.innerHTML=items.map(([k,v,sec])=>`<span class="ts" data-sec="${sec}"><b>${k}</b>：${v.length>12?v.slice(0,12)+"…":v}</span>`).join("");
   el0.querySelectorAll(".ts").forEach(e=>e.addEventListener("click",()=>{
     const t=document.getElementById(e.dataset.sec);
@@ -5236,9 +5294,19 @@ function renderRows(){
   try{getWarnings().forEach(w=>{if(w.fix&&w.fix.id)WARN_IDS.add(w.fix.id);});}catch(e){}
   let curBody=null;
   FIELDS.forEach(f=>{
+    if(f.sub){
+      const dv=document.createElement("div");
+      dv.className="row";
+      dv.style.cssText="background:#e8e6df;font-weight:600;padding:5px 8px;border-radius:4px;margin-top:8px";
+      dv.textContent=f.sub;
+      if(curBody)curBody.appendChild(dv);
+      return;
+    }
     if(f.section){
       const det=document.createElement("details");
-      det.className="sec";det.open=true;det.id=f.secId;
+      det.className="sec";
+      det.open=!(S.refMode==="ref"&&["sec-scene","sec-subject","sec-shot","sec-candid"].includes(f.secId));
+      det.id=f.secId;
       const cnt=FIELDS.filter(x=>x.id&&FIELDS.indexOf(x)>FIELDS.indexOf(f)&&(FIELDS.slice(FIELDS.indexOf(f)+1,FIELDS.indexOf(x)+1).every(y=>!y.section))).length;
       det.innerHTML=`<summary>${f.section}<span class="cnt">${cnt}項目</span></summary><div class="sec-body"></div><span class="sec-badge" data-badge="${f.secId}"></span>`;
       wrap.appendChild(det);
@@ -6635,7 +6703,7 @@ ${anatomyJP}■ ${TARGET_GUIDE[target].jp}
 
   let enF=en,jpF=jp;
   if(S.refMode==="ref"){
-    const V={f:["a single FRONT view","前面1ビュー"],fs:["FRONT view and SIDE view side by side","前面と側面の2ビューを横並びで"],fsb:["FRONT, SIDE and BACK views side by side","前面・側面・背面の3ビューを横並びで"],turn:["a 4-view turnaround (front / side / back / opposite side)","4面ターンアラウンド（前・横・後・逆横）"]}[S.refViews||"fs"];
+    const V={full:["THREE PANELS on one sheet — Panel A: full body WITH shoes (front + side). Panel B: the SAME person and outfit with shoes removed and placed neatly beside the feet, standing in socks (front + side). Panel C: a LARGE close-up of the SOCK SOLES of both feet, showing every specified sole detail (dirt, thinning, holes) with maximum fidelity. If the setting is bare feet, panels B and C show bare feet instead","3パネル構成——A：靴を履いた全身（前面＋側面）／B：同一人物・同一服装のまま靴を脱いで傍らに揃え、靴下履きで直立（前面＋側面）／C：両足の靴下の足裏の大きな拡大（汚れ・薄れ・穴などの設定を最も精密に）。素足設定時はB・Cを素足に"],f:["a single FRONT view","前面1ビュー"],fs:["FRONT view and SIDE view side by side","前面と側面の2ビューを横並びで"],fsb:["FRONT, SIDE and BACK views side by side","前面・側面・背面の3ビューを横並びで"],turn:["a 4-view turnaround (front / side / back / opposite side)","4面ターンアラウンド（前・横・後・逆横）"]}[S.refViews||"fs"];
     enF=`FULL-BODY OUTFIT REFERENCE SHEET — ${V[0]}, every view showing the EXACT same person and the EXACT same outfit.
 Standing straight and relaxed, arms naturally at the sides, feet shoulder-width, looking straight ahead.
 Expression: completely neutral — mouth closed, no acting.
